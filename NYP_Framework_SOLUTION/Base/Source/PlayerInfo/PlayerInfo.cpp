@@ -20,6 +20,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, m_bFallDownwards(false)
 	, m_dFallSpeed(0.0)
 	, m_dFallAcceleration(-10.0)
+	, m_dElapsedTime(0.0)
 	, attachedCamera(NULL)
 	, m_pTerrain(NULL)
 	, primaryWeapon(NULL)
@@ -109,7 +110,7 @@ void CPlayerInfo::SetToJumpUpwards(bool isOnJumpUpwards)
 	{
 		m_bJumpUpwards = true;
 		m_bFallDownwards = false;
-		m_dJumpSpeed = 40.0;
+		m_dJumpSpeed = 4.0;
 	}
 }
 
@@ -209,15 +210,18 @@ void CPlayerInfo::UpdateJumpUpwards(double dt)
 	if (m_bJumpUpwards == false)
 		return;
 
+	// Update the jump's elapsed time
+	m_dElapsedTime += dt;
+
 	// Update position and target y values
 	// Use SUVAT equation to update the change in position and target
 	// s = u * t + 0.5 * a * t ^ 2
-	position.y += (float)(m_dJumpSpeed * dt + 0.5 * m_dJumpAcceleration * dt * dt);
-	target.y += (float)(m_dJumpSpeed*dt + 0.5 * m_dJumpAcceleration * dt * dt);
+	position.y += (float)(m_dJumpSpeed * m_dElapsedTime + 0.5 * m_dJumpAcceleration * m_dElapsedTime * m_dElapsedTime);
+	target.y += (float)(m_dJumpSpeed*m_dElapsedTime + 0.5 * m_dJumpAcceleration * m_dElapsedTime * m_dElapsedTime);
 	// Use this equation to calculate final velocity, v
 	// SUVAT: v = u + a * t;
 	// v is m_dJumpSpeed AFTER updating using SUVAT where u is the initial speed and is equal to m_dJumpSpeed
-	m_dJumpSpeed = m_dJumpSpeed + m_dJumpAcceleration * dt;
+	m_dJumpSpeed = m_dJumpSpeed + m_dJumpAcceleration * m_dElapsedTime;
 	// Check if the jump speed is less than zero, then it should be falling
 	if (m_dJumpSpeed < 0.0)
 	{
@@ -225,6 +229,7 @@ void CPlayerInfo::UpdateJumpUpwards(double dt)
 		m_bJumpUpwards = false;
 		m_dFallSpeed = 0.0;
 		m_bFallDownwards = true;
+		m_dElapsedTime = 0.0;
 	}
 }
 
@@ -234,15 +239,18 @@ void CPlayerInfo::UpdateFreeFall(double dt)
 	if (m_bFallDownwards == false)
 		return;
 
+	// Update the freefall's elapsed time
+	m_dElapsedTime += dt;
+
 	// Update position and target y values
 	// Use SUVAT equation to update the change in position and target
 	// s = u * t + 0.5 * a * t ^ 2
-	position.y += (float)(m_dFallSpeed * dt + 0.5 * m_dJumpAcceleration * dt * dt);
-	target.y += (float)(m_dFallSpeed * dt + 0.5 * m_dJumpAcceleration * dt * dt);
+	position.y += (float)(m_dFallSpeed * m_dElapsedTime + 0.5 * m_dJumpAcceleration * m_dElapsedTime * m_dElapsedTime);
+	target.y += (float)(m_dFallSpeed * m_dElapsedTime + 0.5 * m_dJumpAcceleration * m_dElapsedTime * m_dElapsedTime);
 	// Use this equation to calculate final velocity, v
 	// SUVAT: v = u + a * t;
 	// v is m_dJumpSpeed AFTER updating using SUVAT where u is the initial speed and is equal to m_dJumpSpeed
-	m_dFallSpeed = m_dFallSpeed + m_dFallAcceleration * dt;
+	m_dFallSpeed = m_dFallSpeed + m_dFallAcceleration * m_dElapsedTime;
 	// Check if the jump speed is below terrain, then it should be reset to terrain height
 	if (position.y < m_pTerrain->GetTerrainHeight(position))
 	{
@@ -251,6 +259,7 @@ void CPlayerInfo::UpdateFreeFall(double dt)
 		target = position + viewDirection;
 		m_dFallSpeed = 0.0;
 		m_bFallDownwards = false;
+		m_dElapsedTime = 0.0;
 	}
 }
 
@@ -275,15 +284,11 @@ void CPlayerInfo::Update(double dt)
 		Vector3 rightUV;
 		if (KeyboardController::GetInstance()->IsKeyDown('W'))
 		{
-			Vector3 temp(viewVector);
-			temp.y = 0;
-			position += temp.Normalized() * (float)m_dSpeed * (float)dt;
+			position += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
 		}
 		else if (KeyboardController::GetInstance()->IsKeyDown('S'))
 		{
-			Vector3 temp(viewVector);
-			temp.y = 0;
-			position -= temp.Normalized() * (float)m_dSpeed * (float)dt;
+			position -= viewVector.Normalized() * (float)m_dSpeed * (float)dt;
 		}
 		if (KeyboardController::GetInstance()->IsKeyDown('A'))
 		{
@@ -440,7 +445,6 @@ void CPlayerInfo::Update(double dt)
 	{
 		attachedCamera->SetCameraPos(position);
 		attachedCamera->SetCameraTarget(target);
-		attachedCamera->SetCameraUp(up);
 	}
 }
 
@@ -450,14 +454,21 @@ void CPlayerInfo::Constrain(void)
 	// Constrain player within the boundary
 	if (position.x > maxBoundary.x - 1.0f)
 		position.x = maxBoundary.x - 1.0f;
-	//if (position.y > maxBoundary.y - 1.0f)
-	//	position.y = maxBoundary.y - 1.0f;
+	if (position.y > maxBoundary.y - 1.0f)
+	{
+		position.y = maxBoundary.y - 1.0f;
+		m_dJumpSpeed = 0.0;
+		m_bJumpUpwards = false;
+		m_dFallSpeed = 0.0;
+		m_bFallDownwards = true;
+		m_dElapsedTime = 0.0;
+	}
 	if (position.z > maxBoundary.z - 1.0f)
 		position.z = maxBoundary.z - 1.0f;
 	if (position.x < minBoundary.x + 1.0f)
 		position.x = minBoundary.x + 1.0f;
-	//if (position.y < minBoundary.y + 1.0f)
-	//	position.y = minBoundary.y + 1.0f;
+	if (position.y < minBoundary.y + 1.0f)
+		position.y = minBoundary.y + 1.0f;
 	if (position.z < minBoundary.z + 1.0f)
 		position.z = minBoundary.z + 1.0f;
 
