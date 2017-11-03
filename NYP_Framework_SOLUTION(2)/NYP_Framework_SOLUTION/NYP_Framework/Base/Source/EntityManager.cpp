@@ -13,6 +13,8 @@ void EntityManager::Update(double _dt)
 	UpdateList(characterEntityList, _dt);
 	UpdateList(projectilesEntityList, _dt);
 	UpdateList(entityList, _dt);
+	CheckForCollision();
+	Cleanup();
 }
 
 void EntityManager::UpdateList(std::list<EntityBase*> entList, double _dt)
@@ -24,13 +26,22 @@ void EntityManager::UpdateList(std::list<EntityBase*> entList, double _dt)
 	{
 		(*it)->Update(_dt);
 	}
-	//need to seperate all three portions
-	//==============================================================================
-	// Check for Collision amongst entities with collider properties
-	CheckForCollision();
-	//==============================================================================
+}
+
+void EntityManager::Cleanup()
+{
+	CleanupList(fixedEntityList);
+	CleanupList(characterEntityList);
+	CleanupList(projectilesEntityList);
+	CleanupList(entityList);
+}
+
+void EntityManager::CleanupList(std::list<EntityBase*> &entList) // need pass by reference or else it will not delete it properly
+{
 	// Clean up entities that are done
+	std::list<EntityBase*>::iterator it, end;
 	it = entList.begin();
+	end = entList.end();
 	while (it != end)
 	{
 		if ((*it)->IsDone())
@@ -53,11 +64,12 @@ void EntityManager::Render()
 	// Render all entities
 	RenderSpecificList(fixedEntityList);
 	RenderSpecificList(characterEntityList);
+
 	RenderSpecificList(projectilesEntityList);
 	RenderSpecificList(entityList);
 }
 
-void EntityManager::RenderSpecificList(std::list<EntityBase*> entList)
+void EntityManager::RenderSpecificList(std::list<EntityBase*> &entList)
 {
 	std::list<EntityBase*>::iterator it, end;
 	end = entList.end();
@@ -292,12 +304,14 @@ bool EntityManager::CheckForCollision(void)
 {
 	// Check for Collision
 	// Character with fixed and character
-	//CheckForSpecificCollision(characterEntityList, fixedEntityList);
-	//CheckForSpecificCollision(characterEntityList, characterEntityList, true);
+	CheckForSpecificCollision(characterEntityList, fixedEntityList);
+
+	if(characterEntityList.size() > 1) // will crash if there is only player
+		CheckForSpecificCollision(characterEntityList, characterEntityList, true);  
 
 	//// Projectiles with character and fixed
-	//CheckForSpecificCollision(projectilesEntityList, characterEntityList);
-	//CheckForSpecificCollision(projectilesEntityList, fixedEntityList);
+	CheckForSpecificCollision(projectilesEntityList, characterEntityList);
+	CheckForSpecificCollision(projectilesEntityList, fixedEntityList);
 	return false;
 }
 

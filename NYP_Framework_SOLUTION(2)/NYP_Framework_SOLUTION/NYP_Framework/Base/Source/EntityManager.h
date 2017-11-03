@@ -13,10 +13,14 @@ class EntityManager : public Singleton<EntityManager>
 public:
 	void Update(double _dt);
 	void UpdateList(std::list<EntityBase*> entList, double _dt);
+	void Cleanup();
+	void CleanupList(std::list<EntityBase*>&entList);
+
 	void Render();
-	void RenderSpecificList(std::list<EntityBase*> entList);
+	void RenderSpecificList(std::list<EntityBase*> &entList);
 	void RenderUI();
 	void RenderSpecificListUI(std::list<EntityBase*> entList);
+
 
 	void AddEntity(EntityBase* _newEntity);
 	bool RemoveEntity(EntityBase* _existingEntity);
