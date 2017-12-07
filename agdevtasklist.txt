@@ -1,0 +1,16 @@
+1) Advanced Collision Detection
+- Laser , Rocket (Marcus)
+- Player, Enemy movement collide (Shih Wei)
+
+2) LOD (Shih Wei)
+- Use spatial partioning grids to determine lod quality.
+
+3) SceneGraph
+- Pickup/ Drop gun (marcus)
+- Zombie (marcus)
+- House, car (shih wei)
+
+4) Gameplay logic (marcus)
+
+
+ 
