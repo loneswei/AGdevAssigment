@@ -105,7 +105,5 @@ private:
 	CWeaponInfo* primaryWeapon;
 	CWeaponInfo* secondaryWeapon;
 
-	CSceneNode *playerNode;
-
 	std::vector<CWeaponInfo*> GunOnGround;
 };

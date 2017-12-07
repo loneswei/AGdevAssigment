@@ -213,8 +213,10 @@ bool CSceneNode::DeleteAllChildren(void)
 CSceneNode* CSceneNode::DetachChild(EntityBase* theEntity)
 {
 	// if it is inside this node, then return this node
-	if (this->ID == ID)
+	if (this->theEntity == theEntity)
+	{
 		return this;
+	}
 
 	if (theChildren.size() != 0)
 	{
@@ -262,7 +264,9 @@ CSceneNode* CSceneNode::GetEntity(EntityBase* theEntity)
 {
 	// if it is inside this node, then return this node
 	if (this->theEntity == theEntity)
+	{
 		return this;
+	}
 
 	if (theChildren.size() != 0)
 	{

@@ -55,7 +55,7 @@ bool CSceneGraph::DeleteNode(const int ID)
 // Detach a Node from this Scene Graph using the pointer to the node
 CSceneNode* CSceneGraph::DetachNode(CSceneNode* theNode)
 {
-	return NULL;// theRoot->DetachChild(theNode);
+	return theRoot->DetachChild((EntityBase*)theNode);
 }
 
 // Detach a Node from this Scene Graph using its ID
@@ -67,7 +67,8 @@ CSceneNode* CSceneGraph::DetachNode(const int ID)
 // Get a Node using the pointer to the node
 CSceneNode* CSceneGraph::GetNode(EntityBase* theEntity)
 {
-	return theRoot->GetEntity(theEntity);
+	CSceneNode* t = theRoot->GetEntity(theEntity);
+	return  t;
 }
 
 // Get a Node using its ID

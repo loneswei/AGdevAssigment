@@ -72,7 +72,6 @@ void CPlayerInfo::Init(void)
 	secondaryWeapon = new CGrenadeThrow();
 	secondaryWeapon->Init();
 
-	playerNode = (CSceneNode*)this;
 }
 
 // Returns true if the player is on ground
@@ -528,7 +527,7 @@ void CPlayerInfo::DropGun(CWeaponInfo* &gun)
 		return;
 
 	// detach gun and drop it on the ground.
-	playerNode->DetachChild(gun);
+	//playerNode->DetachChild(gun);
 	CSceneGraph::GetInstance()->AddNode(gun);
 	GunOnGround.push_back(gun);
 
@@ -548,8 +547,8 @@ void CPlayerInfo::PickUpGun(CWeaponInfo* &gun)
 	if (primaryWeapon == nullptr)
 	{
 		primaryWeapon = gun;
-		CSceneGraph::GetInstance()->DetachNode(CSceneGraph::GetInstance()->GetNode(gun));
-		playerNode->AddChild(primaryWeapon);
+		CSceneNode* n = CSceneGraph::GetInstance()->DetachNode(CSceneGraph::GetInstance()->GetNode(gun));
+
 		if(!GunOnGround.empty())
 			GunOnGround.erase(std::find(GunOnGround.begin(), GunOnGround.end(), gun));
 	}
@@ -557,9 +556,8 @@ void CPlayerInfo::PickUpGun(CWeaponInfo* &gun)
 	{
 		secondaryWeapon = gun;
 		// detach the gun node from scene
-		CSceneGraph::GetInstance()->DetachNode(CSceneGraph::GetInstance()->GetNode(gun));
-		// add gun node as a child to player
-		playerNode->AddChild(secondaryWeapon);
+		CSceneNode *n = CSceneGraph::GetInstance()->DetachNode(CSceneGraph::GetInstance()->GetNode(gun));
+
 		if (!GunOnGround.empty())
 			GunOnGround.erase(std::find(GunOnGround.begin(), GunOnGround.end(), gun));
 	}
