@@ -8,6 +8,7 @@
 #include "../WeaponInfo/Pistol.h"
 #include "../WeaponInfo/LaserBlaster.h"
 #include "../WeaponInfo/GrenadeThrow.h"
+#include"../WeaponInfo/RocketLauncher.h"
 #include "../EntityManager.h"
 #include "../SceneGraph/SceneGraph.h"
 
@@ -64,12 +65,12 @@ void CPlayerInfo::Init(void)
 	minBoundary.Set(-1, -1, -1);
 
 	// Set the pistol as the primary weapon
-	primaryWeapon = new CPistol();
+	primaryWeapon = new CLaserBlaster();
 	primaryWeapon->Init();
 	// Set the laser blaster as the secondary weapon
 	//secondaryWeapon = new CLaserBlaster();
 	//secondaryWeapon->Init();
-	secondaryWeapon = new CGrenadeThrow();
+	secondaryWeapon = new RocketLauncher();
 	secondaryWeapon->Init();
 
 }
@@ -439,7 +440,10 @@ void CPlayerInfo::Update(double dt)
 	else if (MouseController::GetInstance()->IsButtonPressed(MouseController::RMB))
 	{
 		if (secondaryWeapon)
+		{
+			cout << secondaryWeapon->GetMagRound() << endl;
 			secondaryWeapon->Discharge(position, target, this);
+		}
 	}
 
 	// If the user presses R key, then reset the view to default values
@@ -532,7 +536,7 @@ void CPlayerInfo::DropGun(CWeaponInfo* &gun)
 	GunOnGround.push_back(gun);
 
 	// drop the gun onto the ground
-	gun->SetPosition(Vector3(this->position.x, m_pTerrain->GetTerrainHeight(position), this->position.z));
+	gun->SetPosition(Vector3(this->position.x, m_pTerrain->GetTerrainHeight(position) + 5, this->position.z));
 
 	gun = nullptr;
 }

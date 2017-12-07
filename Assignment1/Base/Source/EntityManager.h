@@ -21,6 +21,7 @@ public:
 	bool MarkForDeletion(EntityBase* _existingEntity);
 
 	void SetSpatialPartition(CSpatialPartition* theSpatialPartition);
+	bool SphereAABBCollision(Vector3 min, Vector3 max, Vector3 spherePos, float sphereScale);
 
 private:
 	EntityManager();

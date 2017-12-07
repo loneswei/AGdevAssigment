@@ -373,3 +373,15 @@ bool EntityManager::CheckForCollision(void)
 	}
 	return false;
 }
+
+bool EntityManager::SphereAABBCollision(Vector3 min, Vector3 max, Vector3 spherePos, float sphereScale)
+{
+	float dist = 0.f;
+	if (spherePos.x < min.x || spherePos.x > max.x)
+		dist += (spherePos.x - min.x) * (spherePos.x - min.x);
+	if (spherePos.y < min.y - 0.5 || spherePos.y > max.y + 0.5)
+		dist += (spherePos.y - min.y ) * (spherePos.y - min.y);
+	if (spherePos.z < min.z || spherePos.z > max.z)
+		dist += (spherePos.z - min.z) * (spherePos.z - min.z);
+	return dist < sphereScale * sphereScale;
+}
