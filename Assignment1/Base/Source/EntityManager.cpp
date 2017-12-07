@@ -301,43 +301,38 @@ bool EntityManager::CheckForCollision(void)
 			// Dynamic cast it to a CLaser class
 			CLaser* thisEntity = dynamic_cast<CLaser*>(*colliderThis);
 
-			// Check for collision with another collider class
-			colliderThatEnd = entityList.end();
-			int counter = 0;
-			for (colliderThat = entityList.begin(); colliderThat != colliderThatEnd; ++colliderThat)
+			//get objs in laser grid
+			vector<EntityBase*> LaserGridObj = CSpatialPartition::GetInstance()->GetObjects(thisEntity->GetPosition(), 1.f);
+
+			
+			for (int i = 0; i < LaserGridObj.size(); ++i)
 			{
-				if (colliderThat == colliderThis)
+				if (LaserGridObj[i] == thisEntity) //prevent selfchecking
 					continue;
 
-				if ((*colliderThat)->HasCollider())
+				if (LaserGridObj[i]->HasCollider())		// if the obj have collider
 				{
 					Vector3 hitPosition = Vector3(0, 0, 0);
+		
+					CCollider *thatCollider = dynamic_cast<CCollider*>(LaserGridObj[i]);
+					Vector3 thatMinAABB = LaserGridObj[i]->GetPosition() + thatCollider->GetMinAABB();
+					Vector3 thatMaxAABB = LaserGridObj[i]->GetPosition() + thatCollider->GetMaxAABB();
 
-					// Get the minAABB and maxAABB for (*colliderThat)
-					CCollider *thatCollider = dynamic_cast<CCollider*>(*colliderThat);
-					Vector3 thatMinAABB = (*colliderThat)->GetPosition() + thatCollider->GetMinAABB();
-					Vector3 thatMaxAABB = (*colliderThat)->GetPosition() + thatCollider->GetMaxAABB();
-
-					if (CheckLineSegmentPlane(	thisEntity->GetPosition(), 
-												thisEntity->GetPosition() - thisEntity->GetDirection() * thisEntity->GetLength(),
-												thatMinAABB, thatMaxAABB,
-												hitPosition) == true)
+					if (CheckLineSegmentPlane(thisEntity->GetPosition(),
+						thisEntity->GetPosition() - thisEntity->GetDirection() * thisEntity->GetLength(),
+						thatMinAABB, thatMaxAABB,
+						hitPosition))
 					{
 						(*colliderThis)->SetIsDone(true);
-						(*colliderThat)->SetIsDone(true);
-
+						LaserGridObj[i]->SetIsDone(true);
 
 						// Remove from Scene Graph
-						if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)) == true)
-						{
+						if (CSceneGraph::GetInstance()->DeleteNode(*colliderThis))
 							cout << "*** This Entity removed ***" << endl;
-						}
+				
 						// Remove from Scene Graph
-						if (CSceneGraph::GetInstance()->DeleteNode((*colliderThat)) == true)
-						{
+						if (CSceneGraph::GetInstance()->DeleteNode(LaserGridObj[i]))
 							cout << "*** That Entity removed ***" << endl;
-						}
-
 					}
 				}
 			}
