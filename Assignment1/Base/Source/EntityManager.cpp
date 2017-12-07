@@ -385,3 +385,22 @@ bool EntityManager::SphereAABBCollision(Vector3 min, Vector3 max, Vector3 sphere
 		dist += (spherePos.z - min.z) * (spherePos.z - min.z);
 	return dist < sphereScale * sphereScale;
 }
+
+std::list<EntityBase*> EntityManager::GetEntityList()
+{
+	return entityList;
+}
+
+bool EntityManager::PointToAABBCollision(Vector3 position, EntityBase * thatEntity)
+{
+	CCollider *thatCollider = dynamic_cast<CCollider*>(thatEntity);
+	Vector3 thatMinAABB = thatEntity->GetPosition() + thatCollider->GetMinAABB();
+	Vector3 thatMaxAABB = thatEntity->GetPosition() + thatCollider->GetMaxAABB();
+
+	if (position.x > thatMinAABB.x && position.x < thatMaxAABB.x &&
+		position.y > thatMinAABB.y && position.y < thatMaxAABB.y &&
+		position.z > thatMinAABB.z && position.z < thatMaxAABB.z)
+		return true;
+
+	return false;
+}
