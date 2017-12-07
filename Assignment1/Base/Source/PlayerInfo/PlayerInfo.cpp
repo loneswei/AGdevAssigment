@@ -290,27 +290,103 @@ void CPlayerInfo::Update(double dt)
 	{
 		Vector3 viewVector = target - position;
 		Vector3 rightUV;
+		Vector3 tempPos = position;
+		bool hasCollider = false, canMove = false;
 		if (KeyboardController::GetInstance()->IsKeyDown('W'))
 		{
-			position += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
+			tempPos += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
+			for (EntityBase* currEntity : EntityManager::GetInstance()->GetEntityList())
+			{
+				if (currEntity->HasCollider())
+				{
+					hasCollider = true;
+					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, currEntity))
+					{
+						canMove = false;
+						break;
+					}
+					else
+						canMove = true;
+				}
+				else
+					hasCollider = false;
+			}
+			if((hasCollider && canMove) || !hasCollider)
+				position += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
 		}
 		else if (KeyboardController::GetInstance()->IsKeyDown('S'))
 		{
-			position -= viewVector.Normalized() * (float)m_dSpeed * (float)dt;
+			tempPos -= viewVector.Normalized() * (float)m_dSpeed * (float)dt;
+			for (EntityBase* currEntity : EntityManager::GetInstance()->GetEntityList())
+			{
+				if (currEntity->HasCollider())
+				{
+					hasCollider = true;
+					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, currEntity))
+					{
+						canMove = false;
+						break;
+					}
+					else
+						canMove = true;
+				}
+				else
+					hasCollider = false;
+			}
+			if ((hasCollider && canMove) || !hasCollider)
+				position -= viewVector.Normalized() * (float)m_dSpeed * (float)dt;
 		}
 		if (KeyboardController::GetInstance()->IsKeyDown('A'))
 		{
 			rightUV = (viewVector.Normalized()).Cross(up);
 			rightUV.y = 0;
 			rightUV.Normalize();
-			position -= rightUV * (float)m_dSpeed * (float)dt;
+
+			tempPos -= rightUV * (float)m_dSpeed * (float)dt;
+			for (EntityBase* currEntity : EntityManager::GetInstance()->GetEntityList())
+			{
+				if (currEntity->HasCollider())
+				{
+					hasCollider = true;
+					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, currEntity))
+					{
+						canMove = false;
+						break;
+					}
+					else
+						canMove = true;
+				}
+				else
+					hasCollider = false;
+			}
+			if ((hasCollider && canMove) || !hasCollider)
+				position -= rightUV * (float)m_dSpeed * (float)dt;
 		}
 		else if (KeyboardController::GetInstance()->IsKeyDown('D'))
 		{
 			rightUV = (viewVector.Normalized()).Cross(up);
 			rightUV.y = 0;
 			rightUV.Normalize();
-			position += rightUV * (float)m_dSpeed * (float)dt;
+
+			tempPos += rightUV * (float)m_dSpeed * (float)dt;
+			for (EntityBase* currEntity : EntityManager::GetInstance()->GetEntityList())
+			{
+				if (currEntity->HasCollider())
+				{
+					hasCollider = true;
+					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, currEntity))
+					{
+						canMove = false;
+						break;
+					}
+					else
+						canMove = true;
+				}
+				else
+					hasCollider = false;
+			}
+			if ((hasCollider && canMove) || !hasCollider)
+				position += rightUV * (float)m_dSpeed * (float)dt;
 		}
 		// Constrain the position
 		Constrain();

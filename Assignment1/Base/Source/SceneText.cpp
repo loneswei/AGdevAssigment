@@ -219,6 +219,10 @@ void SceneText::Init()
 	theEnemy = new CEnemy();
 	theEnemy->Init();
 
+	GenericEntity* cuboid = Create::Entity("cube", Vector3(20.0f, 0.0f, -20.0f));
+	cuboid->SetCollider(true);
+	cuboid->SetAABB(Vector3(2.f, 20.f, 2.f), Vector3(-2.f, -20.f, -2.f));
+
 	groundEntity = Create::Ground("GRASS_DARKGREEN", "GEO_GRASS_LIGHTGREEN");
 //	Create::Text3DObject("text", Vector3(0.0f, 0.0f, 0.0f), "DM2210", Vector3(10.0f, 10.0f, 10.0f), Color(0, 1, 1));
 	Create::Sprite2DObject("crosshair", Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 10.0f, 10.0f));

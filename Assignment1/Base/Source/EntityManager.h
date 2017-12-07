@@ -22,6 +22,9 @@ public:
 
 	void SetSpatialPartition(CSpatialPartition* theSpatialPartition);
 	bool SphereAABBCollision(Vector3 min, Vector3 max, Vector3 spherePos, float sphereScale);
+	
+	std::list<EntityBase*> GetEntityList();
+	bool PointToAABBCollision(Vector3 position, EntityBase* thatEntity);
 
 private:
 	EntityManager();
