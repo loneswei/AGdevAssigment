@@ -13,6 +13,7 @@ CEnemy::CEnemy()
 	, maxBoundary(Vector3(0.0f, 0.0f, 0.0f))
 	, minBoundary(Vector3(0.0f, 0.0f, 0.0f))
 	, m_pTerrain(NULL)
+	, health(0)
 {
 }
 
@@ -50,6 +51,7 @@ void CEnemy::Init(void)
 	// Add to EntityManager
 	EntityManager::GetInstance()->AddEntity(this, true);
 
+	health = 100;
 }
 
 // Reset this player instance to default

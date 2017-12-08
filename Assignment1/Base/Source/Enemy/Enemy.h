@@ -13,6 +13,8 @@ protected:
 	Vector3 maxBoundary, minBoundary;
 	GroundEntity* m_pTerrain;
 
+	int health; 
+
 	double m_dSpeed;
 	double m_dAcceleration;
 
@@ -35,6 +37,7 @@ public:
 	// Set the terrain for the player info
 	void SetTerrain(GroundEntity* m_pTerrain);
 
+	void AddHealth(int h) { health += h; }
 	// Get position
 	Vector3 GetPos(void) const;
 	// Get target
