@@ -1,3 +1,0 @@
-Things to finish by monday
-Marcus - neaten the codes & zombie scenegraph
-Shih wei - car/house scenegraph (one of them)

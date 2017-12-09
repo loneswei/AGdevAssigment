@@ -1,17 +1,26 @@
 1) Advanced Collision Detection
 - Laser [x], Rocket [x] (Marcus)
-- Player, Enemy movement collide (Shih Wei)
+- Player [x] , Enemy movement collide (Shih Wei)
 
 2) LOD (Shih Wei)
-- Use spatial partioning grids to determine lod quality.
+- vehicle (no scenegraph)
 - human ( 1 obj)  
+- lamppost
+- tree
+- house
 
 3) SceneGraph
 - Pickup/ Drop gun (marcus)  [x]
 - Zombie (marcus) (update: no lod)
-- House, car (shih wei) 
+- House (shih wei) 
+- Zombie riding horse (kill horse, both die / kill zombie, only zombie die)
+(marcus)
 
 4) Gameplay logic (marcus)
+- kill horse riding zombie to win
+- player <= 0 hp to lose
 
+5) bonus
+zombie rotating head while moving (depending on who finishes task 1st)
 
  
