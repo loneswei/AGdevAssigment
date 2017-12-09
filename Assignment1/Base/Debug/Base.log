@@ -1,8 +1,35 @@
+<<<<<<< HEAD
 ﻿  Enemy.cpp
   Generating Code...
   Skipping... (no relevant changes detected)
   SceneText.cpp
   Application.cpp
+=======
+﻿  PlayerInfo.cpp
+c:\users\zhiha\desktop\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
+  c:\users\zhiha\desktop\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
+c:\users\zhiha\desktop\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(299): warning C4018: '<': signed/unsigned mismatch
+c:\users\zhiha\desktop\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(326): warning C4018: '<': signed/unsigned mismatch
+c:\users\zhiha\desktop\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(356): warning C4018: '<': signed/unsigned mismatch
+c:\users\zhiha\desktop\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(388): warning C4018: '<': signed/unsigned mismatch
+c:\users\zhiha\desktop\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(566): warning C4018: '<': signed/unsigned mismatch
+c:\users\zhiha\desktop\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(568): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  EntityManager.cpp
+c:\users\zhiha\desktop\agdevassigment\assignment1\base\source\entitymanager.cpp(308): warning C4018: '<': signed/unsigned mismatch
+  Enemy.cpp
+  Generating Code...
+  Compiling...
+  SceneText.cpp
+c:\users\zhiha\desktop\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
+  c:\users\zhiha\desktop\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
+  Application.cpp
+c:\users\zhiha\desktop\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
+  c:\users\zhiha\desktop\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Grid.cpp
+  GenericEntity.cpp
+>>>>>>> 85dac276f4b9b306e23d5b04c341e5f94d904116
 Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Base.vcxproj -> D:\GDT\Year 2 Semester 2\Advanced Game Dev\AGdevAssigment\Assignment1\Debug\Base.exe
