@@ -154,20 +154,23 @@ void CEnemy::Constrain(void)
 		position.y = m_pTerrain->GetTerrainHeight(position);
 }
 
+//note: just reuse back the genericentity::render
+// render code below forces enemy to have LOD
+
 // Render
-void CEnemy::Render(void)
-{
-	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
-	modelStack.PushMatrix();
-	modelStack.Translate(position.x, position.y, position.z);
-	modelStack.Scale(scale.x, scale.y, scale.z);
-	if (GetLODStatus() == true)
-	{
-		if (theDetailLevel != NO_DETAILS)
-		{
-			//cout << theDetailLevel << endl;
-			RenderHelper::RenderMesh(GetLODMesh());
-		}
-	}
-	modelStack.PopMatrix();
-}
+//void CEnemy::Render(void)
+//{
+//	/*MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
+//	modelStack.PushMatrix();
+//	modelStack.Translate(position.x, position.y, position.z);
+//	modelStack.Scale(scale.x, scale.y, scale.z);
+//	if (GetLODStatus() == true)
+//	{
+//		if (theDetailLevel != NO_DETAILS)
+//		{
+//			cout << theDetailLevel << endl;
+//			RenderHelper::RenderMesh(GetLODMesh());
+//		}
+//	}
+//	modelStack.PopMatrix();*/
+//}
