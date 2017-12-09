@@ -2,7 +2,7 @@
 - Laser [x], Rocket [x] (Marcus)
 - Player [x] , Enemy movement collide (Shih Wei)
 
-2) LOD (Marcus)
+2) LOD (Shih wei)
 - vehicle (no scenegraph)
 - human ( 1 obj)  
 - lamppost
@@ -11,7 +11,7 @@
 
 3) SceneGraph
 - Pickup/ Drop gun (marcus)  [x]
-- Zombie (shih wei) (update: no lod)
+- Zombie (marcus) (update: no lod)
 - House (shih wei) 
 - Zombie riding horse (kill horse, both die / kill zombie, only zombie die)
 (marcus)
@@ -25,7 +25,7 @@ zombie rotating head while moving (depending on who finishes task 1st)
 
 Objects
 - Horse [x]
-- Zombie
+- Zombie [x]
 - Car
 - Lamppost
 - Tree 
