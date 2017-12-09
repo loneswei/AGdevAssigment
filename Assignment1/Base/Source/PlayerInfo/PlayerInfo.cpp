@@ -295,12 +295,16 @@ void CPlayerInfo::Update(double dt)
 		if (KeyboardController::GetInstance()->IsKeyDown('W'))
 		{
 			tempPos += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
-			for (EntityBase* currEntity : EntityManager::GetInstance()->GetEntityList())
+			vector<EntityBase*> playerGridObj = CSpatialPartition::GetInstance()->GetObjects(this->position, 1.f);
+			for (int i = 0; i < playerGridObj.size(); ++i)
 			{
-				if (currEntity->HasCollider())
+				if (playerGridObj[i] == this)
+					continue;
+
+				if (playerGridObj[i]->HasCollider())
 				{
 					hasCollider = true;
-					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, currEntity))
+					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, playerGridObj[i]))
 					{
 						canMove = false;
 						break;
@@ -311,18 +315,23 @@ void CPlayerInfo::Update(double dt)
 				else
 					hasCollider = false;
 			}
-			if((hasCollider && canMove) || !hasCollider)
+			if ((hasCollider && canMove) || !hasCollider)
 				position += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
 		}
 		else if (KeyboardController::GetInstance()->IsKeyDown('S'))
 		{
 			tempPos -= viewVector.Normalized() * (float)m_dSpeed * (float)dt;
-			for (EntityBase* currEntity : EntityManager::GetInstance()->GetEntityList())
+			
+			vector<EntityBase*>playerGridObj = CSpatialPartition::GetInstance()->GetObjects(this->position, 1);
+			for (int i = 0; i < playerGridObj.size(); ++i)
 			{
-				if (currEntity->HasCollider())
+				if (playerGridObj[i] == this)
+					continue;
+
+				if (playerGridObj[i]->HasCollider())
 				{
 					hasCollider = true;
-					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, currEntity))
+					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, playerGridObj[i]))
 					{
 						canMove = false;
 						break;
@@ -343,12 +352,16 @@ void CPlayerInfo::Update(double dt)
 			rightUV.Normalize();
 
 			tempPos -= rightUV * (float)m_dSpeed * (float)dt;
-			for (EntityBase* currEntity : EntityManager::GetInstance()->GetEntityList())
+			vector<EntityBase*>playerGridObj = CSpatialPartition::GetInstance()->GetObjects(this->position, 1);
+			for (int i = 0; i < playerGridObj.size(); ++i)
 			{
-				if (currEntity->HasCollider())
+				if (playerGridObj[i] == this)
+					continue;
+
+				if (playerGridObj[i]->HasCollider())
 				{
 					hasCollider = true;
-					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, currEntity))
+					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, playerGridObj[i]))
 					{
 						canMove = false;
 						break;
@@ -359,6 +372,7 @@ void CPlayerInfo::Update(double dt)
 				else
 					hasCollider = false;
 			}
+		
 			if ((hasCollider && canMove) || !hasCollider)
 				position -= rightUV * (float)m_dSpeed * (float)dt;
 		}
@@ -369,12 +383,16 @@ void CPlayerInfo::Update(double dt)
 			rightUV.Normalize();
 
 			tempPos += rightUV * (float)m_dSpeed * (float)dt;
-			for (EntityBase* currEntity : EntityManager::GetInstance()->GetEntityList())
+			vector<EntityBase*>playerGridObj = CSpatialPartition::GetInstance()->GetObjects(this->position, 1);
+			
+			for (int i=0;i<playerGridObj.size();++i)
 			{
-				if (currEntity->HasCollider())
+				if (playerGridObj[i] == this)
+					continue;
+				if (playerGridObj[i]->HasCollider())
 				{
 					hasCollider = true;
-					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, currEntity))
+					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, playerGridObj[i]))
 					{
 						canMove = false;
 						break;
@@ -606,14 +624,15 @@ void CPlayerInfo::DropGun(CWeaponInfo* &gun)
 	if (gun == nullptr)
 		return;
 
-	// detach gun and drop it on the ground.
 	//playerNode->DetachChild(gun);
+	// add the dropped gun to the scenegraph 
 	CSceneGraph::GetInstance()->AddNode(gun);
 	GunOnGround.push_back(gun);
 
 	// drop the gun onto the ground
 	gun->SetPosition(Vector3(this->position.x, m_pTerrain->GetTerrainHeight(position) + 5, this->position.z));
 
+	// drop gun means player does not have the gun anymore
 	gun = nullptr;
 }
 
@@ -621,6 +640,7 @@ void CPlayerInfo::PickUpGun(CWeaponInfo* &gun)
 {
 	if (gun == nullptr)
 		return;
+	// if both gun slots are occupied, no space to pick up gun
 	if (primaryWeapon && secondaryWeapon)
 		return;
 	
@@ -635,7 +655,7 @@ void CPlayerInfo::PickUpGun(CWeaponInfo* &gun)
 	else if (secondaryWeapon == nullptr)
 	{
 		secondaryWeapon = gun;
-		// detach the gun node from scene
+		// search for the gun node, then detach it from scene
 		CSceneNode *n = CSceneGraph::GetInstance()->DetachNode(CSceneGraph::GetInstance()->GetNode(gun));
 
 		if (!GunOnGround.empty())
