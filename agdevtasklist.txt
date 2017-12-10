@@ -28,7 +28,7 @@ Objects
 - Zombie [x]
 - Car
 - Lamppost  [x]
-- Tree 
+- Tree [x]
 - House
 - Human [x]
 
