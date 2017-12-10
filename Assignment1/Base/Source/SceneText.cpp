@@ -177,6 +177,28 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateOBJ("zombiebody", "OBJ//zombiebody.obj");
 	MeshBuilder::GetInstance()->GetMesh("zombiebody")->textureID = LoadTGA("Image//zombie.tga");
 
+	MeshBuilder::GetInstance()->GenerateOBJ("houseroof", "OBJ//LOD//houseroof.obj");
+	MeshBuilder::GetInstance()->GetMesh("houseroof")->textureID = LoadTGA("Image//LOD//houselow.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("houseleftwall", "OBJ//LOD//houseleftwall.obj");
+	MeshBuilder::GetInstance()->GetMesh("houseleftwall")->textureID = LoadTGA("Image//LOD//houselow.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("housebackwall", "OBJ//LOD//housebackwall.obj");
+	MeshBuilder::GetInstance()->GetMesh("housebackwall")->textureID = LoadTGA("Image//LOD//houselow.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("houserightwall", "OBJ//LOD//houserightwall.obj");
+	MeshBuilder::GetInstance()->GetMesh("houserightwall")->textureID = LoadTGA("Image//LOD//houselow.tga");
+
+	MeshBuilder::GetInstance()->GenerateOBJ("housemedfrontwall", "OBJ//LOD//housemedfrontwall.obj");
+	MeshBuilder::GetInstance()->GetMesh("housemedfrontwall")->textureID = LoadTGA("Image//LOD//housemed.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("househighfrontwall", "OBJ//LOD//househighfrontwall.obj");
+	MeshBuilder::GetInstance()->GetMesh("househighfrontwall")->textureID = LoadTGA("Image//LOD//househigh.tga");
+	
+	MeshBuilder::GetInstance()->GenerateOBJ("houselowdoor", "OBJ//LOD//housedoor.obj");
+	MeshBuilder::GetInstance()->GetMesh("houselowdoor")->textureID = LoadTGA("Image//LOD//houselow.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("housemeddoor", "OBJ//LOD//housedoor.obj");
+	MeshBuilder::GetInstance()->GetMesh("housemeddoor")->textureID = LoadTGA("Image//LOD//housemed.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("househighdoor", "OBJ//LOD//housedoor.obj");
+	MeshBuilder::GetInstance()->GetMesh("househighdoor")->textureID = LoadTGA("Image//LOD//househigh.tga");
+
+
 	// Set up the Spatial Partition and pass it to the EntityManager to manage
 	CSpatialPartition::GetInstance()->Init(100, 100, 10, 10);
 	CSpatialPartition::GetInstance()->SetMesh("GRIDMESH");
@@ -188,9 +210,19 @@ void SceneText::Init()
 	Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
 	Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
 
-	Create::Entity("carlow", Vector3(100, -10, 100), Vector3(5, 5, 5));
-	Create::Entity("carmed", Vector3(200, -10, 200), Vector3(5, 5, 5));
-	Create::Entity("carhigh", Vector3(300, -10, 300), Vector3(5, 5, 5));
+	Create::Entity("houseroof", Vector3(-400, -10, -400), Vector3(5, 5, 5));
+	Create::Entity("houseleftwall", Vector3(-400, -10, -400), Vector3(5, 5, 5));
+	Create::Entity("houserightwall", Vector3(-400, -10, -400), Vector3(5, 5, 5));
+	Create::Entity("housebackwall", Vector3(-400, -10, -400), Vector3(5, 5, 5));
+	
+	GenericEntity* frontwall = Create::Entity("housemedfrontwall", Vector3(-400, -10, -400), Vector3(5, 5, 5));
+	frontwall->InitLOD("househighfrontwall", "housemedfrontwall", "househighfrontwall");
+
+	GenericEntity* door = Create::Entity("houselowdoor", Vector3(-400, -10, -400), Vector3(5, 5, 5));
+	door->InitLOD("househighdoor", "housemeddoor", "houselowdoor");
+
+	GenericEntity* car = Create::Entity("carmed", Vector3(400, -10, 400), Vector3(5, 5, 5));
+	car->InitLOD("carhigh", "carmed", "carlow");
 
 	GenericEntity* aCube = Create::Entity("cube", Vector3(-20.0f, 0.0f, -20.0f));
 	aCube->SetCollider(true);
@@ -237,7 +269,7 @@ void SceneText::Init()
 	theEnemy = new CEnemy();
 	theEnemy->Init();
 
-	Create::zombieEntity("zombie", Vector3(-100, 10, -100), Vector3(100,100,100));
+	//Create::zombieEntity("zombie", Vector3(-100, 10, -100), Vector3(100,100,100));
 	
 	GenericEntity* cuboid = Create::Entity("cube", Vector3(20.0f, 0.0f, -20.0f));
 	cuboid->SetCollider(true);
