@@ -1,6 +1,6 @@
 1) Advanced Collision Detection
 - Laser [x], Rocket [x] (Marcus)
-- Player [x] , Enemy movement collide (Shih Wei)
+- Player [x] , Enemy movement collide [x]
 
 2) LOD (Shih wei)
 - vehicle (no scenegraph)
@@ -11,8 +11,12 @@
 
 3) SceneGraph
 - Pickup/ Drop gun (marcus)  [x]
-- Zombie (marcus) (update: no lod)
+
+- Zombie (marcus) (update: no lod) 
+[can render but weird duplicate of arm/head, havent implement the collision respond yet]
+
 - House (shih wei) 
+
 - Zombie riding horse (kill horse, both die / kill zombie, only zombie die)
 (marcus)
 
@@ -26,7 +30,7 @@ zombie rotating head while moving (depending on who finishes task 1st)
 Objects
 - Horse [x]
 - Zombie [x]
-- Car
+- Car [x]
 - Lamppost  [x]
 - Tree [x]
 - House

@@ -237,8 +237,9 @@ void SceneText::Init()
 	theEnemy = new CEnemy();
 	theEnemy->Init();
 
-	Create::zombieEntity("zombie", Vector3(-100, 10, -100), Vector3(100,100,100));
-	
+	Zombie *z = new Zombie();
+	z->Init();
+
 	GenericEntity* cuboid = Create::Entity("cube", Vector3(20.0f, 0.0f, -20.0f));
 	cuboid->SetCollider(true);
 	cuboid->SetAABB(Vector3(2.f, 20.f, 2.f), Vector3(-2.f, -20.f, -2.f));

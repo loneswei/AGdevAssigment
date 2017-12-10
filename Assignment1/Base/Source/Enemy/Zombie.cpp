@@ -4,21 +4,27 @@
 #include "../SpatialPartition/SpatialPartition.h"
 #include "MeshBuilder.h"
 
-ZombiePart::ZombiePart(void): GenericEntity(nullptr)
-{
-}
-
-ZombiePart::ZombiePart(Mesh * _modelMesh, Zombie * z, std::string pName) : GenericEntity(nullptr)
-{
-	modelMesh = _modelMesh;
-	zombie = z;
-	partName = pName;
-}
 
 void Zombie::Init()
 {
 	health = 200;
 	m_dSpeed = 40.f;
+	Vector3 pos = Vector3(Math::RandFloatMinMax(-200, 200), 10, Math::RandFloatMinMax(-200, 200));
+	GenericEntity *zBody = Create::Entity("zombiebody", pos, Vector3(5, 5, 5));
+	CSceneNode *bodyNode = CSceneGraph::GetInstance()->AddNode(zBody);
+
+	GenericEntity *zArm = Create::Entity("zombiearm", pos, Vector3(5, 5, 5));
+	CSceneNode *LArmNode = bodyNode->AddChild(zArm);
+	LArmNode->ApplyTranslate(2.5, 5, 3);
+
+	CSceneNode *RArmNode = bodyNode->AddChild(zArm);
+	RArmNode->ApplyTranslate(-2.5, 5, 3);
+
+	GenericEntity *zHead = Create::Entity("zombiehead", pos, Vector3(5, 5, 5));
+	CSceneNode *zHeadNode = bodyNode->AddChild(zHead);
+	zHeadNode->ApplyTranslate(0, 8, 0);
+
+
 }
 
 void Zombie::Update(double dt)
@@ -93,35 +99,4 @@ void Zombie::Update(double dt)
 		if ((hasCollider && canMove) || !hasCollider)
 			position += moveDir.Normalized() * (float)m_dSpeed * (float)dt;
 	}
-}
-
-Zombie * Create::zombieEntity(const std::string & _meshName, const Vector3 & _position, const Vector3 & _scale)
-{
-	Zombie*z = new Zombie();
-	z->SetPosition(_position);
-	z->SetScale(_scale);
-	z->SetCollider(true);
-
-	Mesh* bodyMesh = MeshBuilder::GetInstance()->GetMesh("zombiebody");
-	ZombiePart *body = new ZombiePart(bodyMesh, z, "body");
-	
-	Mesh* armMesh = MeshBuilder::GetInstance()->GetMesh("zombiearm");
-	ZombiePart *leftArm = new ZombiePart(armMesh, z, "leftarm");
-	ZombiePart *rightArm = new ZombiePart(armMesh, z, "rightarm");
-
-	Mesh *headMesh = MeshBuilder::GetInstance()->GetMesh("zombiehead");
-	ZombiePart *head = new ZombiePart(headMesh, z, "head");
-
-	CSceneNode *zombieNode = CSceneGraph::GetInstance()->AddNode(z);
-	CSceneNode *zBodyNode = zombieNode->AddChild(body);
-	CSceneNode *zLArmNode = zBodyNode->AddChild(leftArm);
-	zLArmNode->ApplyTranslate(3, 3, 0);
-	CSceneNode *zRArmNode = zBodyNode->AddChild(rightArm);
-	zRArmNode->ApplyTranslate(-3, 3, 0);
-	CSceneNode *zHeadNode = zBodyNode->AddChild(head);
-	zHeadNode->ApplyTranslate(0, 6, 0);
-
-	EntityManager::GetInstance()->AddEntity(z, true);
-
-	return z;
 }

@@ -1,80 +1,13 @@
-﻿  WeaponInfo.cpp
+﻿  Zombie.cpp
 d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
   d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-  RocketLauncher.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
-  d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-  Pistol.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
-  d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-  LaserBlaster.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
-  d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-  GrenadeThrow.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
-  d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-  TextEntity.cpp
-  SpriteEntity.cpp
-  SpatialPartition.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\spatialpartition\spatialpartition.cpp(71): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\spatialpartition\spatialpartition.cpp(154): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\spatialpartition\spatialpartition.cpp(178): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\spatialpartition\spatialpartition.cpp(180): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Grid.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\spatialpartition\grid.cpp(42): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\spatialpartition\grid.cpp(43): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\spatialpartition\grid.cpp(123): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\spatialpartition\grid.cpp(136): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\spatialpartition\grid.cpp(175): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\spatialpartition\grid.cpp(203): warning C4018: '<': signed/unsigned mismatch
-  SkyBoxEntity.cpp
+d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\enemy\zombie.cpp(48): warning C4018: '<': signed/unsigned mismatch
+d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\enemy\zombie.cpp(80): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
   SceneText.cpp
 d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
   d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-  UpdateTransformation.cpp
-  Transform.cpp
-  SceneNode.cpp
-  SceneGraph.cpp
-  Rocket.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
-  d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\projectile\rocket.cpp(46): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\projectile\rocket.cpp(56): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\projectile\rocket.cpp(68): warning C4018: '<': signed/unsigned mismatch
-  Projectile.cpp
-  Laser.cpp
-  Grenade.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
-  d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\projectile\grenade.cpp(54): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\projectile\grenade.cpp(71): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\projectile\grenade.cpp(75): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  PlayerInfo.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
-  d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(299): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(326): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(356): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(388): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(566): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\playerinfo\playerinfo.cpp(568): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-  Compiling...
-  OBJMesh.cpp
-  main.cpp
-  Light.cpp
-  LevelOfDetails.cpp
-  GroundEntity.cpp
-  GenericEntity.cpp
-  FPSCamera.cpp
-  EntityManager.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\entitymanager.cpp(308): warning C4018: '<': signed/unsigned mismatch
-  Zombie.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
-  d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\enemy\zombie.cpp(42): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\enemy\zombie.cpp(74): warning C4018: '<': signed/unsigned mismatch
-  Enemy.cpp
   Application.cpp
 d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
   d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
