@@ -129,6 +129,9 @@
     <ClCompile Include="Source\WeaponInfo\RocketLauncher.cpp">
       <Filter>WeaponInfo</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\Zombie.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="Source\WeaponInfo\RocketLauncher.h">
       <Filter>WeaponInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Zombie.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

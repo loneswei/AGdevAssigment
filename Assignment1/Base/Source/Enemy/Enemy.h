@@ -37,6 +37,8 @@ public:
 	// Set the terrain for the player info
 	void SetTerrain(GroundEntity* m_pTerrain);
 
+	void SetHealth(int h) { health = h; }
+
 	void AddHealth(int h) { health += h; }
 	// Get position
 	Vector3 GetPos(void) const;
