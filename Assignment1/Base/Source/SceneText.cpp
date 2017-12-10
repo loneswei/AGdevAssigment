@@ -163,6 +163,20 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateRay("laser", 10.0f);
 	MeshBuilder::GetInstance()->GenerateQuad("GRIDMESH", Color(1, 1, 1), 10.f);
 
+	MeshBuilder::GetInstance()->GenerateOBJ("carlow", "OBJ//LOD//carlow.obj");
+	MeshBuilder::GetInstance()->GetMesh("carlow")->textureID = LoadTGA("Image//LOD//carlow.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("carmed", "OBJ//LOD//carmed.obj");
+	MeshBuilder::GetInstance()->GetMesh("carmed")->textureID = LoadTGA("Image//LOD//carmed.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("carhigh", "OBJ//LOD//carhigh.obj");
+	MeshBuilder::GetInstance()->GetMesh("carhigh")->textureID = LoadTGA("Image//LOD//carhigh.tga");
+
+	MeshBuilder::GetInstance()->GenerateOBJ("zombiehead", "OBJ//zombiehead.obj");
+	MeshBuilder::GetInstance()->GetMesh("zombiehead")->textureID = LoadTGA("Image//zombie.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("zombiearm", "OBJ//zombiearm.obj");
+	MeshBuilder::GetInstance()->GetMesh("zombiearm")->textureID = LoadTGA("Image//zombie.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("zombiebody", "OBJ//zombiebody.obj");
+	MeshBuilder::GetInstance()->GetMesh("zombiebody")->textureID = LoadTGA("Image//zombie.tga");
+
 	// Set up the Spatial Partition and pass it to the EntityManager to manage
 	CSpatialPartition::GetInstance()->Init(100, 100, 10, 10);
 	CSpatialPartition::GetInstance()->SetMesh("GRIDMESH");
@@ -173,6 +187,10 @@ void SceneText::Init()
 	// Create entities into the scene
 	Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
 	Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
+
+	Create::Entity("carlow", Vector3(100, -10, 100), Vector3(5, 5, 5));
+	Create::Entity("carmed", Vector3(200, -10, 200), Vector3(5, 5, 5));
+	Create::Entity("carhigh", Vector3(300, -10, 300), Vector3(5, 5, 5));
 
 	GenericEntity* aCube = Create::Entity("cube", Vector3(-20.0f, 0.0f, -20.0f));
 	aCube->SetCollider(true);
@@ -218,6 +236,8 @@ void SceneText::Init()
 	// Create a CEnemy instance
 	theEnemy = new CEnemy();
 	theEnemy->Init();
+
+	Create::zombieEntity("zombie", Vector3(-100, 10, -100), Vector3(100,100,100));
 	
 	GenericEntity* cuboid = Create::Entity("cube", Vector3(20.0f, 0.0f, -20.0f));
 	cuboid->SetCollider(true);

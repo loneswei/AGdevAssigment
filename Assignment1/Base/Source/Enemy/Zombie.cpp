@@ -102,7 +102,7 @@ Zombie * Create::zombieEntity(const std::string & _meshName, const Vector3 & _po
 	z->SetScale(_scale);
 	z->SetCollider(true);
 
-	Mesh* bodyMesh = MeshBuilder::GetInstance()->GetMesh("body");
+	Mesh* bodyMesh = MeshBuilder::GetInstance()->GetMesh("zombiebody");
 	ZombiePart *body = new ZombiePart(bodyMesh, z, "body");
 	
 	Mesh* armMesh = MeshBuilder::GetInstance()->GetMesh("zombiearm");
@@ -123,4 +123,5 @@ Zombie * Create::zombieEntity(const std::string & _meshName, const Vector3 & _po
 
 	EntityManager::GetInstance()->AddEntity(z, true);
 
+	return z;
 }
