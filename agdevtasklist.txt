@@ -27,9 +27,9 @@ Objects
 - Horse [x]
 - Zombie [x]
 - Car
-- Lamppost
+- Lamppost  [x]
 - Tree 
 - House
-- Human 
+- Human [x]
 
  
