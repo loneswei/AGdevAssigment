@@ -7,7 +7,7 @@
 class Zombie : public CEnemy
 {
 public:
-	Zombie() : CEnemy() {} ;
+	Zombie() : CEnemy() { jockey = true; };
 	virtual ~Zombie() {} ;
 
 	void Init();
@@ -16,7 +16,7 @@ public:
 	void SetJockey(bool j) { jockey = j; }
 	bool GetJockey() { return jockey; }
 private:
-	GenericEntity *zBody, *zHead, *zLArm, *zRArm;
+	GenericEntity *zBody, *zHead, *zLArm, *zRArm, *zHorse;
 	bool jockey;
 };
 

@@ -12,38 +12,71 @@ void Zombie::Init()
 	Vector3 pos;
 	pos.Set(Math::RandFloatMinMax(-200, 200), -2, Math::RandFloatMinMax(-200, 200));
 
-    zBody = Create::Entity("zombiebody", pos, Vector3(5, 5, 5));
-	zBody->SetCollider(true);
-	zBody->SetIsZombie(true);
-	zBody->SetAABB(Vector3(2.5, 2.5, 2.5), Vector3(-2.5, -2.5, -2.5));
-	CSceneNode *bodyNode = CSceneGraph::GetInstance()->AddNode(zBody);
-	
-	 zLArm = Create::Entity("zombiearm", Vector3(pos.x + 2.5,pos.y + 5,pos.z +3), Vector3(5, 5, 5));
-	zLArm->SetCollider(true);
-	zLArm->SetIsZombie(true);
-	zLArm->SetAABB(Vector3(2, 2, 2), Vector3(-2, -2, -2));
-	CSceneNode *LArmNode = bodyNode->AddChild(zLArm);
-	//LArmNode->ApplyTranslate(2.5, 5, 3); //this causes duplication of head and make the scenegraph haywire
+	if (!jockey)
+	{
+		zBody = Create::Entity("zombiebody", pos, Vector3(5, 5, 5));
+		zBody->SetCollider(true);
+		zBody->SetIsZombie(true);
+		zBody->SetAABB(Vector3(2.5, 2.5, 2.5), Vector3(-2.5, -2.5, -2.5));
+		CSceneNode *bodyNode = CSceneGraph::GetInstance()->AddNode(zBody);
 
+		zLArm = Create::Entity("zombiearm", Vector3(pos.x + 2.5, pos.y + 5, pos.z + 3), Vector3(5, 5, 5));
+		zLArm->SetCollider(true);
+		zLArm->SetIsZombie(true);
+		zLArm->SetAABB(Vector3(2, 2, 2), Vector3(-2, -2, -2));
+		CSceneNode *LArmNode = bodyNode->AddChild(zLArm);
+		//LArmNode->ApplyTranslate(2.5, 5, 3); //this causes duplication of head and make the scenegraph haywire
 
-	zRArm = Create::Entity("zombiearm", Vector3(pos.x -  2.5, pos.y + 5, pos.z + 3), Vector3(5, 5, 5));
-	zRArm->SetCollider(true);
-	zRArm->SetIsZombie(true);
-	zRArm->SetAABB(Vector3(2, 2, 2), Vector3(-2, -2, -2));
-	CSceneNode *RArmNode = bodyNode->AddChild(zRArm);
-	//RArmNode->ApplyTranslate(-2.5, 5, 3);
+		zRArm = Create::Entity("zombiearm", Vector3(pos.x - 2.5, pos.y + 5, pos.z + 3), Vector3(5, 5, 5));
+		zRArm->SetCollider(true);
+		zRArm->SetIsZombie(true);
+		zRArm->SetAABB(Vector3(2, 2, 2), Vector3(-2, -2, -2));
+		CSceneNode *RArmNode = bodyNode->AddChild(zRArm);
+		//RArmNode->ApplyTranslate(-2.5, 5, 3);
 
-	zHead = Create::Entity("zombiehead", Vector3(pos.x,pos.y+8,pos.z), Vector3(5, 5, 5));
-	zHead->SetCollider(true);
-	zHead->SetIsZombie(true);
-	zHead->SetAABB(Vector3(2, 2, 2), Vector3(-2, -2, -2));
-	CSceneNode *zHeadNode = bodyNode->AddChild(zHead);
-	//zHeadNode->ApplyTranslate(0,8,0);  //this causes duplication of head and make the scenegraph haywire
-	//CUpdateTransformation* aRotateMtx = new CUpdateTransformation();
-	//aRotateMtx->ApplyUpdate(0.5f, 0.0f, 1.0f, 0.0f);
-	//aRotateMtx->SetSteps(-2, 2);
-	//zHeadNode->SetUpdateTransformation(aRotateMtx);
+		zHead = Create::Entity("zombiehead", Vector3(pos.x, pos.y + 8, pos.z), Vector3(5, 5, 5));
+		zHead->SetCollider(true);
+		zHead->SetIsZombie(true);
+		zHead->SetAABB(Vector3(2, 2, 2), Vector3(-2, -2, -2));
+		CSceneNode *zHeadNode = bodyNode->AddChild(zHead);
+		//zHeadNode->ApplyTranslate(0,8,0);  //this causes duplication of head and make the scenegraph haywire
+		//CUpdateTransformation* aRotateMtx = new CUpdateTransformation();
+		//aRotateMtx->ApplyUpdate(0.5f, 0.0f, 1.0f, 0.0f);
+		//aRotateMtx->SetSteps(-2, 2);
+		//zHeadNode->SetUpdateTransformation(aRotateMtx);
+	}
+	else
+	{
+		zHorse = Create::Entity("zombiehorse", pos, Vector3(5, 5, 5));
+		zHorse->SetCollider(true);
+		zHorse->SetIsZombie(true);
+		zHorse->SetAABB(Vector3(2.5, 2.5, 2.5), Vector3(-2.5, -2.5, -2.5));
+		CSceneNode *horseNode = CSceneGraph::GetInstance()->AddNode(zHorse);
 
+		zBody = Create::Entity("zombiebody", Vector3(pos.x, pos.y + 5, pos.z), Vector3(5, 5, 5));
+		zBody->SetCollider(true);
+		zBody->SetIsZombie(true);
+		zBody->SetAABB(Vector3(2.5, 2.5, 2.5), Vector3(-2.5, -2.5, -2.5));
+		CSceneNode *bodyNode = horseNode->AddChild(zBody);
+
+		zLArm = Create::Entity("zombiearm", Vector3(pos.x + 2.5, pos.y + 10, pos.z + 3), Vector3(5, 5, 5));
+		zLArm->SetCollider(true);
+		zLArm->SetIsZombie(true);
+		zLArm->SetAABB(Vector3(2, 2, 2), Vector3(-2, -2, -2));
+		CSceneNode *LArmNode = bodyNode->AddChild(zLArm);
+
+		zRArm = Create::Entity("zombiearm", Vector3(pos.x - 2.5, pos.y + 10, pos.z + 3), Vector3(5, 5, 5));
+		zRArm->SetCollider(true);
+		zRArm->SetIsZombie(true);
+		zRArm->SetAABB(Vector3(2, 2, 2), Vector3(-2, -2, -2));
+		CSceneNode *RArmNode = bodyNode->AddChild(zRArm);
+
+		zHead = Create::Entity("zombiehead", Vector3(pos.x, pos.y + 13, pos.z), Vector3(5, 5, 5));
+		zHead->SetCollider(true);
+		zHead->SetIsZombie(true);
+		zHead->SetAABB(Vector3(2, 2, 2), Vector3(-2, -2, -2));
+		CSceneNode *zHeadNode = bodyNode->AddChild(zHead);
+	}
 
 	position = pos;
 	target = CPlayerInfo::GetInstance()->GetPos();

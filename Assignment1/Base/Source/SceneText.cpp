@@ -182,6 +182,8 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GetMesh("zombiearm")->textureID = LoadTGA("Image//zombie.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("zombiebody", "OBJ//zombiebody.obj");
 	MeshBuilder::GetInstance()->GetMesh("zombiebody")->textureID = LoadTGA("Image//zombie.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("zombiehorse", "OBJ//horse.obj");
+	MeshBuilder::GetInstance()->GetMesh("zombiehorse")->textureID = LoadTGA("Image//horse.tga");
 
 	// House
 	MeshBuilder::GetInstance()->GenerateOBJ("houseroof", "OBJ//LOD//houseroof.obj");
