@@ -210,16 +210,8 @@ void SceneText::Init()
 	Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
 	Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
 
-	Create::Entity("houseroof", Vector3(-400, -10, -400), Vector3(5, 5, 5));
-	Create::Entity("houseleftwall", Vector3(-400, -10, -400), Vector3(5, 5, 5));
-	Create::Entity("houserightwall", Vector3(-400, -10, -400), Vector3(5, 5, 5));
-	Create::Entity("housebackwall", Vector3(-400, -10, -400), Vector3(5, 5, 5));
-	
-	GenericEntity* frontwall = Create::Entity("housemedfrontwall", Vector3(-400, -10, -400), Vector3(5, 5, 5));
-	frontwall->InitLOD("househighfrontwall", "housemedfrontwall", "househighfrontwall");
-
-	GenericEntity* door = Create::Entity("houselowdoor", Vector3(-400, -10, -400), Vector3(5, 5, 5));
-	door->InitLOD("househighdoor", "housemeddoor", "houselowdoor");
+	theHouse = new House();
+	theHouse->Init();
 
 	GenericEntity* car = Create::Entity("carmed", Vector3(400, -10, 400), Vector3(5, 5, 5));
 	car->InitLOD("carhigh", "carmed", "carlow");

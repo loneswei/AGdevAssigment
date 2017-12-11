@@ -12,6 +12,7 @@
 #include "SceneGraph/UpdateTransformation.h"
 #include "Enemy\Enemy.h"
 #include "Enemy\Zombie.h"
+#include "House\house.h"
 
 class ShaderProgram;
 class SceneManager;
@@ -41,6 +42,7 @@ private:
 	GenericEntity* theCube;
 	CEnemy* theEnemy;
 	Zombie* theZombie;
+	House* theHouse;
 
 	static SceneText* sInstance; // The pointer to the object that gets registered
 };
