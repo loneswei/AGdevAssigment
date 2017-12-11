@@ -37,6 +37,9 @@
     <Filter Include="Enemy">
       <UniqueIdentifier>{f5fb02ce-b59a-403f-b90f-1e6eba658755}</UniqueIdentifier>
     </Filter>
+    <Filter Include="House">
+      <UniqueIdentifier>{61bc7b9d-52b2-4fba-97d8-bca18dec944b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -133,7 +136,7 @@
       <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Source\House\house.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>House</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,7 +231,7 @@
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Source\House\house.h">
-      <Filter>Header Files</Filter>
+      <Filter>House</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
