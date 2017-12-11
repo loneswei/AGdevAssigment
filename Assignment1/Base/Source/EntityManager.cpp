@@ -3,6 +3,7 @@
 #include "Collider/Collider.h"
 #include "Projectile/Laser.h"
 #include "SceneGraph\SceneGraph.h"
+#include "Enemy\Zombie.h"
 
 #include <iostream>
 using namespace std;
@@ -313,7 +314,7 @@ bool EntityManager::CheckForCollision(void)
 				if (LaserGridObj[i]->HasCollider())		// if the obj have collider
 				{
 					Vector3 hitPosition = Vector3(0, 0, 0);
-		
+
 					CCollider *thatCollider = dynamic_cast<CCollider*>(LaserGridObj[i]);
 					Vector3 thatMinAABB = LaserGridObj[i]->GetPosition() + thatCollider->GetMinAABB();
 					Vector3 thatMaxAABB = LaserGridObj[i]->GetPosition() + thatCollider->GetMaxAABB();
@@ -329,7 +330,7 @@ bool EntityManager::CheckForCollision(void)
 						// Remove from Scene Graph
 						if (CSceneGraph::GetInstance()->DeleteNode(*colliderThis))
 							cout << "*** This Entity removed ***" << endl;
-				
+
 						// Remove from Scene Graph
 						if (CSceneGraph::GetInstance()->DeleteNode(LaserGridObj[i]))
 							cout << "*** That Entity removed ***" << endl;
@@ -337,34 +338,34 @@ bool EntityManager::CheckForCollision(void)
 				}
 			}
 		}
-		else if ((*colliderThis)->HasCollider())
-		{
-			// This object was derived from a CCollider class, then it will have Collision Detection methods
-			//CCollider *thisCollider = dynamic_cast<CCollider*>(*colliderThis);
-			EntityBase *thisEntity = dynamic_cast<EntityBase*>(*colliderThis);
+		//else if ((*colliderThis)->HasCollider())
+		//{
+		//	// This object was derived from a CCollider class, then it will have Collision Detection methods
+		//	//CCollider *thisCollider = dynamic_cast<CCollider*>(*colliderThis);
+		//	EntityBase *thisEntity = dynamic_cast<EntityBase*>(*colliderThis);
 
-			// Check for collision with another collider class
-			colliderThatEnd = entityList.end();
-			int counter = 0;
-			for (colliderThat = entityList.begin(); colliderThat != colliderThatEnd; ++colliderThat)
-			{
-				if (colliderThat == colliderThis)
-					continue;
+		//	// Check for collision with another collider class
+		//	colliderThatEnd = entityList.end();
+		//	int counter = 0;
+		//	for (colliderThat = entityList.begin(); colliderThat != colliderThatEnd; ++colliderThat)
+		//	{
+		//		if (colliderThat == colliderThis)
+		//			continue;
 
-				if ((*colliderThat)->HasCollider())
-				{
-					EntityBase *thatEntity = dynamic_cast<EntityBase*>(*colliderThat);
-					if (CheckSphereCollision(thisEntity, thatEntity))
-					{
-						if (CheckAABBCollision(thisEntity, thatEntity))
-						{
-							thisEntity->SetIsDone(true);
-							thatEntity->SetIsDone(true);
-						}
-					}
-				}
-			}
-		}
+		//		if ((*colliderThat)->HasCollider())
+		//		{
+		//			EntityBase *thatEntity = dynamic_cast<EntityBase*>(*colliderThat);
+		//			if (CheckSphereCollision(thisEntity, thatEntity))
+		//			{
+		//				if (CheckAABBCollision(thisEntity, thatEntity))
+		//				{
+		//					thisEntity->SetIsDone(true);
+		//					thatEntity->SetIsDone(true);
+		//				}
+		//			}
+		//		}
+		//	}
+		//}
 	}
 	return false;
 }

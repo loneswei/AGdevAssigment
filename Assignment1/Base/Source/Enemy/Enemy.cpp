@@ -52,6 +52,7 @@ void CEnemy::Init(void)
 	EntityManager::GetInstance()->AddEntity(this, true);
 
 	health = 100;
+	dead = false;
 }
 
 // Reset this player instance to default

@@ -12,6 +12,12 @@ public:
 
 	void Init();
 	void Update(double dt);
+
+	void SetJockey(bool j) { jockey = j; }
+	bool GetJockey() { return jockey; }
+private:
+	GenericEntity *zBody, *zHead, *zLArm, *zRArm;
+	bool jockey;
 };
 
 

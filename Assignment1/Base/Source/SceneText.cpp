@@ -47,6 +47,8 @@ void SceneText::Init()
 {
 	currProg = GraphicsManager::GetInstance()->LoadShader("default", "Shader//Texture.vertexshader", "Shader//Texture.fragmentshader");
 	
+	Math::InitRNG();
+
 	// Tell the shader program to store these uniform locations
 	currProg->AddUniform("MVP");
 	currProg->AddUniform("MV");
@@ -261,8 +263,8 @@ void SceneText::Init()
 	theEnemy = new CEnemy();
 	theEnemy->Init();
 
-	Zombie *z = new Zombie();
-	z->Init();
+	theZombie = new Zombie();
+	theZombie->Init();
 
 	//Create::zombieEntity("zombie", Vector3(-100, 10, -100), Vector3(100,100,100));
 	

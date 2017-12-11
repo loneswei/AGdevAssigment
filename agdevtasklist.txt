@@ -12,10 +12,10 @@
 3) SceneGraph
 - Pickup/ Drop gun (marcus)  [x]
 
-- Zombie (marcus) (update: no lod) 
-[can render but weird duplicate of arm/head, havent implement the collision respond yet]
+- Zombie (marcus) (update: no lod) [x] 
+<no movement>
 
-- House (shih wei) 
+- House (shih wei) <collision not working>
 
 - Zombie riding horse (kill horse, both die / kill zombie, only zombie die)
 (marcus)
@@ -26,6 +26,7 @@
 
 5) bonus
 zombie rotating head while moving (depending on who finishes task 1st)
+<tried to do it but duplication problem>
 
 Objects
 - Horse [x]
@@ -33,7 +34,7 @@ Objects
 - Car [x]
 - Lamppost  [x]
 - Tree [x]
-- House
+- House [x]
 - Human [x]
 
  

@@ -18,6 +18,7 @@
     <ClCompile Include="Source\FPSCamera.cpp" />
     <ClCompile Include="Source\GenericEntity.cpp" />
     <ClCompile Include="Source\GroundEntity.cpp" />
+    <ClCompile Include="Source\House\house.cpp" />
     <ClCompile Include="Source\LevelOfDetails\LevelOfDetails.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="Source\FPSCamera.h" />
     <ClInclude Include="Source\GenericEntity.h" />
     <ClInclude Include="Source\GroundEntity.h" />
+    <ClInclude Include="Source\House\house.h" />
     <ClInclude Include="Source\LevelOfDetails\LevelOfDetails.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\OBJMesh.h" />

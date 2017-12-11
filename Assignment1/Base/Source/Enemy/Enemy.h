@@ -14,7 +14,7 @@ protected:
 	GroundEntity* m_pTerrain;
 
 	int health; 
-
+	bool dead;
 	double m_dSpeed;
 	double m_dAcceleration;
 
@@ -38,7 +38,7 @@ public:
 	void SetTerrain(GroundEntity* m_pTerrain);
 
 	void SetHealth(int h) { health = h; }
-
+	void SetDead(bool d) { dead = d; }
 	void AddHealth(int h) { health += h; }
 	// Get position
 	Vector3 GetPos(void) const;

@@ -25,6 +25,20 @@ void House::Init()
 	GenericEntity *door = Create::Entity("houselowdoor", pos, Vector3(5, 5, 5));
 	CSceneNode *DoorNode = roofNode->AddChild(door);
 	door->InitLOD("househighdoor", "housemeddoor", "houselowdoor");
+
+
+	roof->SetCollider(true);
+	roof->SetAABB(Vector3(5, 5, 5), Vector3(-5, -5, -5));
+	door->SetCollider(true);
+	door->SetAABB(Vector3(4, 4, 4), Vector3(-4, -4, -4));
+	backWall->SetCollider(true);
+	backWall->SetAABB(Vector3(4, 4, 4), Vector3(-4, -4, -4));
+	rightWall->SetCollider(true);
+	rightWall->SetAABB(Vector3(4, 4, 4), Vector3(-4, -4, -4));
+	leftWall->SetCollider(true);
+	leftWall->SetAABB(Vector3(4, 4, 4), Vector3(-4, -4, -4));
+	frontWall->SetCollider(true);
+	frontWall->SetAABB(Vector3(4, 4, 4), Vector3(-4, -4, -4));
 }
 
 void House::Update(double dt)

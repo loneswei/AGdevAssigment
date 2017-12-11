@@ -1,17 +1,10 @@
 ﻿  Zombie.cpp
 d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
   d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\enemy\zombie.cpp(48): warning C4018: '<': signed/unsigned mismatch
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\enemy\zombie.cpp(80): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Compiling...
-  SceneText.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
-  d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-  Application.cpp
-d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\weaponinfo\weaponinfo.h(65): warning C4373: 'CWeaponInfo::Update': virtual function overrides 'EntityBase::Update', previous versions of the compiler did not override when parameters only differed by const/volatile qualifiers
-  d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\common\source\entitybase.h(12): note: see declaration of 'EntityBase::Update'
-  Generating Code...
+d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\enemy\zombie.cpp(19): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\enemy\zombie.cpp(27): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\enemy\zombie.cpp(71): warning C4018: '<': signed/unsigned mismatch
+d:\gdt\year 2 semester 2\advanced game dev\agdevassigment\assignment1\base\source\enemy\zombie.cpp(103): warning C4018: '<': signed/unsigned mismatch
 Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Base.vcxproj -> D:\GDT\Year 2 Semester 2\Advanced Game Dev\AGdevAssigment\Assignment1\Debug\Base.exe

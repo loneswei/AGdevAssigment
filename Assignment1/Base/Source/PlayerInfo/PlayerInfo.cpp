@@ -300,6 +300,8 @@ void CPlayerInfo::Update(double dt)
 			{
 				if (playerGridObj[i] == this)
 					continue;
+				if (playerGridObj[i]->IsDone())
+					continue;
 
 				if (playerGridObj[i]->HasCollider())
 				{
@@ -326,6 +328,8 @@ void CPlayerInfo::Update(double dt)
 			for (int i = 0; i < playerGridObj.size(); ++i)
 			{
 				if (playerGridObj[i] == this)
+					continue;
+				if (playerGridObj[i]->IsDone())
 					continue;
 
 				if (playerGridObj[i]->HasCollider())
@@ -357,7 +361,8 @@ void CPlayerInfo::Update(double dt)
 			{
 				if (playerGridObj[i] == this)
 					continue;
-
+				if (playerGridObj[i]->IsDone())
+					continue;
 				if (playerGridObj[i]->HasCollider())
 				{
 					hasCollider = true;
@@ -389,6 +394,9 @@ void CPlayerInfo::Update(double dt)
 			{
 				if (playerGridObj[i] == this)
 					continue;
+				if (playerGridObj[i]->IsDone())
+					continue;
+
 				if (playerGridObj[i]->HasCollider())
 				{
 					hasCollider = true;
