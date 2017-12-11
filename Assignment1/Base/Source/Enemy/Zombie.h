@@ -7,7 +7,7 @@
 class Zombie : public CEnemy
 {
 public:
-	Zombie() : CEnemy() { jockey = true; };
+	Zombie() : CEnemy(), jockey(true) { };
 	virtual ~Zombie() {} ;
 
 	void Init();
