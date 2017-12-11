@@ -149,7 +149,7 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GetMesh("GEO_GRASS_LIGHTGREEN")->textureID = LoadTGA("Image//grass_lightgreen.tga");
 	MeshBuilder::GetInstance()->GenerateCube("cubeSG", Color(1.0f, 0.64f, 0.0f), 1.0f);
 
-
+	// Skybox
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_FRONT", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_BACK", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_LEFT", Color(1, 1, 1), 1.f);
@@ -162,9 +162,12 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GetMesh("SKYBOX_RIGHT")->textureID = LoadTGA("Image//SkyBox//skybox_right.tga");
 	MeshBuilder::GetInstance()->GetMesh("SKYBOX_TOP")->textureID = LoadTGA("Image//SkyBox//skybox_top.tga");
 	MeshBuilder::GetInstance()->GetMesh("SKYBOX_BOTTOM")->textureID = LoadTGA("Image//SkyBox//skybox_bottom.tga");
+
+	// Laser and Grid
 	MeshBuilder::GetInstance()->GenerateRay("laser", 10.0f);
 	MeshBuilder::GetInstance()->GenerateQuad("GRIDMESH", Color(1, 1, 1), 10.f);
 
+	// Car
 	MeshBuilder::GetInstance()->GenerateOBJ("carlow", "OBJ//LOD//carlow.obj");
 	MeshBuilder::GetInstance()->GetMesh("carlow")->textureID = LoadTGA("Image//LOD//carlow.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("carmed", "OBJ//LOD//carmed.obj");
@@ -172,6 +175,7 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateOBJ("carhigh", "OBJ//LOD//carhigh.obj");
 	MeshBuilder::GetInstance()->GetMesh("carhigh")->textureID = LoadTGA("Image//LOD//carhigh.tga");
 
+	// Zombie
 	MeshBuilder::GetInstance()->GenerateOBJ("zombiehead", "OBJ//zombiehead.obj");
 	MeshBuilder::GetInstance()->GetMesh("zombiehead")->textureID = LoadTGA("Image//zombie.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("zombiearm", "OBJ//zombiearm.obj");
@@ -179,6 +183,7 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateOBJ("zombiebody", "OBJ//zombiebody.obj");
 	MeshBuilder::GetInstance()->GetMesh("zombiebody")->textureID = LoadTGA("Image//zombie.tga");
 
+	// House
 	MeshBuilder::GetInstance()->GenerateOBJ("houseroof", "OBJ//LOD//houseroof.obj");
 	MeshBuilder::GetInstance()->GetMesh("houseroof")->textureID = LoadTGA("Image//LOD//houselow.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("houseleftwall", "OBJ//LOD//houseleftwall.obj");
@@ -187,12 +192,10 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GetMesh("housebackwall")->textureID = LoadTGA("Image//LOD//houselow.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("houserightwall", "OBJ//LOD//houserightwall.obj");
 	MeshBuilder::GetInstance()->GetMesh("houserightwall")->textureID = LoadTGA("Image//LOD//houselow.tga");
-
 	MeshBuilder::GetInstance()->GenerateOBJ("housemedfrontwall", "OBJ//LOD//housemedfrontwall.obj");
 	MeshBuilder::GetInstance()->GetMesh("housemedfrontwall")->textureID = LoadTGA("Image//LOD//housemed.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("househighfrontwall", "OBJ//LOD//househighfrontwall.obj");
 	MeshBuilder::GetInstance()->GetMesh("househighfrontwall")->textureID = LoadTGA("Image//LOD//househigh.tga");
-	
 	MeshBuilder::GetInstance()->GenerateOBJ("houselowdoor", "OBJ//LOD//housedoor.obj");
 	MeshBuilder::GetInstance()->GetMesh("houselowdoor")->textureID = LoadTGA("Image//LOD//houselow.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("housemeddoor", "OBJ//LOD//housedoor.obj");
@@ -200,6 +203,29 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateOBJ("househighdoor", "OBJ//LOD//housedoor.obj");
 	MeshBuilder::GetInstance()->GetMesh("househighdoor")->textureID = LoadTGA("Image//LOD//househigh.tga");
 
+	// Human
+	MeshBuilder::GetInstance()->GenerateOBJ("humanlow", "OBJ//LOD//humanlow.obj");
+	MeshBuilder::GetInstance()->GetMesh("humanlow")->textureID = LoadTGA("Image//LOD//humanlow.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("humanmed", "OBJ//LOD//humanmed.obj");
+	MeshBuilder::GetInstance()->GetMesh("humanmed")->textureID = LoadTGA("Image//LOD//humanmed.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("humanhigh", "OBJ//LOD//humanhigh.obj");
+	MeshBuilder::GetInstance()->GetMesh("humanhigh")->textureID = LoadTGA("Image//LOD//humanhigh.tga");
+
+	// Lamp post
+	MeshBuilder::GetInstance()->GenerateOBJ("lamppostlow", "OBJ//LOD//lamppostlow.obj");
+	MeshBuilder::GetInstance()->GetMesh("lamppostlow")->textureID = LoadTGA("Image//LOD//lamppostlow.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("lamppostmed", "OBJ//LOD//lamppostmed.obj");
+	MeshBuilder::GetInstance()->GetMesh("lamppostmed")->textureID = LoadTGA("Image//LOD//lamppostmed.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("lampposthigh", "OBJ//LOD//lampposthigh.obj");
+	MeshBuilder::GetInstance()->GetMesh("lampposthigh")->textureID = LoadTGA("Image//LOD//lampposthigh.tga");
+
+	// Tree
+	MeshBuilder::GetInstance()->GenerateOBJ("treelow", "OBJ//LOD//treelow.obj");
+	MeshBuilder::GetInstance()->GetMesh("treelow")->textureID = LoadTGA("Image//LOD//treelow.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("treemed", "OBJ//LOD//treemed.obj");
+	MeshBuilder::GetInstance()->GetMesh("treemed")->textureID = LoadTGA("Image//LOD//treemed.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("treehigh", "OBJ//LOD//treehigh.obj");
+	MeshBuilder::GetInstance()->GetMesh("treehigh")->textureID = LoadTGA("Image//LOD//treehigh.tga");
 
 	// Set up the Spatial Partition and pass it to the EntityManager to manage
 	CSpatialPartition::GetInstance()->Init(100, 100, 10, 10);
@@ -212,8 +238,17 @@ void SceneText::Init()
 	Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
 	Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
 
-	theHouse = new House();
-	theHouse->Init();
+	//theHouse = new House();
+	//theHouse->Init();
+
+	GenericEntity* human = Create::Entity("humanmed", Vector3(300, 0, 300), Vector3(5, 5, 5));
+	human->InitLOD("humanhigh", "humanmed", "humanlow");
+
+	GenericEntity* lampPost = Create::Entity("lamppostmed", Vector3(200, 5, 200), Vector3(5, 5, 5));
+	lampPost->InitLOD("lampposthigh", "lamppostmed", "lamppostlow");
+
+	GenericEntity* tree = Create::Entity("treemed", Vector3(100, 13.5f, 100), Vector3(5, 5, 5));
+	tree->InitLOD("treehigh", "treemed", "treelow");
 
 	GenericEntity* car = Create::Entity("carmed", Vector3(400, -10, 400), Vector3(5, 5, 5));
 	car->InitLOD("carhigh", "carmed", "carlow");
