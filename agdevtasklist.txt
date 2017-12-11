@@ -3,11 +3,11 @@
 - Player [x] , Enemy movement collide [x]
 
 2) LOD (Shih wei)
-- vehicle (no scenegraph)
-- human ( 1 obj)  
-- lamppost
-- tree
-- house
+- vehicle [x]
+- human  [x]  
+- lamppost [x]
+- tree [x]
+- house [x] <need to manually arrange>
 
 3) SceneGraph
 - Pickup/ Drop gun (marcus)  [x]
