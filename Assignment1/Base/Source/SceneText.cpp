@@ -240,8 +240,8 @@ void SceneText::Init()
 	Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
 	Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
 
-	//theHouse = new House();
-	//theHouse->Init();
+	theHouse = new House();
+	theHouse->Init();
 
 	GenericEntity* human = Create::Entity("humanmed", Vector3(237, 0, 300), Vector3(5, 5, 5));
 	human->InitLOD("humanhigh", "humanmed", "humanlow");
