@@ -243,15 +243,23 @@ void SceneText::Init()
 
 	GenericEntity* human = Create::Entity("humanmed", Vector3(300, 0, 300), Vector3(5, 5, 5));
 	human->InitLOD("humanhigh", "humanmed", "humanlow");
+	human->SetCollider(true);
+	human->SetAABB(Vector3(2, 6, 2), Vector3(-2, -2, -2));
 
 	GenericEntity* lampPost = Create::Entity("lamppostmed", Vector3(200, 5, 200), Vector3(5, 5, 5));
 	lampPost->InitLOD("lampposthigh", "lamppostmed", "lamppostlow");
+	lampPost->SetCollider(true);
+	lampPost->SetAABB(Vector3(2, 8, 2), Vector3(-2, -2, -2));
 
 	GenericEntity* tree = Create::Entity("treemed", Vector3(100, 13.5f, 100), Vector3(5, 5, 5));
 	tree->InitLOD("treehigh", "treemed", "treelow");
+	tree->SetCollider(true);
+	tree->SetAABB(Vector3(2, 8, 2), Vector3(-2, -2, -2));
 
-	GenericEntity* car = Create::Entity("carmed", Vector3(400, -10, 400), Vector3(5, 5, 5));
+	GenericEntity* car = Create::Entity("carmed", Vector3(400, -2, 400), Vector3(5, 5, 5));
 	car->InitLOD("carhigh", "carmed", "carlow");
+	car->SetCollider(true);
+	car->SetAABB(Vector3(3, 8, 3), Vector3(-3, -3, -3));
 
 	GenericEntity* aCube = Create::Entity("cube", Vector3(-20.0f, 0.0f, -20.0f));
 	aCube->SetCollider(true);
