@@ -4,6 +4,7 @@
 #include "../GroundEntity.h"
 #include "../WeaponInfo/WeaponInfo.h"
 #include "../SceneGraph/SceneNode.h"
+#include "../GenericEntity.h"
 
 class CPlayerInfo : public EntityBase
 {
@@ -104,6 +105,8 @@ private:
 
 	CWeaponInfo* primaryWeapon;
 	CWeaponInfo* secondaryWeapon;
+	GenericEntity* gun1;
+	GenericEntity *gun2;
 
 	std::vector<CWeaponInfo*> GunOnGround;
 };

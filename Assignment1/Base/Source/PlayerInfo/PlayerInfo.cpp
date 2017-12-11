@@ -29,6 +29,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, m_pTerrain(NULL)
 	, primaryWeapon(NULL)
 	, secondaryWeapon(NULL)
+	, gun1(nullptr) ,gun2(nullptr)
 {
 }
 
@@ -45,6 +46,17 @@ CPlayerInfo::~CPlayerInfo(void)
 		primaryWeapon = NULL;
 	}
 	m_pTerrain = NULL;
+
+	if (gun1)
+	{
+		delete gun1;
+		gun1 = nullptr;
+	}
+	if (gun2)
+	{
+		delete gun2;
+		gun2 = nullptr;
+	}
 }
 
 // Initialise this class instance
@@ -542,10 +554,7 @@ void CPlayerInfo::Update(double dt)
 	else if (MouseController::GetInstance()->IsButtonPressed(MouseController::RMB))
 	{
 		if (secondaryWeapon)
-		{
-			cout << secondaryWeapon->GetMagRound() << endl;
 			secondaryWeapon->Discharge(position, target, this);
-		}
 	}
 
 	// If the user presses R key, then reset the view to default values
@@ -638,10 +647,21 @@ void CPlayerInfo::DropGun(CWeaponInfo* &gun)
 	GunOnGround.push_back(gun);
 
 	// drop the gun onto the ground
-	gun->SetPosition(Vector3(this->position.x, m_pTerrain->GetTerrainHeight(position) + 5, this->position.z));
+	gun->SetPosition(Vector3(this->position.x, m_pTerrain->GetTerrainHeight(position) -5, this->position.z));
 
 	// drop gun means player does not have the gun anymore
-	gun = nullptr;
+	if (gun == primaryWeapon)
+	{
+		gun = nullptr;
+		gun1 = Create::Entity("cube", Vector3(this->position.x, m_pTerrain->GetTerrainHeight(position) - 10, this->position.z));
+	}
+	else if (gun == secondaryWeapon)
+	{
+		gun = nullptr;
+		gun2 = Create::Entity("cubeSG", Vector3(this->position.x, m_pTerrain->GetTerrainHeight(position) - 10, this->position.z));
+	}
+
+
 }
 
 void CPlayerInfo::PickUpGun(CWeaponInfo* &gun)
@@ -651,13 +671,13 @@ void CPlayerInfo::PickUpGun(CWeaponInfo* &gun)
 	// if both gun slots are occupied, no space to pick up gun
 	if (primaryWeapon && secondaryWeapon)
 		return;
-	
+
 	if (primaryWeapon == nullptr)
 	{
 		primaryWeapon = gun;
 		CSceneNode* n = CSceneGraph::GetInstance()->DetachNode(CSceneGraph::GetInstance()->GetNode(gun));
 
-		if(!GunOnGround.empty())
+		if (!GunOnGround.empty())
 			GunOnGround.erase(std::find(GunOnGround.begin(), GunOnGround.end(), gun));
 	}
 	else if (secondaryWeapon == nullptr)
@@ -668,5 +688,23 @@ void CPlayerInfo::PickUpGun(CWeaponInfo* &gun)
 
 		if (!GunOnGround.empty())
 			GunOnGround.erase(std::find(GunOnGround.begin(), GunOnGround.end(), gun));
+
+	}
+
+	if (gun1)
+	{
+		if (DistanceSquaredBetween(gun1->GetPosition(), this->position) < 120)
+		{
+			gun1->SetIsDone(true);
+			gun1 = nullptr;
+		}
+	}
+	if (gun2)
+	{
+		if (DistanceSquaredBetween(gun2->GetPosition(), this->position) < 120)
+		{
+			gun2->SetIsDone(true);
+			gun2 = nullptr;
+		}
 	}
 }

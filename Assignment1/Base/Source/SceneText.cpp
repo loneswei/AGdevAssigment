@@ -265,8 +265,6 @@ void SceneText::Init()
 
 	theZombie = new Zombie();
 	theZombie->Init();
-
-	//Create::zombieEntity("zombie", Vector3(-100, 10, -100), Vector3(100,100,100));
 	
 	GenericEntity* cuboid = Create::Entity("cube", Vector3(20.0f, 0.0f, -20.0f));
 	cuboid->SetCollider(true);
@@ -286,6 +284,7 @@ void SceneText::Init()
 	groundEntity->SetGrids(Vector3(10.0f, 1.0f, 10.0f));
 	playerInfo->SetTerrain(groundEntity);
 	theEnemy->SetTerrain(groundEntity);
+	theZombie->SetTerrain(groundEntity);
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
