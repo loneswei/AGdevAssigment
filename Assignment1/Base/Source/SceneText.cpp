@@ -240,74 +240,34 @@ void SceneText::Init()
 	Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
 	Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
 
-	// Create 3 houses
 	{
-		Vector3 housePos;
-		vector<Vector3> housePosVec;
-		bool houseCollided = false;
-		for (int i = 0; i < 3; ++i)
-		{
-			if (houseCollided)
-			{
-				--i;
-				houseCollided = false;
-			}
-			housePos.Set(Math::RandFloatMinMax(-300, 300), 5, Math::RandFloatMinMax(-300, 300));
-			Vector3 max = housePos + Vector3(30, 0, 30);
-			Vector3 min = housePos - Vector3(30, 0, 30);
-
-			if (!housePosVec.empty())
-			{
-				// Check house pos
-				for (int k = 0; k < housePosVec.size(); ++k)
-				{
-					if ((housePosVec[k].x > min.x && housePosVec[k].x < max.x) ||
-						(housePosVec[k].z > min.z && housePosVec[k].z < max.z))
-					{
-						houseCollided = true;
-						break;
-					}
-					else
-					{
-						housePosVec.push_back(housePos);
-						theHouse = new House();
-						theHouse->Init(housePos);
-						break;
-					}
-				}
-			}
-			else
-			{
-				housePosVec.push_back(housePos);
-				theHouse = new House();
-				theHouse->Init(housePos);
-			}
-		}
-		housePosVec.clear();
+		Vector3 housePos = Vector3(Math::RandIntMinMax(-400, 400), 5, Math::RandIntMinMax(-400, 400));
+		theHouse = new House();
+		theHouse->Init(housePos);
 	}
 
-	GenericEntity* human = Create::Entity("humanmed", Vector3(237, 0, 300), Vector3(5, 5, 5));
+	GenericEntity* human = Create::Entity("humanmed", Vector3(Math::RandIntMinMax(-400, 400), 0, Math::RandIntMinMax(-400, 400)), Vector3(5, 5, 5));
 	human->InitLOD("humanhigh", "humanmed", "humanlow");
 	human->SetCollider(true);
-	human->SetAABB(Vector3(2.5, 6, 2.5), Vector3(-2.5, -4, -2.5));
+	human->SetAABB(Vector3(6, 7.5f, 5), Vector3(-6, -7.5f, -5));
 	CSceneGraph::GetInstance()->AddNode(human);
 
-	GenericEntity* lampPost = Create::Entity("lamppostmed", Vector3(204, 5, 200), Vector3(5, 5, 5));
+	GenericEntity* lampPost = Create::Entity("lamppostmed", Vector3(Math::RandIntMinMax(-400, 400), 5, Math::RandIntMinMax(-400, 400)), Vector3(5, 5, 5));
 	lampPost->InitLOD("lampposthigh", "lamppostmed", "lamppostlow");
 	lampPost->SetCollider(true);
-	lampPost->SetAABB(Vector3(2, 8, 2), Vector3(-2, -5, -2));
+	lampPost->SetAABB(Vector3(2, 15, 2), Vector3(-2, -15, -2));
 	CSceneGraph::GetInstance()->AddNode(lampPost);
 
-	GenericEntity* tree = Create::Entity("treemed", Vector3(115, 13.5f, 100), Vector3(5, 5, 5));
+	GenericEntity* tree = Create::Entity("treemed", Vector3(Math::RandIntMinMax(-400, 400), 13.5f, Math::RandIntMinMax(-400, 400)), Vector3(5, 5, 5));
 	tree->InitLOD("treehigh", "treemed", "treelow");
 	tree->SetCollider(true);
-	tree->SetAABB(Vector3(2.5, 8, 2.5), Vector3(-2.5, -13, -2.5));
+	tree->SetAABB(Vector3(3, 21.5f, 3), Vector3(-3, -21.5f, -3));
 	CSceneGraph::GetInstance()->AddNode(tree);
 
-	GenericEntity* car = Create::Entity("carmed", Vector3(258, -2, 400), Vector3(5, 5, 5));
+	GenericEntity* car = Create::Entity("carmed", Vector3(Math::RandIntMinMax(-400, 400), -4, Math::RandIntMinMax(-400, 400)), Vector3(5, 5, 5));
 	car->InitLOD("carhigh", "carmed", "carlow");
 	car->SetCollider(true);
-	car->SetAABB(Vector3(9, 4, 25), Vector3(-9, -4, -25));
+	car->SetAABB(Vector3(12, 5.5f, 25), Vector3(-12, -5.5f, -25));
 	CSceneGraph::GetInstance()->AddNode(car);
 
 	GenericEntity* aCube = Create::Entity("cube", Vector3(-20.0f, 0.0f, -20.0f));
