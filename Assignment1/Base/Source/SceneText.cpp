@@ -246,11 +246,8 @@ void SceneText::Init()
 		theHouse->Init(housePos);
 	}
 
-	GenericEntity* human = Create::Entity("humanmed", Vector3(Math::RandIntMinMax(-400, 400), 0, Math::RandIntMinMax(-400, 400)), Vector3(5, 5, 5));
-	human->InitLOD("humanhigh", "humanmed", "humanlow");
-	human->SetCollider(true);
-	human->SetAABB(Vector3(6, 7.5f, 5), Vector3(-6, -7.5f, -5));
-	human->SetIsHuman(true);
+	human = new Human();
+	human->Init();
 	CSceneGraph::GetInstance()->AddNode(human);
 
 	GenericEntity* lampPost = Create::Entity("lamppostmed", Vector3(Math::RandIntMinMax(-400, 400), 5, Math::RandIntMinMax(-400, 400)), Vector3(5, 5, 5));
@@ -429,6 +426,10 @@ void SceneText::Update(double dt)
 	// Update the player position and other details based on keyboard and mouse inputs
 	playerInfo->Update(dt);
 
+	theEnemy->SetTarget(playerInfo->GetPos());
+	human->SetTarget(playerInfo->GetPos());
+	theZombie->SetTarget(playerInfo->GetPos());
+	theZombie->Update(dt);
 	//camera.Update(dt); // Can put the camera into an entity rather than here (Then we don't have to write this)
 
 	GraphicsManager::GetInstance()->UpdateLights(dt);

@@ -13,6 +13,7 @@
 #include "Enemy\Enemy.h"
 #include "Enemy\Zombie.h"
 #include "House\house.h"
+#include "Enemy\Human.h"
 
 class ShaderProgram;
 class SceneManager;
@@ -41,6 +42,7 @@ private:
 
 	GenericEntity* theCube;
 	CEnemy* theEnemy;
+	Human* human;
 	Zombie* theZombie;
 	House* theHouse;
 

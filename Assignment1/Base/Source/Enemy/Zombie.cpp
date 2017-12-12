@@ -9,6 +9,7 @@ void Zombie::Init()
 {
 	health = 200;
 	m_dSpeed = 40.f;
+	dead = false;
 	Vector3 pos;
 	pos.Set(Math::RandFloatMinMax(-200, 200), -2, Math::RandFloatMinMax(-200, 200));
 
@@ -105,37 +106,65 @@ void Zombie::Update(double dt)
 		return;
 	}
 
-	//Constrain();
+	Constrain();
 
 	// movement
-	//bool canMove = false;
-	//bool hasCollider = false;
-	//Vector3 tempPos = this->GetPosition();
-	//Vector3 moveDir = target - position;
-	//tempPos += moveDir.Normalized() * (float)m_dSpeed * (float)dt;
+	bool canMove = false;
+	bool hasCollider = false;
+	Vector3 tempPos = this->GetPosition();
+	Vector3 moveDir = target - position;
+	tempPos += moveDir.Normalized() * (float)m_dSpeed * (float)dt;
 
-	//vector<EntityBase*>zombieGridObj = CSpatialPartition::GetInstance()->GetObjects(this->zBody->GetPosition(), 1);
-	//for (int i = 0; i < zombieGridObj.size(); ++i)
-	//{
-	//	if (zombieGridObj[i] == this->zRArm || zombieGridObj[i] == this->zHead || zombieGridObj[i] == this->zBody || zombieGridObj[i] == this->zLArm)
-	//		continue;
+	if (!jockey)
+	{
+		vector<EntityBase*>zombieGridObj = CSpatialPartition::GetInstance()->GetObjects(this->zBody->GetPosition(), 1);
+		for (int i = 0; i < zombieGridObj.size(); ++i)
+		{
+			if (zombieGridObj[i] == this->zRArm || zombieGridObj[i] == this->zHead || zombieGridObj[i] == this->zBody || zombieGridObj[i] == this->zLArm)
+				continue;
 
-	//	if (zombieGridObj[i]->HasCollider())
-	//	{
-	//		hasCollider = true;
-	//		if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, zombieGridObj[i]))
-	//		{
-	//			canMove = false;
-	//			break;
-	//		}
-	//		else
-	//			canMove = true;
-	//	}
-	//	else
-	//		hasCollider = false;
-	//}
-	//if ((hasCollider && canMove) || !hasCollider)
-	//	this->position += moveDir.Normalized() * (float)m_dSpeed * (float)dt;
+			if (zombieGridObj[i]->HasCollider())
+			{
+				hasCollider = true;
+				if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, zombieGridObj[i]))
+				{
+					canMove = false;
+					break;
+				}
+				else
+					canMove = true;
+			}
+			else
+				hasCollider = false;
+		}
+		if ((hasCollider && canMove) || !hasCollider)
+			zBody->SetPosition(zBody->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
+	}
+	else
+	{
+		vector<EntityBase*>zombieGridObj = CSpatialPartition::GetInstance()->GetObjects(this->zHorse->GetPosition(), 1);
+		for (int i = 0; i < zombieGridObj.size(); ++i)
+		{
+			if (zombieGridObj[i] == this->zRArm || zombieGridObj[i] == this->zHead || zombieGridObj[i] == this->zBody || zombieGridObj[i] == this->zLArm || zombieGridObj[i] == this->zHorse)
+				continue;
+
+			if (zombieGridObj[i]->HasCollider())
+			{
+				hasCollider = true;
+				if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, zombieGridObj[i]))
+				{
+					canMove = false;
+					break;
+				}
+				else
+					canMove = true;
+			}
+			else
+				hasCollider = false;
+		}
+		if ((hasCollider && canMove) || !hasCollider)
+			zHorse->SetPosition(zHorse->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
+	}
 }
 	
 

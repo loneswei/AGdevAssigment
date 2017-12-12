@@ -138,6 +138,9 @@
     <ClCompile Include="Source\House\house.cpp">
       <Filter>House</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\Human.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="Source\House\house.h">
       <Filter>House</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Human.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
