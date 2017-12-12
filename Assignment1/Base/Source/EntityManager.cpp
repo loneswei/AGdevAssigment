@@ -325,7 +325,10 @@ bool EntityManager::CheckForCollision(void)
 						thatMinAABB, thatMaxAABB,
 						hitPosition))
 					{
-						if (LaserGridObj[i]->GetIsZombie())
+						if (LaserGridObj[i]->GetZombiePart()) // zombie part is used for adding score
+							CPlayerInfo::GetInstance()->AddScore(25);
+
+						if (LaserGridObj[i]->GetIsZombie()) //iszombie is only the parent node
 						{
 							Zombie *z = dynamic_cast<Zombie*>(LaserGridObj[i]);
 							if (z)

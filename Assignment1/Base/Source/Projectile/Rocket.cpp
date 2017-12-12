@@ -53,8 +53,9 @@ void Rocket::Update(double dt)
 				position, scale.x))
 			{
 
-				if (RGridObj[i]->GetIsZombie())
+				if (RGridObj[i]->GetZombiePart())
 					CPlayerInfo::GetInstance()->AddScore(100);
+
 				if (RGridObj[i]->GetIsHuman())
 					CPlayerInfo::GetInstance()->AddScore(-100);
 

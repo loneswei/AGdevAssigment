@@ -7,6 +7,8 @@ EntityBase::EntityBase()
 	, m_bCollider(false)
 	, bLaser(false)
 	, isZombie(false)
+	, zombiePart(false)
+	, isHuman(false)
 {
 }
 

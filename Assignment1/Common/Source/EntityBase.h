@@ -33,6 +33,8 @@ public:
 
 	virtual void SetIsZombie(const bool zombie) { isZombie = zombie; }
 	virtual bool GetIsZombie() { return isZombie; }
+	virtual void SetZombiePart(const bool zombie) { zombiePart = zombie; }
+	virtual bool GetZombiePart() { return zombiePart; }
 
 	virtual void SetIsHuman(bool human) { isHuman = human; }
 	virtual bool GetIsHuman() { return isHuman; }
@@ -45,6 +47,8 @@ protected:
 	bool bLaser;
 
 	bool isZombie;
+	bool zombiePart;
+
 	bool isHuman;
 };
 
