@@ -240,8 +240,51 @@ void SceneText::Init()
 	Create::Entity("reference", Vector3(0.0f, 0.0f, 0.0f)); // Reference
 	Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
 
-	theHouse = new House();
-	theHouse->Init();
+	// Create 3 houses
+	{
+		Vector3 housePos;
+		vector<Vector3> housePosVec;
+		bool houseCollided = false;
+		for (int i = 0; i < 3; ++i)
+		{
+			if (houseCollided)
+			{
+				--i;
+				houseCollided = false;
+			}
+			housePos.Set(Math::RandFloatMinMax(-300, 300), 5, Math::RandFloatMinMax(-300, 300));
+			Vector3 max = housePos + Vector3(30, 0, 30);
+			Vector3 min = housePos - Vector3(30, 0, 30);
+
+			if (!housePosVec.empty())
+			{
+				// Check house pos
+				for (int k = 0; k < housePosVec.size(); ++k)
+				{
+					if ((housePosVec[k].x > min.x && housePosVec[k].x < max.x) ||
+						(housePosVec[k].z > min.z && housePosVec[k].z < max.z))
+					{
+						houseCollided = true;
+						break;
+					}
+					else
+					{
+						housePosVec.push_back(housePos);
+						theHouse = new House();
+						theHouse->Init(housePos);
+						break;
+					}
+				}
+			}
+			else
+			{
+				housePosVec.push_back(housePos);
+				theHouse = new House();
+				theHouse->Init(housePos);
+			}
+		}
+		housePosVec.clear();
+	}
 
 	GenericEntity* human = Create::Entity("humanmed", Vector3(237, 0, 300), Vector3(5, 5, 5));
 	human->InitLOD("humanhigh", "humanmed", "humanlow");
