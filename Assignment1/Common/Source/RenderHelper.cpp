@@ -6,6 +6,9 @@
 
 void RenderHelper::RenderMesh(Mesh* _mesh)
 {
+	if (!_mesh)
+		return;
+
 	// Get all our transform matrices & update shader
 	Mtx44 MVP;
 	MVP = GraphicsManager::GetInstance()->GetProjectionMatrix() * GraphicsManager::GetInstance()->GetViewMatrix() * GraphicsManager::GetInstance()->GetModelStack().Top();

@@ -324,6 +324,13 @@ bool EntityManager::CheckForCollision(void)
 						thatMinAABB, thatMaxAABB,
 						hitPosition))
 					{
+						if (LaserGridObj[i]->GetIsZombie())
+						{
+							Zombie *z = dynamic_cast<Zombie*>(LaserGridObj[i]);
+							if (z)
+								z->SetDead(true);
+						}
+
 						(*colliderThis)->SetIsDone(true);
 						LaserGridObj[i]->SetIsDone(true);
 
@@ -334,38 +341,11 @@ bool EntityManager::CheckForCollision(void)
 						// Remove from Scene Graph
 						if (CSceneGraph::GetInstance()->DeleteNode(LaserGridObj[i]))
 							cout << "*** That Entity removed ***" << endl;
+
 					}
 				}
 			}
 		}
-		//else if ((*colliderThis)->HasCollider())
-		//{
-		//	// This object was derived from a CCollider class, then it will have Collision Detection methods
-		//	//CCollider *thisCollider = dynamic_cast<CCollider*>(*colliderThis);
-		//	EntityBase *thisEntity = dynamic_cast<EntityBase*>(*colliderThis);
-
-		//	// Check for collision with another collider class
-		//	colliderThatEnd = entityList.end();
-		//	int counter = 0;
-		//	for (colliderThat = entityList.begin(); colliderThat != colliderThatEnd; ++colliderThat)
-		//	{
-		//		if (colliderThat == colliderThis)
-		//			continue;
-
-		//		if ((*colliderThat)->HasCollider())
-		//		{
-		//			EntityBase *thatEntity = dynamic_cast<EntityBase*>(*colliderThat);
-		//			if (CheckSphereCollision(thisEntity, thatEntity))
-		//			{
-		//				if (CheckAABBCollision(thisEntity, thatEntity))
-		//				{
-		//					thisEntity->SetIsDone(true);
-		//					thatEntity->SetIsDone(true);
-		//				}
-		//			}
-		//		}
-		//	}
-		//}
 	}
 	return false;
 }
