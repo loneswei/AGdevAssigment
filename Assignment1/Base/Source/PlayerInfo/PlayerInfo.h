@@ -84,6 +84,9 @@ public:
 	void DropGun(CWeaponInfo* &gun);
 	void PickUpGun(CWeaponInfo* &gun);
 
+	int GetScore() { return score; }
+	void AddScore(int _score);
+
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
 	Vector3 position, target, up;
@@ -109,4 +112,6 @@ private:
 	GenericEntity *gun2;
 
 	std::vector<CWeaponInfo*> GunOnGround;
+
+	int score;
 };

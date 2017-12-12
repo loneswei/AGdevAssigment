@@ -12,6 +12,17 @@ void Zombie::Init()
 	Vector3 pos;
 	pos.Set(Math::RandFloatMinMax(-200, 200), -2, Math::RandFloatMinMax(-200, 200));
 
+	int decideJockey = Math::RandIntMinMax(0, 1);
+	switch (decideJockey)
+	{
+	case 0:
+		jockey = false;
+		break;
+	case 1:
+		jockey = true;
+		break;
+	}
+
 	if (!jockey)
 	{
 		zBody = Create::Entity("zombiebody", pos, Vector3(5, 5, 5));

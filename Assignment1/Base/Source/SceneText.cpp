@@ -250,6 +250,7 @@ void SceneText::Init()
 	human->InitLOD("humanhigh", "humanmed", "humanlow");
 	human->SetCollider(true);
 	human->SetAABB(Vector3(6, 7.5f, 5), Vector3(-6, -7.5f, -5));
+	human->SetIsHuman(true);
 	CSceneGraph::GetInstance()->AddNode(human);
 
 	GenericEntity* lampPost = Create::Entity("lamppostmed", Vector3(Math::RandIntMinMax(-400, 400), 5, Math::RandIntMinMax(-400, 400)), Vector3(5, 5, 5));
@@ -343,7 +344,7 @@ void SceneText::Init()
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
 	float fontSize = 25.0f;
 	float halfFontSize = fontSize / 2.0f;
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
 		textObj[i] = Create::Text2DObject("text", Vector3(-halfWindowWidth, -halfWindowHeight + fontSize*i + halfFontSize, 0.0f), "", Vector3(fontSize, fontSize, fontSize), Color(0.0f,1.0f,0.0f));
 	}
@@ -440,10 +441,14 @@ void SceneText::Update(double dt)
 	ss << "FPS: " << fps;
 	textObj[1]->SetText(ss.str());
 
-	std::ostringstream ss1;
-	ss1.precision(4);
-	ss1 << "Player:" << playerInfo->GetPos();
-	textObj[2]->SetText(ss1.str());
+	ss.str("");
+	ss.precision(4);
+	ss << "Player:" << playerInfo->GetPos();
+	textObj[2]->SetText(ss.str());
+
+	ss.str("");
+	ss << "Score:" << playerInfo->GetScore();
+	textObj[3]->SetText(ss.str());
 }
 
 void SceneText::Render()

@@ -30,6 +30,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, primaryWeapon(NULL)
 	, secondaryWeapon(NULL)
 	, gun1(nullptr) ,gun2(nullptr)
+	, score(0)
 {
 }
 
@@ -707,4 +708,15 @@ void CPlayerInfo::PickUpGun(CWeaponInfo* &gun)
 			gun2 = nullptr;
 		}
 	}
+}
+
+void CPlayerInfo::AddScore(int _score)
+{
+	int tempScore = score;
+	if (tempScore + _score <= 0)
+	{
+		score = 0;
+		return;
+	}
+	score += _score;
 }

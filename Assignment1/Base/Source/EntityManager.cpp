@@ -4,6 +4,7 @@
 #include "Projectile/Laser.h"
 #include "SceneGraph\SceneGraph.h"
 #include "Enemy\Zombie.h"
+#include "PlayerInfo\PlayerInfo.h"
 
 #include <iostream>
 using namespace std;
@@ -329,7 +330,15 @@ bool EntityManager::CheckForCollision(void)
 							Zombie *z = dynamic_cast<Zombie*>(LaserGridObj[i]);
 							if (z)
 								z->SetDead(true);
+							// Gain score when killed zombie
+							CPlayerInfo::GetInstance()->AddScore(100);
+							// Spawn another zombie
+							Zombie *newZombie = new Zombie();
+							newZombie->Init();
 						}
+						// Loses score when killed human
+						else if (LaserGridObj[i]->GetIsHuman())
+							CPlayerInfo::GetInstance()->AddScore(-100);
 
 						(*colliderThis)->SetIsDone(true);
 						LaserGridObj[i]->SetIsDone(true);
