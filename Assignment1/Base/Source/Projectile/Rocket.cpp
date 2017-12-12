@@ -52,10 +52,17 @@ void Rocket::Update(double dt)
 				RGridObj[i]->GetPosition() + 0.5f * RGridObj[i]->GetScale(),
 				position, scale.x))
 			{
+
+				if (RGridObj[i]->GetIsZombie())
+					CPlayerInfo::GetInstance()->AddScore(100);
+				if (RGridObj[i]->GetIsHuman())
+					CPlayerInfo::GetInstance()->AddScore(-100);
+
 				Removal = RGridObj;
 				for (int i = 0; i < Removal.size(); ++i)
 					if (CSceneGraph::GetInstance()->DeleteNode(Removal[i]))
 						cout << "Removal Successful" << endl;
+			
 			}
 		}
 		
