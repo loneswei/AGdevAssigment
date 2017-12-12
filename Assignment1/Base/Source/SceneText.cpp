@@ -315,7 +315,8 @@ void SceneText::Init()
 
 	theZombie = new Zombie();
 	theZombie->Init();
-	
+	theZombie->SetTarget(playerInfo->GetPos());
+
 	GenericEntity* cuboid = Create::Entity("cube", Vector3(20.0f, 0.0f, -20.0f));
 	cuboid->SetCollider(true);
 	cuboid->SetAABB(Vector3(2.f, 20.f, 2.f), Vector3(-2.f, -20.f, -2.f));
@@ -426,10 +427,9 @@ void SceneText::Update(double dt)
 	// Update the player position and other details based on keyboard and mouse inputs
 	playerInfo->Update(dt);
 
-	theEnemy->SetTarget(playerInfo->GetPos());
-	human->SetTarget(playerInfo->GetPos());
 	theZombie->SetTarget(playerInfo->GetPos());
 	theZombie->Update(dt);
+	//human->Update(dt);
 	//camera.Update(dt); // Can put the camera into an entity rather than here (Then we don't have to write this)
 
 	GraphicsManager::GetInstance()->UpdateLights(dt);

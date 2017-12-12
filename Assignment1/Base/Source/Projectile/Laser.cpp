@@ -5,7 +5,7 @@
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
 #include "GL\glew.h"
-
+#include "../PlayerInfo/PlayerInfo.h"
 #include <iostream>
 using namespace std;
 
@@ -67,6 +67,8 @@ void CLaser::Update(double dt)
 		return;
 
 	// Update TimeLife of projectile. Set to inactive if too long
+	CPlayerInfo::GetInstance()->SetShoot(true);
+
 	m_fLifetime -= (float)dt;
 	if (m_fLifetime < 0.0f)
 	{

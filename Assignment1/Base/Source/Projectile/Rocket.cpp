@@ -25,7 +25,7 @@ void Rocket::Update(double dt)
 	if (!m_bStatus)
 		return;
 
-	cout << position << endl;
+	CPlayerInfo::GetInstance()->SetShoot(true);
 
 	position.Set(position.x + (float)(theDirection.x * dt * m_fSpeed),
 		position.y + (float)(theDirection.y * dt * m_fSpeed),

@@ -18,6 +18,7 @@ public:
 private:
 	GenericEntity *zBody, *zHead, *zLArm, *zRArm, *zHorse;
 	bool jockey;
+	vector<EntityBase*>zombieGridObj;
 };
 
 
