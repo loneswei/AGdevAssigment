@@ -8,7 +8,7 @@
 void Zombie::Init()
 {
 	health = 200;
-	m_dSpeed = 20.f;
+	m_dSpeed = Math::RandIntMinMax(10,20);
 	dead = false;
 	Vector3 pos;
 	pos.Set(Math::RandFloatMinMax(-200, 200), -2, Math::RandFloatMinMax(-200, 200));
@@ -93,142 +93,88 @@ void Zombie::Init()
 	}
 
 	position = pos;
-	target = CPlayerInfo::GetInstance()->GetPos();
+	EntityManager::GetInstance()->AddEntity(this, true);
 }
 
 void Zombie::Update(double dt)
 {
-
 	if (dead)
 	{
 		if (!isDone)
-			SetIsDone(false);
+			SetIsDone(true);
 		return;
 	}
 
 	// movement
+	target = CPlayerInfo::GetInstance()->GetPos();
 	bool canMove = false;
 	bool hasCollider = false;
 	Vector3 tempPos = position;
 	Vector3 moveDir = target - position;
 	tempPos += moveDir.Normalized() * (float)m_dSpeed * (float)dt;
 
-	if (!jockey)
+	//zombieGridObj = CSpatialPartition::GetInstance()->GetObjects(this->zBody->GetPosition(), 1);
+	// cannot use because the size of the vector will change will projectile kill of the zombie, causing crash
+	/*for (int i = 0; i < zombieGridObj.size(); ++i)
 	{
-		
-		//zombieGridObj = CSpatialPartition::GetInstance()->GetObjects(this->zBody->GetPosition(), 1);
-	
-		/*int vSize = zombieGridObj.size();
-		for (int i = 0; i < vSize; ++i)
+		if (zombieGridObj[i] == this->zRArm || zombieGridObj[i] == this->zHead || zombieGridObj[i] == this->zBody || zombieGridObj[i] == this->zLArm)
+			continue;
+		if (zombieGridObj[i] == this || !zombieGridObj[i] || zombieGridObj[i]->IsDone())
+			continue;
+		if (zombieGridObj[i]->HasCollider())
 		{
-			if (zombieGridObj[i] == this->zRArm || zombieGridObj[i] == this->zHead || zombieGridObj[i] == this->zBody || zombieGridObj[i] == this->zLArm)
-				continue;
-			if (zombieGridObj[i] == this || !zombieGridObj[i] || zombieGridObj[i]->IsDone())
-				continue;
-	
-
-			if (zombieGridObj[i]->HasCollider())
+			hasCollider = true;
+			if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, zombieGridObj[i]))
 			{
-				hasCollider = true;
-				if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, zombieGridObj[i]))
-				{
-					canMove = false;
-					break;
-				}
-				else
-					canMove = true;
+				canMove = false;
+				break;
 			}
 			else
-				hasCollider = false;
-		}*/
-		for (auto go : EntityManager::GetInstance()->GetEntityList())
+				canMove = true;
+		}
+		else
+			hasCollider = false;
+	}*/
+
+	for (auto go : EntityManager::GetInstance()->GetEntityList())
+	{
+		if (go == this->zRArm || go == this->zHead || go == this->zBody || go == this->zLArm)
+			continue;
+		if (go == this || !go || go->IsDone())
+			continue;
+
+		if (jockey)
+			if (go == this->zHorse)
+				continue;
+
+		if (go->HasCollider())
 		{
-			if (go == this->zRArm || go == this->zHead || go == this->zBody || go == this->zLArm)
-				continue;
-			if (go == this || !go || go->IsDone())
-				continue;
-
-
-			if (go->HasCollider())
+			hasCollider = true;
+			if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, go))
 			{
-				hasCollider = true;
-				if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, go))
-				{
-					canMove = false;
-					break;
-				}
-				else
-					canMove = true;
+				canMove = false;
+				break;
 			}
 			else
-				hasCollider = false;
+				canMove = true;
 		}
-		if ((hasCollider && canMove) || !hasCollider)
-		{
-			zBody->SetPosition(zBody->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-			zHead->SetPosition(zHead->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-			zLArm->SetPosition(zLArm->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-			zRArm->SetPosition(zRArm->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-			position = zBody->GetPosition();
-		}
+		else
+			hasCollider = false;
 	}
-	else
+	if ((hasCollider && canMove) || !hasCollider)
 	{
-	
-		//zombieGridObj = CSpatialPartition::GetInstance()->GetObjects(this->zHorse->GetPosition(), 1);
-
-		//for (int i = 0; i < zombieGridObj.size(); ++i)
-		/*{
-			if (zombieGridObj[i] == this->zRArm || zombieGridObj[i] == this->zHead || zombieGridObj[i] == this->zBody || zombieGridObj[i] == this->zLArm || zombieGridObj[i] == this->zHorse)
-				continue;
-			if (zombieGridObj[i] == this || !zombieGridObj[i] || zombieGridObj[i]->IsDone())
-				continue;
-
-			if (zombieGridObj[i]->HasCollider())
-			{
-				hasCollider = true;
-				if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, zombieGridObj[i]))
-				{
-					canMove = false;
-					break;
-				}
-				else
-					canMove = true;
-			}
-			else
-				hasCollider = false;
-		}*/
-		for (auto go : EntityManager::GetInstance()->GetEntityList())
-		{
-			if (go == this->zRArm || go == this->zHead || go == this->zBody || go == this->zLArm || go==this->zHorse)
-				continue;
-			if (go == this || !go || go->IsDone())
-				continue;
-
-
-			if (go->HasCollider())
-			{
-				hasCollider = true;
-				if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, go))
-				{
-					canMove = false;
-					break;
-				}
-				else
-					canMove = true;
-			}
-			else
-				hasCollider = false;
-		}
-		if ((hasCollider && canMove) || !hasCollider)
-		{
+		if(jockey)
 			zHorse->SetPosition(zHorse->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-			zBody->SetPosition(zBody->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-			zHead->SetPosition(zHead->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-			zLArm->SetPosition(zLArm->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-			zRArm->SetPosition(zRArm->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
+
+		zBody->SetPosition(zBody->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
+		zHead->SetPosition(zHead->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
+		zLArm->SetPosition(zLArm->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
+		zRArm->SetPosition(zRArm->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
+
+		if (jockey)
 			position = zHorse->GetPosition();
-		}
+		else
+			position = zBody->GetPosition();
 	}
 }
 	

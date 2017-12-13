@@ -3,6 +3,7 @@
 #include "../EntityManager.h"
 #include "../PlayerInfo/PlayerInfo.h"
 #include "../SceneGraph/SceneGraph.h"
+#include "../Enemy/Zombie.h"
 
 Rocket::Rocket(void)
 	: CProjectile(nullptr),
@@ -54,7 +55,13 @@ void Rocket::Update(double dt)
 			{
 
 				if (RGridObj[i]->GetZombiePart())
+				{
 					CPlayerInfo::GetInstance()->AddScore(100);
+
+					//spawn a new zombie upon killing one
+					Zombie *z = new Zombie();
+					z->Init();
+				}
 
 				if (RGridObj[i]->GetIsHuman())
 					CPlayerInfo::GetInstance()->AddScore(-100);

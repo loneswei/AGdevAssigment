@@ -311,7 +311,7 @@ void CPlayerInfo::Update(double dt)
 			vector<EntityBase*> playerGridObj = CSpatialPartition::GetInstance()->GetObjects(this->position, 1.f);
 			for (int i = 0; i < playerGridObj.size(); ++i)
 			{
-				if (playerGridObj[i] == this)
+				if (playerGridObj[i] == this || !playerGridObj[i])
 					continue;
 				if (playerGridObj[i]->IsDone())
 					continue;
@@ -372,7 +372,7 @@ void CPlayerInfo::Update(double dt)
 			vector<EntityBase*>playerGridObj = CSpatialPartition::GetInstance()->GetObjects(this->position, 1);
 			for (int i = 0; i < playerGridObj.size(); ++i)
 			{
-				if (playerGridObj[i] == this)
+				if (playerGridObj[i] == this || !playerGridObj[i])
 					continue;
 				if (playerGridObj[i]->IsDone())
 					continue;
@@ -405,9 +405,11 @@ void CPlayerInfo::Update(double dt)
 			
 			for (int i=0;i<playerGridObj.size();++i)
 			{
-				if (playerGridObj[i] == this)
+				if (playerGridObj[i] == this || !playerGridObj[i])
 					continue;
 				if (playerGridObj[i]->IsDone())
+					continue;
+				if (i > playerGridObj.size())	 //to be extra safe and prevent reading violation
 					continue;
 
 				if (playerGridObj[i]->HasCollider())
