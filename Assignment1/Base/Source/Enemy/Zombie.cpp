@@ -11,7 +11,11 @@ void Zombie::Init()
 	m_dSpeed = Math::RandIntMinMax(10,20);
 	dead = false;
 	Vector3 pos;
-	pos.Set(Math::RandFloatMinMax(-200, 200), -2, Math::RandFloatMinMax(-200, 200));
+	pos.Set(Math::RandFloatMinMax(-400, 400), -2, Math::RandFloatMinMax(-400, 400));
+	while ((pos.x > -200 && pos.x < 200) || (pos.z > -200 && pos.z < 200))
+	{
+		pos.Set(Math::RandFloatMinMax(-400, 400), -2, Math::RandFloatMinMax(-400, 400));
+	}
 
 	int decideJockey = Math::RandIntMinMax(0, 1);
 	switch (decideJockey)

@@ -451,8 +451,11 @@ void SceneText::Update(double dt)
 		GraphicsManager::GetInstance()->UpdateLights(dt);
 
 		timerToWinGame += (float)dt;
-		if (timerToWinGame > 10.0f || playerInfo->GetPlayerLose())
+		if (timerToWinGame > 30.0f || playerInfo->GetPlayerLose())
+		{
 			gameEnd = true;
+			timerToWinGame -= 30.0f;
+		}
 	}
 
 	if (gameEnd)
@@ -477,15 +480,6 @@ void SceneText::Update(double dt)
 	ss.str("");
 	ss << "Score:" << playerInfo->GetScore();
 	textObj[3]->SetText(ss.str());
-
-	// Restart the game
-	if (KeyboardController::GetInstance()->IsKeyDown('R'))
-	{
-		gameEnd = false;
-		playerInfo->SetPlayerLose(false);
-		
-		//need to re-init the objects as well
-	}
 }
 
 void SceneText::Render()
