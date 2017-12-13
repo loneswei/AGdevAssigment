@@ -111,6 +111,12 @@ void Zombie::Update(double dt)
 	bool hasCollider = false;
 	Vector3 tempPos = position;
 	Vector3 moveDir = target - position;
+
+	if (moveDir.LengthSquared() < 5 * 5)
+	{
+		CPlayerInfo::GetInstance()->SetPlayerLose(true);
+		return;
+	}
 	tempPos += moveDir.Normalized() * (float)m_dSpeed * (float)dt;
 
 	//zombieGridObj = CSpatialPartition::GetInstance()->GetObjects(this->zBody->GetPosition(), 1);

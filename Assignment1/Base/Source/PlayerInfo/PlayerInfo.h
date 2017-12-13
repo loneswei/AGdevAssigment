@@ -89,6 +89,10 @@ public:
 
 	bool GetShoot() { return shoot; }
 	void SetShoot(bool s) { shoot = s; }
+
+	bool GetPlayerLose() { return playerLose; }
+	void SetPlayerLose(bool _playerLose) { playerLose = _playerLose; }
+
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
 	Vector3 position, target, up;
@@ -116,6 +120,6 @@ private:
 	std::vector<CWeaponInfo*> GunOnGround;
 
 	int score;
-
 	bool shoot;
+	bool playerLose;
 };

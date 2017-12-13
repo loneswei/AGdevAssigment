@@ -48,6 +48,9 @@ private:
 
 	float timerToSpawnZombie;
 	static SceneText* sInstance; // The pointer to the object that gets registered
+
+	bool gameEnd;
+	float timerToWinGame;
 };
 
 #endif

@@ -29,8 +29,9 @@ CPlayerInfo::CPlayerInfo(void)
 	, m_pTerrain(NULL)
 	, primaryWeapon(NULL)
 	, secondaryWeapon(NULL)
-	, gun1(nullptr) ,gun2(nullptr)
-	, score(0) , shoot(false)
+	, gun1(nullptr), gun2(nullptr)
+	, score(0), shoot(false)
+	, playerLose(false)
 {
 }
 
