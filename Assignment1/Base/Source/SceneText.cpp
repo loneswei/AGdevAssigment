@@ -427,13 +427,11 @@ void SceneText::Update(double dt)
 
 
 	timerToSpawnZombie += (float)dt;
-	if (timerToSpawnZombie >= 5.0f)
+	if (timerToSpawnZombie > 5.0f)
 	{
 		theZombie = new Zombie();
 		theZombie->Init();
-		theZombie->SetTarget(playerInfo->GetPos());
 		theZombie->SetTerrain(groundEntity);
-		theZombie->Update(dt);
 		timerToSpawnZombie -= 5.0f;
 	}
 	//human->SetTarget(theZombie->GetPosition());

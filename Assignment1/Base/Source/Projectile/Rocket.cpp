@@ -46,7 +46,7 @@ void Rocket::Update(double dt)
 
 		for (int i = 0; i < RGridObj.size(); ++i)
 		{
-			if (RGridObj[i] == this)
+			if (RGridObj[i] == this || RGridObj[i]->IsDone() || !RGridObj[i])
 				continue;
 			// if collided with an obj
 			if (EntityManager::GetInstance()->SphereAABBCollision(RGridObj[i]->GetPosition() - 0.5f * RGridObj[i]->GetScale(),
@@ -57,10 +57,6 @@ void Rocket::Update(double dt)
 				if (RGridObj[i]->GetZombiePart())
 				{
 					CPlayerInfo::GetInstance()->AddScore(100);
-
-					//spawn a new zombie upon killing one
-					Zombie *z = new Zombie();
-					z->Init();
 				}
 
 				if (RGridObj[i]->GetIsHuman())
