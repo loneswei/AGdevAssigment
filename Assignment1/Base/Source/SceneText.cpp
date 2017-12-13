@@ -313,10 +313,6 @@ void SceneText::Init()
 	theEnemy = new CEnemy();
 	theEnemy->Init();
 
-	theZombie = new Zombie();
-	theZombie->Init();
-	theZombie->SetTarget(playerInfo->GetPos());
-
 	GenericEntity* cuboid = Create::Entity("cube", Vector3(20.0f, 0.0f, -20.0f));
 	cuboid->SetCollider(true);
 	cuboid->SetAABB(Vector3(2.f, 20.f, 2.f), Vector3(-2.f, -20.f, -2.f));
@@ -335,8 +331,7 @@ void SceneText::Init()
 	groundEntity->SetGrids(Vector3(10.0f, 1.0f, 10.0f));
 	playerInfo->SetTerrain(groundEntity);
 	theEnemy->SetTerrain(groundEntity);
-	theZombie->SetTerrain(groundEntity);
-	human->SetTerrain(groundEntity);
+	//human->SetTerrain(groundEntity);
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
@@ -348,6 +343,8 @@ void SceneText::Init()
 		textObj[i] = Create::Text2DObject("text", Vector3(-halfWindowWidth, -halfWindowHeight + fontSize*i + halfFontSize, 0.0f), "", Vector3(fontSize, fontSize, fontSize), Color(0.0f,1.0f,0.0f));
 	}
 	textObj[0]->SetText("HELLO WORLD");
+
+	timerToSpawnZombie = 0.0f;
 }
 
 void SceneText::Update(double dt)
@@ -428,10 +425,19 @@ void SceneText::Update(double dt)
 	// Update the player position and other details based on keyboard and mouse inputs
 	playerInfo->Update(dt);
 
-	theZombie->SetTarget(playerInfo->GetPos());
-	theZombie->Update(dt);
-	human->SetTarget(theZombie->GetPosition());
-	human->Update(dt);
+
+	timerToSpawnZombie += (float)dt;
+	if (timerToSpawnZombie >= 5.0f)
+	{
+		theZombie = new Zombie();
+		theZombie->Init();
+		theZombie->SetTarget(playerInfo->GetPos());
+		theZombie->SetTerrain(groundEntity);
+		theZombie->Update(dt);
+		timerToSpawnZombie -= 5.0f;
+	}
+	//human->SetTarget(theZombie->GetPosition());
+	//human->Update(dt);
 	//camera.Update(dt); // Can put the camera into an entity rather than here (Then we don't have to write this)
 
 	GraphicsManager::GetInstance()->UpdateLights(dt);

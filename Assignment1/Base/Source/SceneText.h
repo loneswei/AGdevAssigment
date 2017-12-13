@@ -46,6 +46,7 @@ private:
 	Zombie* theZombie;
 	House* theHouse;
 
+	float timerToSpawnZombie;
 	static SceneText* sInstance; // The pointer to the object that gets registered
 };
 

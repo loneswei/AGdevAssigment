@@ -163,19 +163,28 @@ void Zombie::Update(double dt)
 	}
 	if ((hasCollider && canMove) || !hasCollider)
 	{
-		if(jockey)
-			zHorse->SetPosition(zHorse->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-
-		zBody->SetPosition(zBody->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-		zHead->SetPosition(zHead->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-		zLArm->SetPosition(zLArm->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-		zRArm->SetPosition(zRArm->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
-
 		if (jockey)
+		{
+			zHorse->SetPosition(zHorse->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
+			zHorse->SetPosition(Vector3(zHorse->GetPosition().x, -2, zHorse->GetPosition().z));
+			zBody->SetPosition(Vector3(zHorse->GetPosition().x, zHorse->GetPosition().y + 5, zHorse->GetPosition().z));
+			zLArm->SetPosition(Vector3(zHorse->GetPosition().x + 2.5, zHorse->GetPosition().y + 10, zHorse->GetPosition().z + 3));
+			zRArm->SetPosition(Vector3(zHorse->GetPosition().x - 2.5, zHorse->GetPosition().y + 10, zHorse->GetPosition().z + 3));
+			zHead->SetPosition(Vector3(zHorse->GetPosition().x, zHorse->GetPosition().y + 13, zHorse->GetPosition().z));
 			position = zHorse->GetPosition();
+		}
 		else
+		{
+			zBody->SetPosition(zBody->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
+			zBody->SetPosition(Vector3(zBody->GetPosition().x, -2, zBody->GetPosition().z));
+			zLArm->SetPosition(Vector3(zBody->GetPosition().x + 2.5, zBody->GetPosition().y + 5, zBody->GetPosition().z + 3));
+			zRArm->SetPosition(Vector3(zBody->GetPosition().x - 2.5, zBody->GetPosition().y + 5, zBody->GetPosition().z + 3));
+			zHead->SetPosition(Vector3(zBody->GetPosition().x, zBody->GetPosition().y + 8, zBody->GetPosition().z));
 			position = zBody->GetPosition();
+		}
 	}
+
+	Constrain();
 }
 	
 
