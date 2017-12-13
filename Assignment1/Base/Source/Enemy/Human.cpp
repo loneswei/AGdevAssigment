@@ -19,9 +19,8 @@ void Human::Update(double dt)
 	bool canMove = false;
 	bool hasCollider = false;
 	Vector3 tempPos = position;
-	Vector3 moveDir = target - position;
+	Vector3 moveDir = position - target;
 	tempPos += moveDir.Normalized() * (float)m_dSpeed * (float)dt;
-
 
 	vector<EntityBase*>humangridobj = CSpatialPartition::GetInstance()->GetObjects(position, 1);
 	for (int i = 0; i < humangridobj.size(); ++i)

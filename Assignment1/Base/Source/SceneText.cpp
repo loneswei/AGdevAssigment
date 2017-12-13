@@ -336,6 +336,7 @@ void SceneText::Init()
 	playerInfo->SetTerrain(groundEntity);
 	theEnemy->SetTerrain(groundEntity);
 	theZombie->SetTerrain(groundEntity);
+	human->SetTerrain(groundEntity);
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
@@ -429,13 +430,13 @@ void SceneText::Update(double dt)
 
 	theZombie->SetTarget(playerInfo->GetPos());
 	theZombie->Update(dt);
-	//human->Update(dt);
+	human->SetTarget(theZombie->GetPosition());
+	human->Update(dt);
 	//camera.Update(dt); // Can put the camera into an entity rather than here (Then we don't have to write this)
 
 	GraphicsManager::GetInstance()->UpdateLights(dt);
 
-	// Update the 2 text object values. NOTE: Can do this in their own class but i'm lazy to do it now :P
-	// Eg. FPSRenderEntity or inside RenderUI for LightEntity
+	// Update the 2 text object values.
 	std::ostringstream ss;
 	ss.precision(5);
 	float fps = (float)(1.f / dt);
