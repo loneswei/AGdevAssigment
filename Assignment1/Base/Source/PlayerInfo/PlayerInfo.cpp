@@ -304,15 +304,18 @@ void CPlayerInfo::Update(double dt)
 	{
 		Vector3 viewVector = target - position;
 		Vector3 rightUV;
-		Vector3 tempPos = position;
+		Vector3 tempPos = position;	// store the player position in a temp variable for calculations
 		bool hasCollider = false, canMove = false;
 		if (KeyboardController::GetInstance()->IsKeyDown('W'))
 		{
+			// simulate the player position 
 			tempPos += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
+			// get objects in player grid
 			vector<EntityBase*> playerGridObj = CSpatialPartition::GetInstance()->GetObjects(this->position, 1.f);
 			for (int i = 0; i < playerGridObj.size(); ++i)
 			{
-				if (playerGridObj[i] == this || !playerGridObj[i])
+				// prevents unnecessary checking (self checking, checking with null and done objs)
+				if (playerGridObj[i] == this || !playerGridObj[i])	
 					continue;
 				if (playerGridObj[i]->IsDone())
 					continue;
@@ -320,6 +323,7 @@ void CPlayerInfo::Update(double dt)
 				if (playerGridObj[i]->HasCollider())
 				{
 					hasCollider = true;
+					// our player is not an object but a point in the map, so use ptaabb coll
 					if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, playerGridObj[i]))
 					{
 						canMove = false;
@@ -331,11 +335,13 @@ void CPlayerInfo::Update(double dt)
 				else
 					hasCollider = false;
 			}
+			// if meet the conditions, allow player to move
 			if ((hasCollider && canMove) || !hasCollider)
 				position += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
 		}
 		else if (KeyboardController::GetInstance()->IsKeyDown('S'))
 		{
+			// same as the 'W' movement
 			tempPos -= viewVector.Normalized() * (float)m_dSpeed * (float)dt;
 			
 			vector<EntityBase*>playerGridObj = CSpatialPartition::GetInstance()->GetObjects(this->position, 1);
@@ -369,6 +375,7 @@ void CPlayerInfo::Update(double dt)
 			rightUV.y = 0;
 			rightUV.Normalize();
 
+			// same as the 'W' movement
 			tempPos -= rightUV * (float)m_dSpeed * (float)dt;
 			vector<EntityBase*>playerGridObj = CSpatialPartition::GetInstance()->GetObjects(this->position, 1);
 			for (int i = 0; i < playerGridObj.size(); ++i)
@@ -401,6 +408,7 @@ void CPlayerInfo::Update(double dt)
 			rightUV.y = 0;
 			rightUV.Normalize();
 
+			// same as the 'W' movement
 			tempPos += rightUV * (float)m_dSpeed * (float)dt;
 			vector<EntityBase*>playerGridObj = CSpatialPartition::GetInstance()->GetObjects(this->position, 1);
 			
@@ -409,8 +417,6 @@ void CPlayerInfo::Update(double dt)
 				if (playerGridObj[i] == this || !playerGridObj[i])
 					continue;
 				if (playerGridObj[i]->IsDone())
-					continue;
-				if (i > playerGridObj.size())	 //to be extra safe and prevent reading violation
 					continue;
 
 				if (playerGridObj[i]->HasCollider())
@@ -582,12 +588,13 @@ void CPlayerInfo::Update(double dt)
 
 	//---- Scenegraph Feature #1---- ~MarcusTan
 	// Pick Up Gun
-	if (!GunOnGround.empty())
+	if (!GunOnGround.empty())	// if there is agun on ground
 	{
 		for (int i = 0; i < GunOnGround.size(); ++i)
 		{
+			// check with every gun on ground
 			Vector3 dist = DistanceSquaredBetween(GunOnGround[i]->GetPosition(), this->position);
-			if (dist < 100)
+			if (dist < 120)	// if player close to the gun, allow him to potentially pick up the gun
 				if (KeyboardController::GetInstance()->IsKeyReleased('G'))
 					PickUpGun(GunOnGround[i]);
 		}
@@ -657,10 +664,13 @@ void CPlayerInfo::DropGun(CWeaponInfo* &gun)
 	if (gun == primaryWeapon)
 	{
 		gun = nullptr;
+		// create a reference entity to allow player to find the gun... , ps could have find better objs 
+		// the position is on the ground where the player drop gun 
 		gun1 = Create::Entity("cube", Vector3(this->position.x, m_pTerrain->GetTerrainHeight(position) - 10, this->position.z));
 	}
 	else if (gun == secondaryWeapon)
 	{
+		// read above
 		gun = nullptr;
 		gun2 = Create::Entity("cubeSG", Vector3(this->position.x, m_pTerrain->GetTerrainHeight(position) - 10, this->position.z));
 	}
@@ -676,16 +686,21 @@ void CPlayerInfo::PickUpGun(CWeaponInfo* &gun)
 	if (primaryWeapon && secondaryWeapon)
 		return;
 
+	// only equip the gun at the null weapon pointer
 	if (primaryWeapon == nullptr)
 	{
+		// equip gun
 		primaryWeapon = gun;
+		// remove the gun node from scene
 		CSceneNode* n = CSceneGraph::GetInstance()->DetachNode(CSceneGraph::GetInstance()->GetNode(gun));
 
+		// erase the gun from the vector
 		if (!GunOnGround.empty())
 			GunOnGround.erase(std::find(GunOnGround.begin(), GunOnGround.end(), gun));
 	}
 	else if (secondaryWeapon == nullptr)
 	{
+		// read above
 		secondaryWeapon = gun;
 		// search for the gun node, then detach it from scene
 		CSceneNode *n = CSceneGraph::GetInstance()->DetachNode(CSceneGraph::GetInstance()->GetNode(gun));
@@ -695,6 +710,7 @@ void CPlayerInfo::PickUpGun(CWeaponInfo* &gun)
 
 	}
 
+	// remove the reference object (?)
 	if (gun1)
 	{
 		if (DistanceSquaredBetween(gun1->GetPosition(), this->position) < 120)
@@ -716,6 +732,7 @@ void CPlayerInfo::PickUpGun(CWeaponInfo* &gun)
 void CPlayerInfo::AddScore(int _score)
 {
 	int tempScore = score;
+	// theres no negative score
 	if (tempScore + _score <= 0)
 	{
 		score = 0;

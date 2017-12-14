@@ -2,6 +2,7 @@
 
 void House::Init(Vector3 pos)
 {
+	// creation of house
 	roof = Create::Entity("houseroof", Vector3(pos.x, pos.y + 25.5f, pos.z), Vector3(5, 5, 5));
 	roofNode = CSceneGraph::GetInstance()->AddNode(roof);
 	roof->SetCollider(true);

@@ -311,7 +311,7 @@ bool EntityManager::CheckForCollision(void)
 			{
 				if (LaserGridObj[i] == thisEntity) //prevent selfchecking
 					continue;
-				if (LaserGridObj[i]->IsDone() || !LaserGridObj[i])
+				if (LaserGridObj[i]->IsDone() || !LaserGridObj[i]) // if the object is nullptr or isdone
 					continue;
 
 				if (LaserGridObj[i]->HasCollider())		// if the obj have collider
@@ -334,13 +334,10 @@ bool EntityManager::CheckForCollision(void)
 						{
 							Zombie *z = dynamic_cast<Zombie*>(LaserGridObj[i]);
 							if (z)
-								z->SetDead(true);
+								z->SetDead(true);	 // if zombie not deleted yet, set to dead so that it returns at start of update
+
 							// Gain score when killed zombie
 							CPlayerInfo::GetInstance()->AddScore(100);
-							// Spawn another zombie
-							//Zombie *newZombie = new Zombie();
-							//newZombie->Init();
-							//newZombie->SetTerrain(CPlayerInfo::GetInstance()->GetTerrain());
 						}
 						// Loses score when killed human
 						else if (LaserGridObj[i]->GetIsHuman())
@@ -368,6 +365,7 @@ bool EntityManager::CheckForCollision(void)
 
 bool EntityManager::SphereAABBCollision(Vector3 min, Vector3 max, Vector3 spherePos, float sphereScale)
 {
+	// used for rocket 
 	float dist = 0.f;
 	if (spherePos.x < min.x || spherePos.x > max.x)
 		dist += (spherePos.x - min.x) * (spherePos.x - min.x);

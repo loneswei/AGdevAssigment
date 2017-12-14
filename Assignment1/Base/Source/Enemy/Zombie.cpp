@@ -7,16 +7,16 @@
 
 void Zombie::Init()
 {
-	health = 200;
-	m_dSpeed = Math::RandIntMinMax(10,20);
+	m_dSpeed = Math::RandIntMinMax(10,25);
 	dead = false;
 	Vector3 pos;
 	pos.Set(Math::RandFloatMinMax(-400, 400), -2, Math::RandFloatMinMax(-400, 400));
-	while ((pos.x > -200 && pos.x < 200) || (pos.z > -200 && pos.z < 200))
-	{
-		pos.Set(Math::RandFloatMinMax(-400, 400), -2, Math::RandFloatMinMax(-400, 400));
-	}
 
+	//prevent it from spawning it too near to the player starting game position
+	while ((pos.x > -200 && pos.x < 200) || (pos.z > -200 && pos.z < 200))
+		pos.Set(Math::RandFloatMinMax(-400, 400), -2, Math::RandFloatMinMax(-400, 400));
+
+	// randomly spawns a zombie or zombiejockey
 	int decideJockey = Math::RandIntMinMax(0, 1);
 	switch (decideJockey)
 	{
@@ -28,6 +28,7 @@ void Zombie::Init()
 		break;
 	}
 
+	// creating the zombie/zombie jockey
 	if (!jockey)
 	{
 		zBody = Create::Entity("zombiebody", pos, Vector3(5, 5, 5));
@@ -102,6 +103,7 @@ void Zombie::Init()
 
 void Zombie::Update(double dt)
 {
+	// if dead set to done and return to reduce unnecessary calculations
 	if (dead)
 	{
 		if (!isDone)
@@ -110,44 +112,51 @@ void Zombie::Update(double dt)
 	}
 
 	// movement
+
+	// constantly update the target since player position will change as well
 	target = CPlayerInfo::GetInstance()->GetPos();
 	bool canMove = false;
 	bool hasCollider = false;
 	Vector3 tempPos = position;
 	Vector3 moveDir = target - position;
 
-	if (moveDir.LengthSquared() < 5 * 5)
+	// gameplay : when zombie 'collides' with player
+	if (DistanceSquaredBetween(CPlayerInfo::GetInstance()->GetPos(), position) < 25)
 	{
 		CPlayerInfo::GetInstance()->SetPlayerLose(true);
 		return;
 	}
+
+	// simulate zombie movement
 	tempPos += moveDir.Normalized() * (float)m_dSpeed * (float)dt;
 
-	//zombieGridObj = CSpatialPartition::GetInstance()->GetObjects(this->zBody->GetPosition(), 1);
 	// cannot use because the size of the vector will change will projectile kill of the zombie, causing crash
-	/*for (int i = 0; i < zombieGridObj.size(); ++i)
-	{
-		if (zombieGridObj[i] == this->zRArm || zombieGridObj[i] == this->zHead || zombieGridObj[i] == this->zBody || zombieGridObj[i] == this->zLArm)
-			continue;
-		if (zombieGridObj[i] == this || !zombieGridObj[i] || zombieGridObj[i]->IsDone())
-			continue;
-		if (zombieGridObj[i]->HasCollider())
-		{
-			hasCollider = true;
-			if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, zombieGridObj[i]))
-			{
-				canMove = false;
-				break;
-			}
-			else
-				canMove = true;
-		}
-		else
-			hasCollider = false;
-	}*/
+	//zombieGridObj = CSpatialPartition::GetInstance()->GetObjects(this->zBody->GetPosition(), 1);
+	//for (int i = 0; i < zombieGridObj.size(); ++i)
+	//{
+	//	if (zombieGridObj[i] == this->zRArm || zombieGridObj[i] == this->zHead || zombieGridObj[i] == this->zBody || zombieGridObj[i] == this->zLArm)
+	//		continue;
+	//	if (zombieGridObj[i] == this || !zombieGridObj[i] || zombieGridObj[i]->IsDone())
+	//		continue;
+	//	if (zombieGridObj[i]->HasCollider())
+	//	{
+	//		hasCollider = true;
+	//		if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, zombieGridObj[i]))
+	//		{
+	//			canMove = false;
+	//			break;
+	//		}
+	//		else
+	//			canMove = true;
+	//	}
+	//	else
+	//		hasCollider = false;
+	//}
 
+	//checks with every entity in entitylist
 	for (auto go : EntityManager::GetInstance()->GetEntityList())
 	{
+		//prevents unnecessary checks
 		if (go == this->zRArm || go == this->zHead || go == this->zBody || go == this->zLArm)
 			continue;
 		if (go == this || !go || go->IsDone())
@@ -160,6 +169,7 @@ void Zombie::Update(double dt)
 		if (go->HasCollider())
 		{
 			hasCollider = true;
+			// zombie is not an obj but an invisible pt that is based off the parent node position
 			if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, go))
 			{
 				canMove = false;
@@ -171,6 +181,7 @@ void Zombie::Update(double dt)
 		else
 			hasCollider = false;
 	}
+	// conditions satisfied
 	if ((hasCollider && canMove) || !hasCollider)
 	{
 		if (jockey)
