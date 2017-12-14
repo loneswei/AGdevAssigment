@@ -594,7 +594,7 @@ void CPlayerInfo::Update(double dt)
 		{
 			// check with every gun on ground
 			Vector3 dist = DistanceSquaredBetween(GunOnGround[i]->GetPosition(), this->position);
-			if (dist < 120)	// if player close to the gun, allow him to potentially pick up the gun
+			if (dist < 100)	// if player close to the gun, allow him to potentially pick up the gun
 				if (KeyboardController::GetInstance()->IsKeyReleased('G'))
 					PickUpGun(GunOnGround[i]);
 		}
@@ -614,14 +614,10 @@ void CPlayerInfo::Constrain(void)
 	// Constrain player within the boundary
 	if (position.x > maxBoundary.x - 1.0f)
 		position.x = maxBoundary.x - 1.0f;
-	//if (position.y > maxBoundary.y - 1.0f)
-	//	position.y = maxBoundary.y - 1.0f;
 	if (position.z > maxBoundary.z - 1.0f)
 		position.z = maxBoundary.z - 1.0f;
 	if (position.x < minBoundary.x + 1.0f)
 		position.x = minBoundary.x + 1.0f;
-	//if (position.y < minBoundary.y + 1.0f)
-	//	position.y = minBoundary.y + 1.0f;
 	if (position.z < minBoundary.z + 1.0f)
 		position.z = minBoundary.z + 1.0f;
 

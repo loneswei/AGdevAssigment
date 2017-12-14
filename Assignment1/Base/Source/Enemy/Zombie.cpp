@@ -3,7 +3,8 @@
 #include"../PlayerInfo/PlayerInfo.h"
 #include "../SpatialPartition/SpatialPartition.h"
 #include "MeshBuilder.h"
-
+#include "GraphicsManager.h"
+#include"RenderHelper.h"
 
 void Zombie::Init()
 {
@@ -99,6 +100,8 @@ void Zombie::Init()
 
 	position = pos;
 	EntityManager::GetInstance()->AddEntity(this, true);
+
+
 }
 
 void Zombie::Update(double dt)
@@ -187,6 +190,7 @@ void Zombie::Update(double dt)
 		if (jockey)
 		{
 			zHorse->SetPosition(zHorse->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
+			//prevent "flying horses"
 			zHorse->SetPosition(Vector3(zHorse->GetPosition().x, -2, zHorse->GetPosition().z));
 			zBody->SetPosition(Vector3(zHorse->GetPosition().x, zHorse->GetPosition().y + 5, zHorse->GetPosition().z));
 			zLArm->SetPosition(Vector3(zHorse->GetPosition().x + 2.5, zHorse->GetPosition().y + 10, zHorse->GetPosition().z + 3));
@@ -197,6 +201,7 @@ void Zombie::Update(double dt)
 		else
 		{
 			zBody->SetPosition(zBody->GetPosition() + moveDir.Normalized() * (float)m_dSpeed * (float)dt);
+			// prevent "flying bodies"
 			zBody->SetPosition(Vector3(zBody->GetPosition().x, -2, zBody->GetPosition().z));
 			zLArm->SetPosition(Vector3(zBody->GetPosition().x + 2.5, zBody->GetPosition().y + 5, zBody->GetPosition().z + 3));
 			zRArm->SetPosition(Vector3(zBody->GetPosition().x - 2.5, zBody->GetPosition().y + 5, zBody->GetPosition().z + 3));
@@ -207,5 +212,4 @@ void Zombie::Update(double dt)
 
 	Constrain();
 }
-	
 

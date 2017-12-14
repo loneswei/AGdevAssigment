@@ -3,6 +3,7 @@
 #include "EntityManager.h"
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
+#include "PlayerInfo\PlayerInfo.h"
 
 GenericEntity::GenericEntity(Mesh* _modelMesh)
 	: modelMesh(_modelMesh)
@@ -23,6 +24,13 @@ void GenericEntity::Render()
 	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
 	modelStack.PushMatrix();
 	modelStack.Translate(position.x, position.y, position.z);
+
+	if (this->GetIsZombie())
+	{
+		Vector3 view = (CPlayerInfo::GetInstance()->GetPos() - position).Normalized();
+		float angle = Math::RadianToDegree(atan2(view.x, view.z));
+		modelStack.Rotate(angle, 0, 1, 0);
+	}
 	modelStack.Scale(scale.x, scale.y, scale.z);
 	if (GetLODStatus()==true)
 	{
