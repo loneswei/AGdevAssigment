@@ -382,10 +382,7 @@ void SceneText::Update(double dt)
 		// Game ends when player survived for 30s or player collides with zombie
 		timerToWinGame += (float)dt;
 		if (timerToWinGame > 30.0f || playerInfo->GetPlayerLose())
-		{
 			gameEnd = true;
-			timerToWinGame -= 30.0f;
-		}
 	}
 
 	// show postgame screen based on outcome
@@ -411,6 +408,10 @@ void SceneText::Update(double dt)
 	ss.str("");
 	ss << "Score:" << playerInfo->GetScore();
 	textObj[3]->SetText(ss.str());
+
+	ss.str("");
+	ss << "Timer: " << (30 - timerToWinGame);
+	textObj[0]->SetText(ss.str());
 }
 
 void SceneText::Render()
