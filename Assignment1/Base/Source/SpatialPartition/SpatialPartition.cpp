@@ -167,7 +167,7 @@ void CSpatialPartition::Render(Vector3* theCameraPosition)
 {
 	// Render the Spatial Partitions
 	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
-
+	//cout << "start\n";
 	modelStack.PushMatrix();
 	modelStack.Translate(0.0f, yOffset, 0.0f);
 	for (int i = 0; i<xNumOfGrid; i++)
@@ -176,6 +176,9 @@ void CSpatialPartition::Render(Vector3* theCameraPosition)
 		{
 			modelStack.PushMatrix();
 			modelStack.Translate(xGridSize*i - (xSize >> 1), 0.0f, zGridSize*j - (zSize >> 1));
+
+			if (theGrid[i*zNumOfGrid + j].GetMesh()->name == "RED_GRIDMESH")
+				modelStack.Translate(0, 0.01, 0);
 			modelStack.PushMatrix();
 			modelStack.Scale(xGridSize, 1.0f, zGridSize);
 			modelStack.Rotate(-90, 1, 0, 0);
@@ -184,7 +187,7 @@ void CSpatialPartition::Render(Vector3* theCameraPosition)
 			modelStack.PopMatrix();
 		}
 	}
-
+	//cout << "end\n";
 	modelStack.PopMatrix();
 }
 
@@ -236,7 +239,15 @@ int CSpatialPartition::GetzNumOfGrid(void) const
  ********************************************************************************/
 CGrid CSpatialPartition::GetGrid(const int xIndex, const int yIndex) const
 {
+	//returns a copy
 	return theGrid[ xIndex*zNumOfGrid + yIndex ];
+}
+
+CGrid& CSpatialPartition::GetGrid(Vector3 pos) const
+{
+	int xIndex = (((int)pos.x - (-xSize >> 1)) / (xSize / xNumOfGrid));
+	int zIndex = (((int)pos.z - (-zSize >> 1)) / (zSize / zNumOfGrid));
+	return theGrid[xIndex*zNumOfGrid + zIndex];
 }
 
 /********************************************************************************

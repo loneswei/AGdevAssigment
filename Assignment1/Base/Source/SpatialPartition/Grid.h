@@ -46,7 +46,7 @@ public:
 
 	// Set a particular grid's Mesh
 	void SetMesh(const std::string& _meshName);
-
+	Mesh* GetMesh() { return theMesh; }
 	// Update the grid
 	void Update(vector<EntityBase*>* migrationList);
 	// Render the grid

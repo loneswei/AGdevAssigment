@@ -51,6 +51,7 @@ private:
 
 	bool gameEnd;
 	float timerToWinGame;
+	bool createScreen;
 };
 
 #endif

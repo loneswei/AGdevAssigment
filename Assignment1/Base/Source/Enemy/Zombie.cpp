@@ -8,7 +8,6 @@
 
 void Zombie::Init()
 {
-	m_dSpeed = Math::RandIntMinMax(10,25);
 	dead = false;
 	Vector3 pos;
 	pos.Set(Math::RandFloatMinMax(-400, 400), -2, Math::RandFloatMinMax(-400, 400));
@@ -32,6 +31,7 @@ void Zombie::Init()
 	// creating the zombie/zombie jockey
 	if (!jockey)
 	{
+		m_dSpeed = 10;
 		zBody = Create::Entity("zombiebody", pos, Vector3(5, 5, 5));
 		zBody->SetCollider(true);
 		zBody->SetIsZombie(true);
@@ -62,6 +62,7 @@ void Zombie::Init()
 	}
 	else
 	{
+		m_dSpeed = 25;
 		zHorse = Create::Entity("zombiehorse", pos, Vector3(5, 5, 5));
 		zHorse->SetCollider(true);
 		zHorse->SetIsZombie(true);

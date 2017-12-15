@@ -166,6 +166,7 @@ void SceneText::Init()
 	// Laser and Grid
 	MeshBuilder::GetInstance()->GenerateRay("laser", 10.0f);
 	MeshBuilder::GetInstance()->GenerateQuad("GRIDMESH", Color(1, 1, 1), 10.f);
+	MeshBuilder::GetInstance()->GenerateQuad("RED_GRIDMESH", Color(1, 0, 0), 1.f);
 
 	// Car
 	MeshBuilder::GetInstance()->GenerateOBJ("carlow", "OBJ//LOD//carlow.obj");
@@ -303,6 +304,7 @@ void SceneText::Init()
 	timerToSpawnZombie = 0.0f;
 	gameEnd = false;
 	timerToWinGame = 0.0f;
+	createScreen = false;
 }
 
 void SceneText::Update(double dt)
@@ -368,19 +370,19 @@ void SceneText::Update(double dt)
 		playerInfo->Update(dt);
 
 		// spawn zombie every 5 seconds
-		timerToSpawnZombie += (float)dt;
-		if (timerToSpawnZombie > 5.0f)
-		{
-			theZombie = new Zombie();
-			theZombie->Init();	// zombie will be added into entitylist in Init(), so dunneed call update
-			theZombie->SetTerrain(groundEntity); 
-			timerToSpawnZombie -= 5.0f;
-		}
+		//timerToSpawnZombie += (float)dt;
+		//if (timerToSpawnZombie > 5.0f)
+		//{
+		//	theZombie = new Zombie();
+		//	theZombie->Init();	// zombie will be added into entitylist in Init(), so dunneed call update
+		//	theZombie->SetTerrain(groundEntity); 
+		//	timerToSpawnZombie -= 5.0f;
+		//}
 
 		GraphicsManager::GetInstance()->UpdateLights(dt);
 
 		// Game ends when player survived for 30s or player collides with zombie
-		timerToWinGame += (float)dt;
+		//timerToWinGame += (float)dt;
 		if (timerToWinGame > 30.0f || playerInfo->GetPlayerLose())
 			gameEnd = true;
 	}
@@ -388,10 +390,15 @@ void SceneText::Update(double dt)
 	// show postgame screen based on outcome
 	if (gameEnd)
 	{
-		if(playerInfo->GetPlayerLose())
-			Create::Sprite2DObject("lose", Vector3(0.0f, 0.0f, 0.0f), Vector3(400.0f, 400.0f, 400.0f));
-		else
-			Create::Sprite2DObject("win", Vector3(0.0f, 0.0f, 0.0f), Vector3(400.0f, 400.0f, 400.0f));
+		if (!createScreen)
+		{
+			if (playerInfo->GetPlayerLose())
+				Create::Sprite2DObject("lose", Vector3(0.0f, 0.0f, 0.0f), Vector3(400.0f, 400.0f, 400.0f));
+			else
+				Create::Sprite2DObject("win", Vector3(0.0f, 0.0f, 0.0f), Vector3(400.0f, 400.0f, 400.0f));
+
+			createScreen = true;
+		}
 	}
 	// Update the 2 text object values.
 	std::ostringstream ss;

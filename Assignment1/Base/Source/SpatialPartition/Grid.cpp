@@ -26,7 +26,7 @@ CGrid::~CGrid(void)
 {
 	if (theMesh)
 	{
-		delete theMesh;
+		//delete theMesh;
 		theMesh = NULL;
 	}
 	Remove();
@@ -53,7 +53,7 @@ void CGrid::SetMesh(const std::string& _meshName)
 {
 	Mesh* modelMesh = MeshBuilder::GetInstance()->GetMesh(_meshName);
 	if (modelMesh != nullptr)
-	{
+	{	
 		theMesh = MeshBuilder::GetInstance()->GetMesh(_meshName);
 	}
 }
@@ -91,11 +91,16 @@ RenderScene
 ********************************************************************************/
 void CGrid::Render(void)
 {
+	int a = 0;
 	if (theMesh)
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		RenderHelper::RenderMesh(theMesh);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		if (theMesh->name == "RED_GRIDMESH")
+		{
+			RenderHelper::RenderMesh(theMesh);
+			//cout << "red\n";
+		}
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
 

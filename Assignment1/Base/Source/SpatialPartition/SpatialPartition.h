@@ -13,7 +13,6 @@ protected:
 	CSpatialPartition(void);
 
 	// Variables
-	CGrid* theGrid;
 	int xSize;
 	int zSize;
 	int xGridSize;
@@ -29,6 +28,8 @@ protected:
 	float LevelOfDetails_Distances[2];
 
 public:
+	CGrid* theGrid;
+
 	static CSpatialPartition *GetInstance()
 	{
 		if (!sp_instance)
@@ -78,6 +79,7 @@ public:
 
 	// Get a particular grid
 	CGrid GetGrid(const int xIndex, const int zIndex) const;
+	CGrid& GetGrid(Vector3 pos) const;
 
 	// Get vector of objects from this Spatial Partition
 	vector<EntityBase*> GetObjects(Vector3 position, const float radius);

@@ -19,6 +19,9 @@ Rocket::Rocket(Mesh * _modelMesh)
 
 Rocket::~Rocket(void)
 {
+	for (int i = 0; i < CSpatialPartition::GetInstance()->GetxNumOfGrid(); i++)
+		for (int j = 0; j < CSpatialPartition::GetInstance()->GetzNumOfGrid(); j++)
+			CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("GRIDMESH");
 }
 
 void Rocket::Update(double dt)
@@ -29,6 +32,22 @@ void Rocket::Update(double dt)
 	position.Set(position.x + (float)(theDirection.x * dt * m_fSpeed),
 		position.y + (float)(theDirection.y * dt * m_fSpeed),
 		position.z + (float)(theDirection.z * dt * m_fSpeed));
+
+	// Set grid below rocket projectile to spawn a red quad
+	for (int i = 0; i < CSpatialPartition::GetInstance()->GetxNumOfGrid(); i++)
+	{
+		for (int j = 0; j < CSpatialPartition::GetInstance()->GetzNumOfGrid(); j++)
+		{
+			if (CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].IsHere(this))
+			{
+				CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("RED_GRIDMESH");
+				//cout << "Set " << i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j << " to red\n";
+			}
+			else
+				CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("GRIDMESH");
+		}
+	}
+	
 
 	// remove the rocket when it is already out of bounds
 	if (position.x < -500 || position.x > 500 || position.z < -500 || position.z > 500 || position.y > 1000)
@@ -66,8 +85,12 @@ void Rocket::Update(double dt)
 			// trying to be cautious here by copying it into another vector be4 deletion
 			Removal = RGridObj;
 			for (int i = 0; i < Removal.size(); ++i)
+			{
+				if(Removal[i])
+					Removal[i]->SetIsDone(true);
 				if (CSceneGraph::GetInstance()->DeleteNode(Removal[i]))
 					cout << "Removal Successful" << endl;
+			}
 
 		}
 	}
@@ -79,8 +102,12 @@ void Rocket::Update(double dt)
 		vector<EntityBase*> RGridObj = CSpatialPartition::GetInstance()->GetObjects(position, 1.0f);
 
 		for (int i = 0; i < RGridObj.size(); ++i)
+		{
+			if(RGridObj[i])
+				RGridObj[i]->SetIsDone(true);
 			if (CSceneGraph::GetInstance()->DeleteNode(RGridObj[i]))
 				cout << "Removal Successful" << endl;
+		}
 	}
 }
 
