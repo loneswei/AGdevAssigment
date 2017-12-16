@@ -39,10 +39,7 @@ void Rocket::Update(double dt)
 		for (int j = 0; j < CSpatialPartition::GetInstance()->GetzNumOfGrid(); j++)
 		{
 			if (CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].IsHere(this))
-			{
 				CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("RED_GRIDMESH");
-				//cout << "Set " << i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j << " to red\n";
-			}
 			else
 				CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("GRIDMESH");
 		}

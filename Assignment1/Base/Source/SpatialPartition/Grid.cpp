@@ -96,10 +96,7 @@ void CGrid::Render(void)
 	{
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		if (theMesh->name == "RED_GRIDMESH")
-		{
 			RenderHelper::RenderMesh(theMesh);
-			//cout << "red\n";
-		}
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }

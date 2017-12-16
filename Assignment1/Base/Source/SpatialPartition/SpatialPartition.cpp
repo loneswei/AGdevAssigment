@@ -167,7 +167,6 @@ void CSpatialPartition::Render(Vector3* theCameraPosition)
 {
 	// Render the Spatial Partitions
 	MS& modelStack = GraphicsManager::GetInstance()->GetModelStack();
-	//cout << "start\n";
 	modelStack.PushMatrix();
 	modelStack.Translate(0.0f, yOffset, 0.0f);
 	for (int i = 0; i<xNumOfGrid; i++)
@@ -177,8 +176,8 @@ void CSpatialPartition::Render(Vector3* theCameraPosition)
 			modelStack.PushMatrix();
 			modelStack.Translate(xGridSize*i - (xSize >> 1), 0.0f, zGridSize*j - (zSize >> 1));
 
-			if (theGrid[i*zNumOfGrid + j].GetMesh()->name == "RED_GRIDMESH")
-				modelStack.Translate(0, 0.01, 0);
+			//if (theGrid[i*zNumOfGrid + j].GetMesh()->name == "RED_GRIDMESH")
+			//	modelStack.Translate(0, 0.01, 0);
 			modelStack.PushMatrix();
 			modelStack.Scale(xGridSize, 1.0f, zGridSize);
 			modelStack.Rotate(-90, 1, 0, 0);
