@@ -23,9 +23,8 @@ void House::Init(Vector3 pos)
 	backWall->SetCollider(true);
 	backWall->SetAABB(Vector3(10, 14, 3), Vector3(-10, -14, -3));
 
-	frontWall = Create::Entity("housemedfrontwall", Vector3(pos.x, pos.y, pos.z + 12.5f), Vector3(5, 5, 5));
+	frontWall = Create::Entity("housefrontwall", Vector3(pos.x, pos.y, pos.z + 12.5f), Vector3(5, 5, 5));
 	FWallNode = roofNode->AddChild(frontWall);
-	frontWall->InitLOD("househighfrontwall", "housemedfrontwall", "househighfrontwall");
 	frontWall->SetCollider(true);
 	frontWall->SetAABB(Vector3(10, 14, 3), Vector3(-10, -14, -3));
 	
