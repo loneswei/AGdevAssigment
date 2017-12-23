@@ -172,9 +172,9 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateOBJ("carlow", "OBJ//LOD//carlow.obj");
 	MeshBuilder::GetInstance()->GetMesh("carlow")->textureID = LoadTGA("Image//LOD//carlow.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("carmed", "OBJ//LOD//carmed.obj");
-	MeshBuilder::GetInstance()->GetMesh("carmed")->textureID = LoadTGA("Image//LOD//carmed.tga");
+	MeshBuilder::GetInstance()->GetMesh("carmed")->textureID = LoadTGA("Image//LOD//carlow.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("carhigh", "OBJ//LOD//carhigh.obj");
-	MeshBuilder::GetInstance()->GetMesh("carhigh")->textureID = LoadTGA("Image//LOD//carhigh.tga");
+	MeshBuilder::GetInstance()->GetMesh("carhigh")->textureID = LoadTGA("Image//LOD//carlow.tga");
 
 	// Zombie
 	MeshBuilder::GetInstance()->GenerateOBJ("zombiehead", "OBJ//zombiehead.obj");
@@ -208,7 +208,7 @@ void SceneText::Init()
 
 	// Human
 	MeshBuilder::GetInstance()->GenerateOBJ("humanlow", "OBJ//LOD//humanlow.obj");
-	MeshBuilder::GetInstance()->GetMesh("humanlow")->textureID = LoadTGA("Image//LOD//humanlow.tga");
+	MeshBuilder::GetInstance()->GetMesh("humanlow")->textureID = LoadTGA("Image//LOD//humanmed.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("humanmed", "OBJ//LOD//humanmed.obj");
 	MeshBuilder::GetInstance()->GetMesh("humanmed")->textureID = LoadTGA("Image//LOD//humanmed.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("humanhigh", "OBJ//LOD//humanhigh.obj");
@@ -216,19 +216,19 @@ void SceneText::Init()
 
 	// Lamp post
 	MeshBuilder::GetInstance()->GenerateOBJ("lamppostlow", "OBJ//LOD//lamppostlow.obj");
-	MeshBuilder::GetInstance()->GetMesh("lamppostlow")->textureID = LoadTGA("Image//LOD//lamppostlow.tga");
+	MeshBuilder::GetInstance()->GetMesh("lamppostlow")->textureID = LoadTGA("Image//LOD//lampposthigh.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("lamppostmed", "OBJ//LOD//lamppostmed.obj");
-	MeshBuilder::GetInstance()->GetMesh("lamppostmed")->textureID = LoadTGA("Image//LOD//lamppostmed.tga");
+	MeshBuilder::GetInstance()->GetMesh("lamppostmed")->textureID = LoadTGA("Image//LOD//lampposthigh.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("lampposthigh", "OBJ//LOD//lampposthigh.obj");
 	MeshBuilder::GetInstance()->GetMesh("lampposthigh")->textureID = LoadTGA("Image//LOD//lampposthigh.tga");
 
 	// Tree
 	MeshBuilder::GetInstance()->GenerateOBJ("treelow", "OBJ//LOD//treelow.obj");
-	MeshBuilder::GetInstance()->GetMesh("treelow")->textureID = LoadTGA("Image//LOD//treelow.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("treemed", "OBJ//LOD//treemed.obj");
-	MeshBuilder::GetInstance()->GetMesh("treemed")->textureID = LoadTGA("Image//LOD//treemed.tga");
+	MeshBuilder::GetInstance()->GetMesh("treelow")->textureID = LoadTGA("Image//LOD//treehigh.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("treemed", "OBJ//LOD//treehigh.obj");
+	MeshBuilder::GetInstance()->GetMesh("treemed")->textureID = LoadTGA("Image//LOD//treehigh.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("treehigh", "OBJ//LOD//treehigh.obj");
-	MeshBuilder::GetInstance()->GetMesh("treehigh")->textureID = LoadTGA("Image//LOD//treehigh.tga");
+	MeshBuilder::GetInstance()->GetMesh("treehigh")->textureID = LoadTGA("Image//LOD//treemed.tga");
 
 	// Win / Lose Screen
 	MeshBuilder::GetInstance()->GenerateQuad("win", Color(1, 1, 1), 1.f);
