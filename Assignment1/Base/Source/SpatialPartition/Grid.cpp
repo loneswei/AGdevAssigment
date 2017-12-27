@@ -94,10 +94,10 @@ void CGrid::Render(void)
 	int a = 0;
 	if (theMesh)
 	{
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		if (theMesh->name == "RED_GRIDMESH")
 			RenderHelper::RenderMesh(theMesh);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
 

@@ -37,7 +37,7 @@ void RocketLauncher::Discharge(Vector3 position, Vector3 target, CPlayerInfo * _
 				position,
 				_direction,
 				10.0f,
-				20.f,
+				60.f,
 				_source);
 			rocket->SetCollider(false); // collision done in its own update, not in entitymanager so set false
 			rocket->SetStatus(true);

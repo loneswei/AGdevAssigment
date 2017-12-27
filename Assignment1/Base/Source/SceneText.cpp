@@ -143,7 +143,7 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateCube("cube", Color(1.0f, 1.0f, 0.0f), 1.0f);
 	MeshBuilder::GetInstance()->GetMesh("cone")->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
 	MeshBuilder::GetInstance()->GetMesh("cone")->material.kSpecular.Set(0.f, 0.f, 0.f);
-	MeshBuilder::GetInstance()->GenerateQuad("GRASS_DARKGREEN", Color(0.3f, 0.3f, 0.3f), 1.f);
+	MeshBuilder::GetInstance()->GenerateQuad("GRASS_DARKGREEN", Color(0.325f, 0.325f, 0.325f), 1.f);
 	//MeshBuilder::GetInstance()->GetMesh("GRASS_DARKGREEN")->textureID = LoadTGA("Image//grass_darkgreen.tga");
 	MeshBuilder::GetInstance()->GenerateQuad("GEO_GRASS_LIGHTGREEN", Color(0.35f, 0.35f, 0.35f), 1.f);
 	//MeshBuilder::GetInstance()->GetMesh("GEO_GRASS_LIGHTGREEN")->textureID = LoadTGA("Image//grass_lightgreen.tga");
@@ -165,7 +165,7 @@ void SceneText::Init()
 
 	// Laser and Grid
 	MeshBuilder::GetInstance()->GenerateRay("laser", 10.0f);
-	MeshBuilder::GetInstance()->GenerateQuad("GRIDMESH", Color(1, 1, 1), 10.f);
+	MeshBuilder::GetInstance()->GenerateQuad("GRIDMESH", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GenerateQuad("RED_GRIDMESH", Color(1, 0, 0), 1.f);
 
 	// Car
@@ -322,25 +322,25 @@ void SceneText::Update(double dt)
 		if (KeyboardController::GetInstance()->IsKeyDown('4'))
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		if (KeyboardController::GetInstance()->IsKeyDown('5'))
-			lights[0]->type = Light::LIGHT_POINT;
-		else if (KeyboardController::GetInstance()->IsKeyDown('6'))
-			lights[0]->type = Light::LIGHT_DIRECTIONAL;
-		else if (KeyboardController::GetInstance()->IsKeyDown('7'))
-			lights[0]->type = Light::LIGHT_SPOT;
+		//if (KeyboardController::GetInstance()->IsKeyDown('5'))
+		//	lights[0]->type = Light::LIGHT_POINT;
+		//else if (KeyboardController::GetInstance()->IsKeyDown('6'))
+		//	lights[0]->type = Light::LIGHT_DIRECTIONAL;
+		//else if (KeyboardController::GetInstance()->IsKeyDown('7'))
+		//	lights[0]->type = Light::LIGHT_SPOT;
 
-		if (KeyboardController::GetInstance()->IsKeyDown('I'))
-			lights[0]->position.z -= (float)(10.f * dt);
-		if (KeyboardController::GetInstance()->IsKeyDown('K'))
-			lights[0]->position.z += (float)(10.f * dt);
-		if (KeyboardController::GetInstance()->IsKeyDown('J'))
-			lights[0]->position.x -= (float)(10.f * dt);
-		if (KeyboardController::GetInstance()->IsKeyDown('L'))
-			lights[0]->position.x += (float)(10.f * dt);
-		if (KeyboardController::GetInstance()->IsKeyDown('O'))
-			lights[0]->position.y -= (float)(10.f * dt);
-		if (KeyboardController::GetInstance()->IsKeyDown('P'))
-			lights[0]->position.y += (float)(10.f * dt);
+		//if (KeyboardController::GetInstance()->IsKeyDown('I'))
+		//	lights[0]->position.z -= (float)(10.f * dt);
+		//if (KeyboardController::GetInstance()->IsKeyDown('K'))
+		//	lights[0]->position.z += (float)(10.f * dt);
+		//if (KeyboardController::GetInstance()->IsKeyDown('J'))
+		//	lights[0]->position.x -= (float)(10.f * dt);
+		//if (KeyboardController::GetInstance()->IsKeyDown('L'))
+		//	lights[0]->position.x += (float)(10.f * dt);
+		//if (KeyboardController::GetInstance()->IsKeyDown('O'))
+		//	lights[0]->position.y -= (float)(10.f * dt);
+		//if (KeyboardController::GetInstance()->IsKeyDown('P'))
+		//	lights[0]->position.y += (float)(10.f * dt);
 
 		if (KeyboardController::GetInstance()->IsKeyReleased('M'))
 		{
@@ -352,16 +352,16 @@ void SceneText::Update(double dt)
 			CSpatialPartition::GetInstance()->PrintSelf();
 
 		// if the left mouse button was released
-		if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
-			cout << "Left Mouse Button was released!" << endl;
-		if (MouseController::GetInstance()->IsButtonReleased(MouseController::RMB))
-			cout << "Right Mouse Button was released!" << endl;
-		if (MouseController::GetInstance()->IsButtonReleased(MouseController::MMB))
-			cout << "Middle Mouse Button was released!" << endl;
-		if (MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_XOFFSET) != 0.0)
-			cout << "Mouse Wheel has offset in X-axis of " << MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_XOFFSET) << endl;
-		if (MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_YOFFSET) != 0.0)
-			cout << "Mouse Wheel has offset in Y-axis of " << MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_YOFFSET) << endl;
+		//if (MouseController::GetInstance()->IsButtonReleased(MouseController::LMB))
+		//	cout << "Left Mouse Button was released!" << endl;
+		//if (MouseController::GetInstance()->IsButtonReleased(MouseController::RMB))
+		//	cout << "Right Mouse Button was released!" << endl;
+		//if (MouseController::GetInstance()->IsButtonReleased(MouseController::MMB))
+		//	cout << "Middle Mouse Button was released!" << endl;
+		//if (MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_XOFFSET) != 0.0)
+		//	cout << "Mouse Wheel has offset in X-axis of " << MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_XOFFSET) << endl;
+		//if (MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_YOFFSET) != 0.0)
+		//	cout << "Mouse Wheel has offset in Y-axis of " << MouseController::GetInstance()->GetMouseScrollStatus(MouseController::SCROLL_TYPE_YOFFSET) << endl;
 		// <THERE>
 
 		// Update the player position and other details based on keyboard and mouse inputs
@@ -369,13 +369,13 @@ void SceneText::Update(double dt)
 
 		// spawn zombie every 5 seconds
 		//timerToSpawnZombie += (float)dt;
-		//if (timerToSpawnZombie > 5.0f)
-		//{
-		//	theZombie = new Zombie();
-		//	theZombie->Init();	// zombie will be added into entitylist in Init(), so dunneed call update
-		//	theZombie->SetTerrain(groundEntity); 
-		//	timerToSpawnZombie -= 5.0f;
-		//}
+		if (timerToSpawnZombie > 5.0f)
+		{
+			theZombie = new Zombie();
+			theZombie->Init();	// zombie will be added into entitylist in Init(), so dunneed call update
+			theZombie->SetTerrain(groundEntity); 
+			timerToSpawnZombie -= 5.0f;
+		}
 
 		GraphicsManager::GetInstance()->UpdateLights(dt);
 
