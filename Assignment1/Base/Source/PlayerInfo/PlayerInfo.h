@@ -93,6 +93,7 @@ public:
 	bool GetPlayerLose() { return playerLose; }
 	void SetPlayerLose(bool _playerLose) { playerLose = _playerLose; }
 
+	bool spActive;
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
 	Vector3 position, target, up;
@@ -122,4 +123,5 @@ private:
 	int score;
 	bool shoot;
 	bool playerLose;
+
 };

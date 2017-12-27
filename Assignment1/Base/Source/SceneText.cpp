@@ -195,8 +195,8 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GetMesh("housebackwall")->textureID = LoadTGA("Image//LOD//houselow.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("houserightwall", "OBJ//LOD//houserightwall.obj");
 	MeshBuilder::GetInstance()->GetMesh("houserightwall")->textureID = LoadTGA("Image//LOD//houselow.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("housefrontwall", "OBJ//LOD//housefrontwall.obj");
-	MeshBuilder::GetInstance()->GetMesh("housefrontwall")->textureID = LoadTGA("Image//LOD//househigh.tga");
+	//MeshBuilder::GetInstance()->GenerateOBJ("housefrontwall", "OBJ//LOD//housefrontwall.obj");
+	//MeshBuilder::GetInstance()->GetMesh("housefrontwall")->textureID = LoadTGA("Image//LOD//househigh.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("houselowdoor", "OBJ//LOD//housedoor.obj");
 	MeshBuilder::GetInstance()->GetMesh("houselowdoor")->textureID = LoadTGA("Image//LOD//houselow.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("housemeddoor", "OBJ//LOD//housedoor.obj");

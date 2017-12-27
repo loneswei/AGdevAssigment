@@ -32,6 +32,7 @@ CPlayerInfo::CPlayerInfo(void)
 	, gun1(nullptr), gun2(nullptr)
 	, score(0), shoot(false)
 	, playerLose(false)
+	, spActive(true)
 {
 }
 
@@ -606,6 +607,16 @@ void CPlayerInfo::Update(double dt)
 		DropGun(secondaryWeapon);
 
 	// ------------------------------------------------
+
+	if (KeyboardController::GetInstance()->IsKeyUp(VK_LSHIFT))
+	{
+		if (spActive)
+			spActive = false;
+		else
+			spActive = true;
+	}
+
+
 }
 
 // Constrain the position within the borders

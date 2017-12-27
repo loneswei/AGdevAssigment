@@ -302,61 +302,95 @@ bool EntityManager::CheckForCollision(void)
 		{
 			// Dynamic cast it to a CLaser class
 			CLaser* thisEntity = dynamic_cast<CLaser*>(*colliderThis);
-
-			//get objs in laser grid
-			vector<EntityBase*> LaserGridObj = CSpatialPartition::GetInstance()->GetObjects(thisEntity->GetPosition(), 1.f);
-
-			
-			for (int i = 0; i < LaserGridObj.size(); ++i)
+			if (CPlayerInfo::GetInstance()->spActive)
 			{
-				if (LaserGridObj[i] == thisEntity) //prevent selfchecking
-					continue;
-				if (LaserGridObj[i]->IsDone() || !LaserGridObj[i]) // if the object is nullptr or isdone
-					continue;
-
-				if (LaserGridObj[i]->HasCollider())		// if the obj have collider
+				//get objs in laser grid
+				vector<EntityBase*> LaserGridObj = CSpatialPartition::GetInstance()->GetObjects(thisEntity->GetPosition(), 1.f);
+				for (int i = 0; i < LaserGridObj.size(); ++i)
 				{
-					Vector3 hitPosition = Vector3(0, 0, 0);
+					if (LaserGridObj[i] == thisEntity) //prevent selfchecking
+						continue;
+					if (LaserGridObj[i]->IsDone() || !LaserGridObj[i]) // if the object is nullptr or isdone
+						continue;
 
-					CCollider *thatCollider = dynamic_cast<CCollider*>(LaserGridObj[i]);
-					Vector3 thatMinAABB = LaserGridObj[i]->GetPosition() + thatCollider->GetMinAABB();
-					Vector3 thatMaxAABB = LaserGridObj[i]->GetPosition() + thatCollider->GetMaxAABB();
-
-					if (CheckLineSegmentPlane(thisEntity->GetPosition(),
-						thisEntity->GetPosition() - thisEntity->GetDirection() * thisEntity->GetLength(),
-						thatMinAABB, thatMaxAABB,
-						hitPosition))
+					if (LaserGridObj[i]->HasCollider())		// if the obj have collider
 					{
-						if (LaserGridObj[i]->GetZombiePart()) // zombie part is used for adding score
-							CPlayerInfo::GetInstance()->AddScore(25);
+						Vector3 hitPosition = Vector3(0, 0, 0);
 
-						if (LaserGridObj[i]->GetIsZombie()) //iszombie is only the parent node
+						CCollider *thatCollider = dynamic_cast<CCollider*>(LaserGridObj[i]);
+						Vector3 thatMinAABB = LaserGridObj[i]->GetPosition() + thatCollider->GetMinAABB();
+						Vector3 thatMaxAABB = LaserGridObj[i]->GetPosition() + thatCollider->GetMaxAABB();
+
+						if (CheckLineSegmentPlane(thisEntity->GetPosition(),
+							thisEntity->GetPosition() - thisEntity->GetDirection() * thisEntity->GetLength(),
+							thatMinAABB, thatMaxAABB,
+							hitPosition))
 						{
-							Zombie *z = dynamic_cast<Zombie*>(LaserGridObj[i]);
-							if (z)
-								z->SetDead(true);	 // if zombie not deleted yet, set to dead so that it returns at start of update
+							if (LaserGridObj[i]->GetZombiePart()) // zombie part is used for adding score
+								CPlayerInfo::GetInstance()->AddScore(25);
 
-							// Gain score when killed zombie
-							CPlayerInfo::GetInstance()->AddScore(100);
+							if (LaserGridObj[i]->GetIsZombie()) //iszombie is only the parent node
+							{
+								Zombie *z = dynamic_cast<Zombie*>(LaserGridObj[i]);
+								if (z)
+									z->SetDead(true);	 // if zombie not deleted yet, set to dead so that it returns at start of update
+
+								// Gain score when killed zombie
+								CPlayerInfo::GetInstance()->AddScore(100);
+							}
+							// Loses score when killed human
+							else if (LaserGridObj[i]->GetIsHuman())
+								CPlayerInfo::GetInstance()->AddScore(-100);
+
+							(*colliderThis)->SetIsDone(true);
+							LaserGridObj[i]->SetIsDone(true);
+
+							// Remove from Scene Graph
+							if (CSceneGraph::GetInstance()->DeleteNode(*colliderThis))
+								cout << "*** This Entity removed ***" << endl;
+
+							// Remove from Scene Graph
+							if (CSceneGraph::GetInstance()->DeleteNode(LaserGridObj[i]))
+								cout << "*** That Entity removed ***" << endl;
+
 						}
-						// Loses score when killed human
-						else if (LaserGridObj[i]->GetIsHuman())
-							CPlayerInfo::GetInstance()->AddScore(-100);
-
-						(*colliderThis)->SetIsDone(true);
-						LaserGridObj[i]->SetIsDone(true);
-
-						// Remove from Scene Graph
-						if (CSceneGraph::GetInstance()->DeleteNode(*colliderThis))
-							cout << "*** This Entity removed ***" << endl;
-
-						// Remove from Scene Graph
-						if (CSceneGraph::GetInstance()->DeleteNode(LaserGridObj[i]))
-							cout << "*** That Entity removed ***" << endl;
-
 					}
 				}
+			}
+			else
+			{
+				colliderThatEnd = entityList.end();
+				int counter = 0;
+				for (colliderThat = entityList.begin(); colliderThat != colliderThatEnd; ++colliderThat)
+				{
+					if (colliderThat == colliderThis)
+						continue;
 
+					if ((*colliderThat)->HasCollider())
+					{
+						Vector3 hitPosition = Vector3(0, 0, 0);
+
+						// Get the minAABB and maxAABB for (*colliderThat)
+						CCollider *thatCollider = dynamic_cast<CCollider*>(*colliderThat);
+						Vector3 thatMinAABB = (*colliderThat)->GetPosition() + thatCollider->GetMinAABB();
+						Vector3 thatMaxAABB = (*colliderThat)->GetPosition() + thatCollider->GetMaxAABB();
+
+						if (CheckLineSegmentPlane(thisEntity->GetPosition(),
+							thisEntity->GetPosition() - thisEntity->GetDirection() * thisEntity->GetLength(),
+							thatMinAABB, thatMaxAABB,
+							hitPosition) == true)
+						{
+							(*colliderThis)->SetIsDone(true);
+							(*colliderThat)->SetIsDone(true);
+
+							// Remove from Scene Graph
+							if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)))
+								cout << "*** This Entity removed ***" << endl;
+							if (CSceneGraph::GetInstance()->DeleteNode((*colliderThat)))
+								cout << "*** That Entity removed ***" << endl;
+						}
+					}
+				}
 			}
 		}
 	}
