@@ -608,7 +608,7 @@ void CPlayerInfo::Update(double dt)
 
 	// ------------------------------------------------
 
-	if (KeyboardController::GetInstance()->IsKeyUp(VK_LSHIFT))
+	if (KeyboardController::GetInstance()->IsKeyReleased(VK_LSHIFT))
 	{
 		if (spActive)
 			spActive = false;

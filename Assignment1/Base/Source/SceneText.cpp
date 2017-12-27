@@ -368,7 +368,7 @@ void SceneText::Update(double dt)
 		playerInfo->Update(dt);
 
 		// spawn zombie every 5 seconds
-		//timerToSpawnZombie += (float)dt;
+		timerToSpawnZombie += (float)dt;
 		if (timerToSpawnZombie > 5.0f)
 		{
 			theZombie = new Zombie();
@@ -415,8 +415,9 @@ void SceneText::Update(double dt)
 	textObj[3]->SetText(ss.str());
 
 	ss.str("");
-	ss.precision(4);
-	ss << "Timer: " << (30 - timerToWinGame);
+	//ss.precision(4);
+	//ss << "Timer: " << (30 - timerToWinGame);
+	ss << "Spatial: " << CPlayerInfo::GetInstance()->spActive;
 	textObj[0]->SetText(ss.str());
 }
 
