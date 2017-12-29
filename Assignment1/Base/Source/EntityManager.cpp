@@ -365,6 +365,8 @@ bool EntityManager::CheckForCollision(void)
 				{
 					if (colliderThat == colliderThis)
 						continue;
+					if ((*colliderThat)->IsDone() || (*colliderThat) == nullptr)
+						continue;
 
 					if ((*colliderThat)->HasCollider())
 					{
@@ -380,9 +382,23 @@ bool EntityManager::CheckForCollision(void)
 							thatMinAABB, thatMaxAABB,
 							hitPosition) == true)
 						{
+							if ((*colliderThat)->GetIsZombie())
+							{
+								Zombie *z = dynamic_cast<Zombie*>((*colliderThat));
+								if (z)
+									z->SetDead(true);	 // if zombie not deleted yet, set to dead so that it returns at start of update
+								 // Gain score when killed zombie
+								CPlayerInfo::GetInstance()->AddScore(100);
+							}
+
+							if((*colliderThat)->GetZombiePart())
+								CPlayerInfo::GetInstance()->AddScore(25);
+
+							if ((*colliderThat)->GetIsHuman())
+								CPlayerInfo::GetInstance()->AddScore(-100);
+
 							(*colliderThis)->SetIsDone(true);
 							(*colliderThat)->SetIsDone(true);
-
 							// Remove from Scene Graph
 							if (CSceneGraph::GetInstance()->DeleteNode((*colliderThis)))
 								cout << "*** This Entity removed ***" << endl;
