@@ -16,4 +16,15 @@ void Human::Init()
 // initially we wanted to make human move, so we inherit from cenemy, should have just made it as a genericentity...
 void Human::Update(double dt)
 {
+	for (int i = 0; i < CSpatialPartition::GetInstance()->GetxNumOfGrid(); i++)
+	{
+		for (int j = 0; j < CSpatialPartition::GetInstance()->GetzNumOfGrid(); j++)
+		{
+			if (CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].IsHere(this))
+			{
+				index = i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j;
+				CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("RED_GRIDMESH");
+			}
+		}
+	}
 }

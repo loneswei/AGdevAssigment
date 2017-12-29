@@ -8,7 +8,11 @@ class Zombie : public CEnemy
 {
 public:
 	Zombie() : CEnemy(), jockey(true) { };
-	virtual ~Zombie() {} ;
+	virtual ~Zombie() {
+		for (int i = 0; i < CSpatialPartition::GetInstance()->GetxNumOfGrid(); i++)
+			for (int j = 0; j < CSpatialPartition::GetInstance()->GetzNumOfGrid(); j++)
+				CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("GRIDMESH");
+	} ;
 
 	void Init();
 	void Update(double dt);
@@ -19,6 +23,9 @@ public:
 private:
 	GenericEntity *zBody, *zHead, *zLArm, *zRArm, *zHorse;
 	bool jockey;
+
+	int currentIndex;
+	int previousIndex;
 	//vector<EntityBase*>zombieGridObj;
 };
 

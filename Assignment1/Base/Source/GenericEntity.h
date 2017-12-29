@@ -19,6 +19,8 @@ public:
 
 	// Set the maxAABB and minAABB
 	void SetAABB(Vector3 maxAABB, Vector3 minAABB);
+
+	int index;
 private:
 	Mesh* modelMesh;
 };

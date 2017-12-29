@@ -8,8 +8,12 @@ class Human : public CEnemy
 {
 public:
 	Human() : CEnemy() {};
-	virtual ~Human() {};
+	virtual ~Human() {
+			CSpatialPartition::GetInstance()->theGrid[index].SetMesh("GRIDMESH");
+	};
 
 	void Init();
 	void Update(double dt);
+
+	int index;
 };

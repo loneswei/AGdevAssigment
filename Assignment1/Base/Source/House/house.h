@@ -4,14 +4,18 @@
 #include "Vector3.h"
 #include "../SceneGraph/SceneGraph.h"
 
-class House
+class House : public EntityBase
 {
 public:
 	House() {};
-	virtual ~House() {};
+	virtual ~House() {
+		CSpatialPartition::GetInstance()->theGrid[index].SetMesh("GRIDMESH");
+	};
 
 	void Init(Vector3 pos);
 	void Update(double dt);
+
+	int index;
 
 private:
 	Vector3 pos;

@@ -17,6 +17,9 @@ public:
 	void Update(double dt);
 	void SetTerrain(GroundEntity* m_pTerrain);
 
+
+	int currentIndex;
+	int prevIndex;
 };
 
 namespace Create

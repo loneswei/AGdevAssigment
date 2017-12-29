@@ -33,8 +33,22 @@ void House::Init(Vector3 pos)
 	door->InitLOD("househighdoor", "housemeddoor", "houselowdoor");
 	door->SetCollider(true);
 	door->SetAABB(Vector3(5, 10, 1), Vector3(-5, -10, -1));
+
+	EntityManager::GetInstance()->AddEntity(this, true);
 }
 
 void House::Update(double dt)
 {
+	for (int i = 0; i < CSpatialPartition::GetInstance()->GetxNumOfGrid(); i++)
+	{
+		for (int j = 0; j < CSpatialPartition::GetInstance()->GetzNumOfGrid(); j++)
+		{
+			if (CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].IsHere(this))
+			{
+				index = i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j;
+				CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("RED_GRIDMESH");
+			}
+			
+		}
+	}
 }

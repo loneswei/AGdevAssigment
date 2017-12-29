@@ -6,17 +6,30 @@
 #include "PlayerInfo\PlayerInfo.h"
 
 GenericEntity::GenericEntity(Mesh* _modelMesh)
-	: modelMesh(_modelMesh)
+	: modelMesh(_modelMesh), index(0)
 {
 }
 
 GenericEntity::~GenericEntity()
 {
+	CSpatialPartition::GetInstance()->theGrid[index].SetMesh("GRIDMESH");
 }
 
 void GenericEntity::Update(double _dt)
 {
 	// Does nothing here, can inherit & override or create your own version of this class :D
+
+	for (int i = 0; i < CSpatialPartition::GetInstance()->GetxNumOfGrid(); i++)
+	{
+		for (int j = 0; j < CSpatialPartition::GetInstance()->GetzNumOfGrid(); j++)
+		{
+			if (CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].IsHere(this))
+			{
+				index = i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j;
+				CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("RED_GRIDMESH");
+			}
+		}
+	}
 }
 
 void GenericEntity::Render()

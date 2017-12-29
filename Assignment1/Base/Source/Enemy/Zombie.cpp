@@ -8,6 +8,8 @@
 
 void Zombie::Init()
 {
+	previousIndex = -1;
+	currentIndex = -1;
 	dead = false;
 	Vector3 pos;
 	pos.Set(Math::RandFloatMinMax(-400, 400), -2, Math::RandFloatMinMax(-400, 400));
@@ -212,5 +214,25 @@ void Zombie::Update(double dt)
 	}
 
 	Constrain();
+
+	for (int i = 0; i < CSpatialPartition::GetInstance()->GetxNumOfGrid(); i++)
+	{
+		for (int j = 0; j < CSpatialPartition::GetInstance()->GetzNumOfGrid(); j++)
+		{
+			if (CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].IsHere(this))
+			{
+				currentIndex = i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j;
+				CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("RED_GRIDMESH");
+			}
+		}
+	}
+
+	if (previousIndex != currentIndex)
+	{
+		if (previousIndex != -1)
+			CSpatialPartition::GetInstance()->theGrid[previousIndex].SetMesh("GRIDMESH");
+
+		previousIndex = currentIndex;
+	}
 }
 

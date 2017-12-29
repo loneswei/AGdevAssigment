@@ -380,9 +380,9 @@ void SceneText::Update(double dt)
 		GraphicsManager::GetInstance()->UpdateLights(dt);
 
 		// Game ends when player survived for 30s or player collides with zombie
-		//timerToWinGame += (float)dt;
-		//if (timerToWinGame > 30.0f || playerInfo->GetPlayerLose())
-			//gameEnd = true;
+		timerToWinGame += (float)dt;
+		if (timerToWinGame > 30.0f || playerInfo->GetPlayerLose())
+			gameEnd = true;
 	}
 
 	// show postgame screen based on outcome
@@ -415,9 +415,9 @@ void SceneText::Update(double dt)
 	textObj[3]->SetText(ss.str());
 
 	ss.str("");
-	//ss.precision(4);
-	//ss << "Timer: " << (30 - timerToWinGame);
-	ss << "Spatial: " << CPlayerInfo::GetInstance()->spActive;
+	ss.precision(4);
+	ss << "Timer: " << (30 - timerToWinGame);
+	//ss << "Spatial: " << CPlayerInfo::GetInstance()->spActive;
 	textObj[0]->SetText(ss.str());
 }
 

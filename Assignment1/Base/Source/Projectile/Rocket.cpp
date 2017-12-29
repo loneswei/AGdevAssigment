@@ -13,15 +13,13 @@ Rocket::Rocket(void)
 
 Rocket::Rocket(Mesh * _modelMesh)
 	: CProjectile(_modelMesh),
-	m_pTerrain(nullptr)
+	m_pTerrain(nullptr),
+	currentIndex(-1), prevIndex(-1)
 {
 }
 
 Rocket::~Rocket(void)
 {
-	for (int i = 0; i < CSpatialPartition::GetInstance()->GetxNumOfGrid(); i++)
-		for (int j = 0; j < CSpatialPartition::GetInstance()->GetzNumOfGrid(); j++)
-			CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("GRIDMESH");
 }
 
 void Rocket::Update(double dt)
@@ -39,12 +37,19 @@ void Rocket::Update(double dt)
 		for (int j = 0; j < CSpatialPartition::GetInstance()->GetzNumOfGrid(); j++)
 		{
 			if (CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].IsHere(this))
-				CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("RED_GRIDMESH");
-			else
-				CSpatialPartition::GetInstance()->theGrid[i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j].SetMesh("GRIDMESH");
+			{
+				currentIndex = i * CSpatialPartition::GetInstance()->GetzNumOfGrid() + j;
+				CSpatialPartition::GetInstance()->theGrid[currentIndex].SetMesh("RED_GRIDMESH");
+			}
 		}
 	}
 	
+	if (prevIndex != currentIndex)
+	{
+		if (prevIndex != -1)
+			CSpatialPartition::GetInstance()->theGrid[prevIndex].SetMesh("GRIDMESH");
+		prevIndex = currentIndex;
+	}
 
 	// remove the rocket when it is already out of bounds
 	if (position.x < -500 || position.x > 500 || position.z < -500 || position.z > 500 || position.y > 1000)
@@ -52,6 +57,7 @@ void Rocket::Update(double dt)
 		SetIsDone(true);
 		SetStatus(false);
 		CSceneGraph::GetInstance()->DeleteNode(this);
+		CSpatialPartition::GetInstance()->theGrid[currentIndex].SetMesh("GRIDMESH");
 	}
 
 	// get list of obj that is in rocket grid
@@ -70,6 +76,8 @@ void Rocket::Update(double dt)
 			RGridObj[i]->GetPosition() + 0.5f * RGridObj[i]->GetScale(),
 			position, scale.x))
 		{
+
+			CSpatialPartition::GetInstance()->theGrid[currentIndex].SetMesh("GRIDMESH");
 
 			// the whole zombie will be destroyed even if 1 part hit, so just add the pts as long as it collides zombie
 			if (RGridObj[i]->GetZombiePart())
@@ -105,6 +113,7 @@ void Rocket::Update(double dt)
 			if (CSceneGraph::GetInstance()->DeleteNode(RGridObj[i]))
 				cout << "Removal Successful" << endl;
 		}
+		CSpatialPartition::GetInstance()->theGrid[currentIndex].SetMesh("GRIDMESH");
 	}
 }
 
