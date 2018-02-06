@@ -185,6 +185,9 @@ void Application::Init()
 	SceneManager::GetInstance()->AddScene("MenuState", new CMenuState());
 	SceneManager::GetInstance()->AddScene("VictoryState", new CVictoryState());
 	SceneManager::GetInstance()->AddScene("DefeatState", new CDefeatState());
+	SceneManager::GetInstance()->AddScene("ControlsState", new CControlsState());
+	SceneManager::GetInstance()->AddScene("SettingsState", new CSettingsState());
+	SceneManager::GetInstance()->AddScene("TutorialState", new CTutorialState());
 	SceneManager::GetInstance()->AddScene("GameState", new SceneText());
 
 	// Set the active scene
