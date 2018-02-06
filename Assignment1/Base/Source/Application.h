@@ -5,6 +5,8 @@
 #include "SceneText.h"
 #include "GameStateManagement\IntroState.h"
 #include "GameStateManagement\MenuState.h"
+#include "GameStateManagement\VictoryState.h"
+#include "GameStateManagement\DefeatState.h"
 
 class ShaderProgram;
 struct GLFWwindow;

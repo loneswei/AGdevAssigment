@@ -183,6 +183,8 @@ void Application::Init()
 	// Create the Game States
 	SceneManager::GetInstance()->AddScene("IntroState", new CIntroState());
 	SceneManager::GetInstance()->AddScene("MenuState", new CMenuState());
+	SceneManager::GetInstance()->AddScene("VictoryState", new CVictoryState());
+	SceneManager::GetInstance()->AddScene("DefeatState", new CDefeatState());
 	SceneManager::GetInstance()->AddScene("GameState", new SceneText());
 
 	// Set the active scene
