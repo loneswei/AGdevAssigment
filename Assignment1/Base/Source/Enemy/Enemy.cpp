@@ -2,6 +2,7 @@
 #include "../EntityManager.h"
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
+#include "../Waypoint/WaypointManager.h"
 
 CEnemy::CEnemy()
 	: GenericEntity(NULL)
@@ -14,7 +15,9 @@ CEnemy::CEnemy()
 	, minBoundary(Vector3(0.0f, 0.0f, 0.0f))
 	, m_pTerrain(NULL)
 	, health(0)
+	, m_iWayPointIndex(-1)
 {
+	listOfWaypoints.clear();
 }
 
 
@@ -29,9 +32,20 @@ void CEnemy::Init(void)
 	defaultTarget.Set(0, 0, 0);
 	defaultUp.Set(0, 1, 0);
 
+	// Set up the waypoints
+	listOfWaypoints.push_back(0);
+	listOfWaypoints.push_back(1);
+	listOfWaypoints.push_back(2);
+
 	// Set the current values
 	position.Set(10.0f, 0.0f, 0.0f);
-	target.Set(10.0f, 0.0f, 450.0f);
+	//target.Set(10.0f, 0.0f, 450.0f);
+	CWaypoint* nextWaypoint = GetNextWaypoint();
+	if (nextWaypoint)
+		target = nextWaypoint->GetPosition();
+	else
+		target.SetZero();
+	cout << "Next target: " << target << endl;
 	up.Set(0.0f, 1.0f, 0.0f);
 
 	// Set Boundary
@@ -119,6 +133,19 @@ GroundEntity* CEnemy::GetTerrain(void)
 	return m_pTerrain;
 }
 
+CWaypoint * CEnemy::GetNextWaypoint(void)
+{
+	if ((int)listOfWaypoints.size() > 0)
+	{
+		m_iWayPointIndex++;
+		if (m_iWayPointIndex >= (int)listOfWaypoints.size())
+			m_iWayPointIndex = 0;
+		return CWaypointManager::GetInstance()->GetWaypoint(listOfWaypoints[m_iWayPointIndex]);
+	}
+	else
+		return NULL;
+}
+
 // Update
 void CEnemy::Update(double dt)
 {
@@ -130,11 +157,20 @@ void CEnemy::Update(double dt)
 	Constrain();
 
 	// Update the target
-	if (position.z > 400.0f)
-		target.z = position.z * -1;
-	else if (position.z < -400.0f)
-		target.z = position.z * -1;
+	//if (position.z > 400.0f)
+	//	target.z = position.z * -1;
+	//else if (position.z < -400.0f)
+	//	target.z = position.z * -1;
 
+	if ((target - position).LengthSquared() < 25.0f)
+	{
+		CWaypoint* nextWaypoint = GetNextWaypoint();
+		if (nextWaypoint)
+			target = nextWaypoint->GetPosition();
+		else
+			target.SetZero();
+		cout << "Next target: " << target << endl;
+	}
 	
 }
 
