@@ -11,6 +11,7 @@
 #include"../WeaponInfo/RocketLauncher.h"
 #include "../EntityManager.h"
 #include "../SceneGraph/SceneGraph.h"
+#include "../Lua/LuaInterface.h"
 
 // Allocating and initializing CPlayerInfo's static data member.  
 // The pointer is allocated but not the object's constructor.
@@ -33,8 +34,12 @@ CPlayerInfo::CPlayerInfo(void)
 	, score(0), shoot(false)
 	, playerLose(false)
 	, spActive(true)
-{
-}
+	, keyMoveForward('W')
+	, keyMoveBackward('S')
+	, keyMoveLeft('A')
+	, keyMoveRight('D')
+{	  
+}	  
 
 CPlayerInfo::~CPlayerInfo(void)
 {
@@ -66,12 +71,12 @@ CPlayerInfo::~CPlayerInfo(void)
 void CPlayerInfo::Init(void)
 {
 	// Set the default values
-	defaultPosition.Set(0,0,10);
+	defaultPosition = CLuaInterface::GetInstance()->getVector3Values("CPlayerInfoStartPos");
 	defaultTarget.Set(0,0,0);
 	defaultUp.Set(0,1,0);
 
 	// Set the current values
-	position.Set(0, 0, 10);
+	position = CLuaInterface::GetInstance()->getVector3Values("CPlayerInfoStartPos");
 	target.Set(0, 0, 0);
 	up.Set(0, 1, 0);
 
@@ -88,6 +93,15 @@ void CPlayerInfo::Init(void)
 	secondaryWeapon = new RocketLauncher();
 	secondaryWeapon->Init();
 
+	keyMoveForward = CLuaInterface::GetInstance()->getCharValue("moveForward");
+	keyMoveBackward = CLuaInterface::GetInstance()->getCharValue("moveBackward");
+	keyMoveLeft = CLuaInterface::GetInstance()->getCharValue("moveLeft");
+	keyMoveRight = CLuaInterface::GetInstance()->getCharValue("moveRight");
+
+	float distanceSquare = CLuaInterface::GetInstance()->getDistanceSquareValue("CalculateDistanceSquare", Vector3(0, 0, 0), Vector3(10, 10, 10));
+
+	int a = 1000, b = 2000, c = 3000, d = 4000;
+	CLuaInterface::GetInstance()->getVariableValues("GetMinMax", a, b, c, d);
 }
 
 // Returns true if the player is on ground
@@ -298,16 +312,16 @@ void CPlayerInfo::Update(double dt)
 	double camera_pitch = mouse_diff_y * 0.0174555555555556;	// 3.142 / 180.0
 
 	// Update the position if the WASD buttons were activated
-	if (KeyboardController::GetInstance()->IsKeyDown('W') ||
-		KeyboardController::GetInstance()->IsKeyDown('A') ||
-		KeyboardController::GetInstance()->IsKeyDown('S') ||
-		KeyboardController::GetInstance()->IsKeyDown('D'))
+	if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward) ||
+		KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft) ||
+		KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward) ||
+		KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
 	{
 		Vector3 viewVector = target - position;
 		Vector3 rightUV;
 		Vector3 tempPos = position;	// store the player position in a temp variable for calculations
 		bool hasCollider = false, canMove = false;
-		if (KeyboardController::GetInstance()->IsKeyDown('W'))
+		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveForward))
 		{
 			// simulate the player position 
 			tempPos += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
@@ -340,7 +354,7 @@ void CPlayerInfo::Update(double dt)
 			if ((hasCollider && canMove) || !hasCollider)
 				position += viewVector.Normalized() * (float)m_dSpeed * (float)dt;
 		}
-		else if (KeyboardController::GetInstance()->IsKeyDown('S'))
+		else if (KeyboardController::GetInstance()->IsKeyDown(keyMoveBackward))
 		{
 			// same as the 'W' movement
 			tempPos -= viewVector.Normalized() * (float)m_dSpeed * (float)dt;
@@ -370,7 +384,7 @@ void CPlayerInfo::Update(double dt)
 			if ((hasCollider && canMove) || !hasCollider)
 				position -= viewVector.Normalized() * (float)m_dSpeed * (float)dt;
 		}
-		if (KeyboardController::GetInstance()->IsKeyDown('A'))
+		if (KeyboardController::GetInstance()->IsKeyDown(keyMoveLeft))
 		{
 			rightUV = (viewVector.Normalized()).Cross(up);
 			rightUV.y = 0;
@@ -403,7 +417,7 @@ void CPlayerInfo::Update(double dt)
 			if ((hasCollider && canMove) || !hasCollider)
 				position -= rightUV * (float)m_dSpeed * (float)dt;
 		}
-		else if (KeyboardController::GetInstance()->IsKeyDown('D'))
+		else if (KeyboardController::GetInstance()->IsKeyDown(keyMoveRight))
 		{
 			rightUV = (viewVector.Normalized()).Cross(up);
 			rightUV.y = 0;

@@ -124,4 +124,9 @@ private:
 	bool shoot;
 	bool playerLose;
 
+	// Key to move the player
+	char keyMoveForward;
+	char keyMoveBackward;
+	char keyMoveLeft;
+	char keyMoveRight;
 };

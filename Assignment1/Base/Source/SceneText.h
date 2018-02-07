@@ -14,6 +14,7 @@
 #include "Enemy\Zombie.h"
 #include "House\house.h"
 #include "Enemy\Human.h"
+#include "Lua\LuaInterface.h"
 
 class ShaderProgram;
 class SceneManager;
