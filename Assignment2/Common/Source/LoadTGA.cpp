@@ -4,12 +4,13 @@
 #include <GL\glew.h>
 
 #include "LoadTGA.h"
+#include "../../Base/Source/Lua/LuaInterface.h"
 
 GLuint LoadTGA(const char *file_path)				// load TGA file to memory
 {
 	std::ifstream fileStream(file_path, std::ios::binary);
 	if(!fileStream.is_open()) {
-		std::cout << "Impossible to open " << file_path << ". Are you in the right directory ?\n";
+		CLuaInterface::GetInstance()->error("error102");
 		return 0;
 	}
 
@@ -29,7 +30,7 @@ GLuint LoadTGA(const char *file_path)				// load TGA file to memory
 		(header[16] != 24 && header[16] != 32))		// is TGA 24 or 32 Bit
 	{
 		fileStream.close();							// close file on failure
-		std::cout << "File header error.\n";
+		CLuaInterface::GetInstance()->error("error103");
 		return 0;										
 	}
 

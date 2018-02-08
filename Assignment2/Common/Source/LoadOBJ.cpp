@@ -3,6 +3,7 @@
 #include <map>
 
 #include "LoadOBJ.h"
+#include "../../Base/Source/Lua/LuaInterface.h"
 
 bool LoadOBJ(
 	const char *file_path, 
@@ -14,7 +15,7 @@ bool LoadOBJ(
 	std::ifstream fileStream(file_path, std::ios::binary);
 	if(!fileStream.is_open())
 	{
-		std::cout << "Impossible to open " << file_path << ". Are you in the right directory ?\n";
+		CLuaInterface::GetInstance()->error("error102");
 		return false;
 	}
 
@@ -91,7 +92,7 @@ bool LoadOBJ(
 			else
 			{
 				std::cout << "Error line: " << buf << std::endl;
-				std::cout << "File can't be read by parser\n";
+				CLuaInterface::GetInstance()->error("error104");
 				return false;
 			}
 		}
