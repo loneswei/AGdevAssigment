@@ -1,5 +1,7 @@
 #include "StatesZombie.h"
 #include"../PlayerInfo/PlayerInfo.h"
+#include "../Lua/LuaInterface.h"
+#include "../Waypoint/WaypointManager.h"
 
 StateMove::StateMove(const std::string & stateID, Zombie * theZombie_)
 	: State(stateID)
@@ -26,7 +28,7 @@ void StateMove::Update(double dt)
 			theZombie->SetTarget(Vector3(0, 0, 0));
 		cout << "Next target: " << theZombie->GetTarget() << endl;
 	}
-	if (DistanceSquaredBetween(CPlayerInfo::GetInstance()->GetPos(), theZombie->GetPos()) < 2500)
+	if (CLuaInterface::GetInstance()->getDistanceSquareValue("CalculateDistanceSquare", CPlayerInfo::GetInstance()->GetPos(), theZombie->GetPos()) <= 2500)
 		theZombie->sm->SetNextState("Chase");
 }
 
@@ -54,14 +56,23 @@ void StateChase::Update(double dt)
 	theZombie->SetTarget(CPlayerInfo::GetInstance()->GetPos());
 
 	// gameplay : when zombie 'collides' with player
-	if (DistanceSquaredBetween(CPlayerInfo::GetInstance()->GetPos(), theZombie->GetPos()) < 25)
+	if (CLuaInterface::GetInstance()->getDistanceSquareValue("CalculateDistanceSquare", CPlayerInfo::GetInstance()->GetPos(), theZombie->GetPos()) < 25)
 	{
 		CPlayerInfo::GetInstance()->SetPlayerLose(true);
 		return;
 	}
 
-	if (DistanceSquaredBetween(CPlayerInfo::GetInstance()->GetPos(), theZombie->GetPos()) > 2500)
-		theZombie->sm->SetNextState("Move");
+	// Check if lose track of player
+	if (CLuaInterface::GetInstance()->getDistanceSquareValue("CalculateDistanceSquare", CPlayerInfo::GetInstance()->GetPos(), theZombie->GetPos()) > 2500)
+	{
+		Vector3 nearestWaypointPos = CWaypointManager::GetInstance()->GetNearestWaypoint(theZombie->GetPos())->GetPosition();
+
+		// Move back to nearest waypoint then change state to Move
+		if(CLuaInterface::GetInstance()->getDistanceSquareValue("CalculateDistanceSquare", nearestWaypointPos, theZombie->GetPos()) > 25)
+			theZombie->SetTarget(nearestWaypointPos);
+		else
+			theZombie->sm->SetNextState("Move");
+	}
 }
 
 void StateChase::Exit()
