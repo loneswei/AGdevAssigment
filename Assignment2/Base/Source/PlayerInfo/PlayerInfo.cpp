@@ -30,14 +30,15 @@ CPlayerInfo::CPlayerInfo(void)
 	, m_pTerrain(NULL)
 	, primaryWeapon(NULL)
 	, secondaryWeapon(NULL)
+	, lua(nullptr)
 	, gun1(nullptr), gun2(nullptr)
 	, score(0), shoot(false)
 	, playerLose(false)
 	, spActive(true)
-	, keyMoveForward('W')
-	, keyMoveBackward('S')
-	, keyMoveLeft('A')
-	, keyMoveRight('D')
+	, keyMoveForward('W'), keyMoveBackward('S'), keyMoveLeft('A'), keyMoveRight('D')
+	, keyDropPriWeapon('H'), keyReload('R'), keyJump(' '), keyShootPri('L'), keyShootSec('M')
+	, keyPickUpWeapon('G'), keyDropSecWeapon('T')
+
 {	  
 }	  
 
@@ -70,6 +71,7 @@ CPlayerInfo::~CPlayerInfo(void)
 // Initialise this class instance
 void CPlayerInfo::Init(void)
 {
+	lua = CLuaInterface::GetInstance();
 	// Set the default values
 	defaultPosition = CLuaInterface::GetInstance()->getVector3Values(CLuaInterface::GetInstance()->theLuaState, "CPlayerInfoStartPos");
 	defaultTarget.Set(0,0,0);
@@ -93,10 +95,17 @@ void CPlayerInfo::Init(void)
 	secondaryWeapon = new RocketLauncher();
 	secondaryWeapon->Init();
 
-	keyMoveForward = CLuaInterface::GetInstance()->getCharValue(CLuaInterface::GetInstance()->theControlState, "moveForward");
-	keyMoveBackward = CLuaInterface::GetInstance()->getCharValue(CLuaInterface::GetInstance()->theControlState,"moveBackward");
-	keyMoveLeft = CLuaInterface::GetInstance()->getCharValue(CLuaInterface::GetInstance()->theControlState,"moveLeft");
-	keyMoveRight = CLuaInterface::GetInstance()->getCharValue(CLuaInterface::GetInstance()->theControlState, "moveRight");
+	keyMoveForward = CheckSpecialKey(lua->getStringValue(lua->theControlState, "moveForward"));
+	keyMoveBackward = CheckSpecialKey(lua->getStringValue(lua->theControlState,"moveBackward"));
+	keyMoveLeft = CheckSpecialKey(lua->getStringValue(lua->theControlState,"moveLeft"));
+	keyMoveRight = CheckSpecialKey(lua->getStringValue(lua->theControlState, "moveRight"));
+	keyReload = CheckSpecialKey(lua->getStringValue(lua->theControlState, "reload"));
+	keyJump = CheckSpecialKey(lua->getStringValue(lua->theControlState, "jump"));
+	keyDropPriWeapon = CheckSpecialKey(lua->getStringValue(lua->theControlState, "dropprimary"));
+	keyDropSecWeapon = CheckSpecialKey(lua->getStringValue(lua->theControlState, "dropsecondary"));
+	keyPickUpWeapon = CheckSpecialKey(lua->getStringValue(lua->theControlState, "pickupgun"));
+	keyShootPri = CheckSpecialKey(lua->getStringValue(lua->theControlState, "shootprimary"));
+	keyShootSec = CheckSpecialKey(lua->getStringValue(lua->theControlState, "shootsecondary"));
 
 	float distanceSquare = CLuaInterface::GetInstance()->getDistanceSquareValue("CalculateDistanceSquare", Vector3(0, 0, 0), Vector3(10, 10, 10));
 
@@ -545,14 +554,14 @@ void CPlayerInfo::Update(double dt)
 	}
 
 	// If the user presses SPACEBAR, then make him jump
-	if (KeyboardController::GetInstance()->IsKeyDown(VK_SPACE) &&
+	if (KeyboardController::GetInstance()->IsKeyDown(keyJump) &&
 		position.y == m_pTerrain->GetTerrainHeight(position))
 	{
 		SetToJumpUpwards(true);
 	}
 
 	// Update the weapons
-	if (KeyboardController::GetInstance()->IsKeyReleased('R'))
+	if (KeyboardController::GetInstance()->IsKeyReleased(keyReload))
 	{
 		if (primaryWeapon)
 		{
@@ -571,12 +580,12 @@ void CPlayerInfo::Update(double dt)
 		secondaryWeapon->Update(dt);
 
 	// if Mouse Buttons were activated, then act on them
-	if (MouseController::GetInstance()->IsButtonPressed(MouseController::LMB))
+	if (MouseController::GetInstance()->IsButtonPressed(keyShootPri))
 	{
 		if (primaryWeapon)
 			primaryWeapon->Discharge(position, target, this);
 	}
-	else if (MouseController::GetInstance()->IsButtonPressed(MouseController::RMB))
+	else if (MouseController::GetInstance()->IsButtonPressed(keyShootSec))
 	{
 		if (secondaryWeapon)
 			secondaryWeapon->Discharge(position, target, this);
@@ -610,14 +619,14 @@ void CPlayerInfo::Update(double dt)
 			// check with every gun on ground
 			Vector3 dist = DistanceSquaredBetween(GunOnGround[i]->GetPosition(), this->position);
 			if (dist < 100)	// if player close to the gun, allow him to potentially pick up the gun
-				if (KeyboardController::GetInstance()->IsKeyReleased('G'))
+				if (KeyboardController::GetInstance()->IsKeyReleased(keyPickUpWeapon))
 					PickUpGun(GunOnGround[i]);
 		}
 	}
 	// Drop Gun
-	if (KeyboardController::GetInstance()->IsKeyReleased('H'))
+	if (KeyboardController::GetInstance()->IsKeyReleased(keyDropPriWeapon))
 		DropGun(primaryWeapon);
-	if (KeyboardController::GetInstance()->IsKeyReleased('T'))
+	if (KeyboardController::GetInstance()->IsKeyReleased(keyDropSecWeapon))
 		DropGun(secondaryWeapon);
 
 	// ------------------------------------------------
@@ -760,4 +769,33 @@ void CPlayerInfo::AddScore(int _score)
 		return;
 	}
 	score += _score;
+}
+
+unsigned char CPlayerInfo::CheckSpecialKey(const char* control)
+{
+	if (control == nullptr)
+		return '_';
+
+	if (control == "space")
+		return VK_SPACE;
+	else if (control == "LMB")
+		return MouseController::LMB;
+	else if (control == "RMB")
+		return MouseController::RMB;
+	else if (control == "LSHIFT")
+		return VK_LSHIFT;
+	else if (control == "RSHIFT")
+		return VK_RSHIFT;
+	else if (control == "tab")
+		return VK_TAB;
+	else if (control == "enter")
+		return VK_RETURN;
+	else if (control == "backspace")
+		return VK_BACK;
+	else if (control == "lcontrol")
+		return VK_LCONTROL;
+	else if (control == "rcontrol")
+		return VK_RCONTROL;
+	else
+		return control[0];
 }

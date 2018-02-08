@@ -5,6 +5,7 @@
 #include "../WeaponInfo/WeaponInfo.h"
 #include "../SceneGraph/SceneNode.h"
 #include "../GenericEntity.h"
+#include "../Lua/LuaInterface.h"
 
 class CPlayerInfo : public EntityBase
 {
@@ -93,7 +94,10 @@ public:
 	bool GetPlayerLose() { return playerLose; }
 	void SetPlayerLose(bool _playerLose) { playerLose = _playerLose; }
 
+	unsigned char CheckSpecialKey(const char *control);
+
 	bool spActive;
+	CLuaInterface *lua;
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
 	Vector3 position, target, up;
@@ -129,4 +133,11 @@ private:
 	char keyMoveBackward;
 	char keyMoveLeft;
 	char keyMoveRight;
+	char keyJump;
+	char keyPickUpWeapon;
+	char keyDropPriWeapon;
+	char keyDropSecWeapon;
+	char keyReload;
+	char keyShootPri;
+	char keyShootSec;
 };
