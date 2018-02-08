@@ -1,2 +1,5 @@
 error100 = "This is not a table."
 error101 = "This is not a valid Waypoint coordinate."
+error102 = "Impossible to open file."
+error103 = "Invalid Targa file."
+error104 = "Invalid Object file."
