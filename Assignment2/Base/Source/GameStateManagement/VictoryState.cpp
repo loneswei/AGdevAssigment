@@ -33,7 +33,8 @@ void CVictoryState::Init()
 	MeshBuilder::GetInstance()->GetMesh("VICTORYSTATE_BKGROUND")->textureID = LoadTGA(CLuaInterface::GetInstance()->getStringValue(CLuaInterface::GetInstance()->theImageState, "victory"));
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
-	VictoryStateBackGround = Create::Sprite2DObject("VICTORYSTATE_BKGROUND", Vector3(halfWindowWidth, halfWindowHeight, 0.0f), Vector3(800.0f, 600.0f, 0.0f));
+	VictoryStateBackGround = Create::Sprite2DObject("VICTORYSTATE_BKGROUND", Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
+		Vector3(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight(), 0.0f));
 
 	cout << "CVictoryState loaded\n" << endl;
 }

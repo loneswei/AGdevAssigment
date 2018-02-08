@@ -33,7 +33,8 @@ void CSettingsState::Init()
 	MeshBuilder::GetInstance()->GetMesh("SETTINGSSTATE_BKGROUND")->textureID = LoadTGA(CLuaInterface::GetInstance()->getStringValue(CLuaInterface::GetInstance()->theImageState, "settings"));
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
-	SettingsStateBackGround = Create::Sprite2DObject("SETTINGSSTATE_BKGROUND", Vector3(halfWindowWidth, halfWindowHeight, 0.0f), Vector3(800.0f, 600.0f, 0.0f));
+	SettingsStateBackGround = Create::Sprite2DObject("SETTINGSSTATE_BKGROUND", Vector3(halfWindowWidth, halfWindowHeight, 0.0f),
+		Vector3(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight(), 0.0f));
 
 	cout << "CSettingsState loaded\n" << endl;
 }
