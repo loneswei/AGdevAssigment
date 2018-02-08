@@ -47,6 +47,9 @@ public:
 	float getFloatValue(lua_State* luaState,  const char* varName);
 	// Get a char value through the Lua Interface Class
 	char getCharValue(lua_State* luaState, const char* varName);
+
+	const char* getStringValue(lua_State* luaState, const char* varName);
+
 	// Get Vector3 values through the Lua Interface Class
 	Vector3 getVector3Values(lua_State* luaState, const char* varName);
 	// Get distance square value through the Lua Interface Class
@@ -76,5 +79,7 @@ public:
 	lua_State *thePlayerInfoState;
 	lua_State *theWeaponInfoState;
 	lua_State *theEnemyInfoState;
+	lua_State *theImageState;
+	lua_State *theObjectState;
 };
 

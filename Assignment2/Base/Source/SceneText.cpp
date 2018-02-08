@@ -47,7 +47,7 @@ SceneText::~SceneText()
 void SceneText::Init()
 {
 	Math::InitRNG();
-	
+	lua = CLuaInterface::GetInstance();
 	//currProg = GraphicsManager::GetInstance()->LoadShader("default", "Shader//Texture.vertexshader", "Shader//Texture.fragmentshader");
 
 	//// Tell the shader program to store these uniform locations
@@ -131,9 +131,9 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateAxes("reference");
 	MeshBuilder::GetInstance()->GenerateCrossHair("crosshair");
 	MeshBuilder::GetInstance()->GenerateQuad("quad", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("quad")->textureID = LoadTGA("Image//calibri.tga");
+	MeshBuilder::GetInstance()->GetMesh("quad")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "calibri"));
 	MeshBuilder::GetInstance()->GenerateText("text", 16, 16);
-	MeshBuilder::GetInstance()->GetMesh("text")->textureID = LoadTGA("Image//calibri.tga");
+	MeshBuilder::GetInstance()->GetMesh("text")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "calibri"));
 	MeshBuilder::GetInstance()->GetMesh("text")->material.kAmbient.Set(1, 0, 0);
 	MeshBuilder::GetInstance()->GenerateOBJ("Chair", "OBJ//chair.obj");
 	MeshBuilder::GetInstance()->GetMesh("Chair")->textureID = LoadTGA("Image//chair.tga");
@@ -157,12 +157,12 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_RIGHT", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_TOP", Color(1, 1, 1), 1.f);
 	MeshBuilder::GetInstance()->GenerateQuad("SKYBOX_BOTTOM", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("SKYBOX_FRONT")->textureID = LoadTGA("Image//SkyBox//skybox_front.tga");
-	MeshBuilder::GetInstance()->GetMesh("SKYBOX_BACK")->textureID = LoadTGA("Image//SkyBox//skybox_back.tga");
-	MeshBuilder::GetInstance()->GetMesh("SKYBOX_LEFT")->textureID = LoadTGA("Image//SkyBox//skybox_left.tga");
-	MeshBuilder::GetInstance()->GetMesh("SKYBOX_RIGHT")->textureID = LoadTGA("Image//SkyBox//skybox_right.tga");
-	MeshBuilder::GetInstance()->GetMesh("SKYBOX_TOP")->textureID = LoadTGA("Image//SkyBox//skybox_top.tga");
-	MeshBuilder::GetInstance()->GetMesh("SKYBOX_BOTTOM")->textureID = LoadTGA("Image//SkyBox//skybox_bottom.tga");
+	MeshBuilder::GetInstance()->GetMesh("SKYBOX_FRONT")->textureID = LoadTGA(lua ->getStringValue(lua->theImageState, "skyboxfront"));
+	MeshBuilder::GetInstance()->GetMesh("SKYBOX_BACK")->textureID = LoadTGA(lua->getStringValue(lua->theImageState,"skyboxback"));
+	MeshBuilder::GetInstance()->GetMesh("SKYBOX_LEFT")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "skyboxleft"));
+	MeshBuilder::GetInstance()->GetMesh("SKYBOX_RIGHT")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "skyboxright"));
+	MeshBuilder::GetInstance()->GetMesh("SKYBOX_TOP")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "skyboxtop"));
+	MeshBuilder::GetInstance()->GetMesh("SKYBOX_BOTTOM")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "skyboxbottom"));
 
 	// Laser and Grid
 	MeshBuilder::GetInstance()->GenerateRay("laser", 10.0f);
@@ -170,70 +170,66 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GenerateQuad("RED_GRIDMESH", Color(1, 0, 0), 1.f);
 
 	// Car
-	MeshBuilder::GetInstance()->GenerateOBJ("carlow", "OBJ//LOD//carlow.obj");
-	MeshBuilder::GetInstance()->GetMesh("carlow")->textureID = LoadTGA("Image//LOD//carlow.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("carmed", "OBJ//LOD//carmed.obj");
-	MeshBuilder::GetInstance()->GetMesh("carmed")->textureID = LoadTGA("Image//LOD//carlow.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("carhigh", "OBJ//LOD//carhigh.obj");
-	MeshBuilder::GetInstance()->GetMesh("carhigh")->textureID = LoadTGA("Image//LOD//carlow.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("carlow", lua->getStringValue(lua->theObjectState, "carlow"));
+	MeshBuilder::GetInstance()->GetMesh("carlow")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "car"));
+	MeshBuilder::GetInstance()->GenerateOBJ("carmed", lua->getStringValue(lua->theObjectState, "carmed"));
+	MeshBuilder::GetInstance()->GetMesh("carmed")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "car"));
+	MeshBuilder::GetInstance()->GenerateOBJ("carhigh", lua->getStringValue(lua->theObjectState, "carhigh"));
+	MeshBuilder::GetInstance()->GetMesh("carhigh")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "car"));
 
 	// Zombie
-	MeshBuilder::GetInstance()->GenerateOBJ("zombiehead", "OBJ//zombiehead.obj");
-	MeshBuilder::GetInstance()->GetMesh("zombiehead")->textureID = LoadTGA("Image//zombie.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("zombiearm", "OBJ//zombiearm.obj");
-	MeshBuilder::GetInstance()->GetMesh("zombiearm")->textureID = LoadTGA("Image//zombie.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("zombiebody", "OBJ//zombiebody.obj");
-	MeshBuilder::GetInstance()->GetMesh("zombiebody")->textureID = LoadTGA("Image//zombie.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("zombiehorse", "OBJ//horse.obj");
-	MeshBuilder::GetInstance()->GetMesh("zombiehorse")->textureID = LoadTGA("Image//horse.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("zombiehead", lua->getStringValue(lua->theObjectState, "zombiehead"));
+	MeshBuilder::GetInstance()->GetMesh("zombiehead")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "zombie"));
+	MeshBuilder::GetInstance()->GenerateOBJ("zombiearm", lua->getStringValue(lua->theObjectState, "zombiearm"));
+	MeshBuilder::GetInstance()->GetMesh("zombiearm")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "zombie"));
+	MeshBuilder::GetInstance()->GenerateOBJ("zombiebody", lua->getStringValue(lua->theObjectState, "zombiebody"));
+	MeshBuilder::GetInstance()->GetMesh("zombiebody")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "zombie"));
+	MeshBuilder::GetInstance()->GenerateOBJ("zombiehorse", lua->getStringValue(lua->theObjectState, "horse"));
+	MeshBuilder::GetInstance()->GetMesh("zombiehorse")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "horse"));
 
 	// House
-	MeshBuilder::GetInstance()->GenerateOBJ("houseroof", "OBJ//LOD//houseroof.obj");
-	MeshBuilder::GetInstance()->GetMesh("houseroof")->textureID = LoadTGA("Image//LOD//houselow.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("houseleftwall", "OBJ//LOD//houseleftwall.obj");
-	MeshBuilder::GetInstance()->GetMesh("houseleftwall")->textureID = LoadTGA("Image//LOD//houselow.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("housebackwall", "OBJ//LOD//housebackwall.obj");
-	MeshBuilder::GetInstance()->GetMesh("housebackwall")->textureID = LoadTGA("Image//LOD//houselow.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("houserightwall", "OBJ//LOD//houserightwall.obj");
-	MeshBuilder::GetInstance()->GetMesh("houserightwall")->textureID = LoadTGA("Image//LOD//houselow.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("houseroof", lua->getStringValue(lua->theObjectState, "houseroof"));
+	MeshBuilder::GetInstance()->GetMesh("houseroof")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "houselow"));
+	MeshBuilder::GetInstance()->GenerateOBJ("houseleftwall", lua->getStringValue(lua->theObjectState, "houseleftwall"));
+	MeshBuilder::GetInstance()->GetMesh("houseleftwall")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "houselow"));
+	MeshBuilder::GetInstance()->GenerateOBJ("housebackwall", lua->getStringValue(lua->theObjectState, "housebackwall"));
+	MeshBuilder::GetInstance()->GetMesh("housebackwall")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "houselow"));
+	MeshBuilder::GetInstance()->GenerateOBJ("houserightwall", lua->getStringValue(lua->theObjectState, "houserightwall"));
+	MeshBuilder::GetInstance()->GetMesh("houserightwall")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "houselow"));
 	//MeshBuilder::GetInstance()->GenerateOBJ("housefrontwall", "OBJ//LOD//housefrontwall.obj");
 	//MeshBuilder::GetInstance()->GetMesh("housefrontwall")->textureID = LoadTGA("Image//LOD//househigh.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("houselowdoor", "OBJ//LOD//housedoor.obj");
-	MeshBuilder::GetInstance()->GetMesh("houselowdoor")->textureID = LoadTGA("Image//LOD//houselow.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("housemeddoor", "OBJ//LOD//housedoor.obj");
-	MeshBuilder::GetInstance()->GetMesh("housemeddoor")->textureID = LoadTGA("Image//LOD//housemed.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("househighdoor", "OBJ//LOD//housedoor.obj");
-	MeshBuilder::GetInstance()->GetMesh("househighdoor")->textureID = LoadTGA("Image//LOD//househigh.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("houselowdoor", lua->getStringValue(lua->theObjectState, "housedoor"));
+	MeshBuilder::GetInstance()->GetMesh("houselowdoor")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "houselow"));
+	MeshBuilder::GetInstance()->GenerateOBJ("housemeddoor", lua->getStringValue(lua->theObjectState, "housedoor"));
+	MeshBuilder::GetInstance()->GetMesh("housemeddoor")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "housemed"));
+	MeshBuilder::GetInstance()->GenerateOBJ("househighdoor", lua->getStringValue(lua->theObjectState, "housedoor"));
+	MeshBuilder::GetInstance()->GetMesh("househighdoor")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "househigh"));
 
 	// Human
-	MeshBuilder::GetInstance()->GenerateOBJ("humanlow", "OBJ//LOD//humanlow.obj");
-	MeshBuilder::GetInstance()->GetMesh("humanlow")->textureID = LoadTGA("Image//LOD//humanmed.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("humanmed", "OBJ//LOD//humanmed.obj");
-	MeshBuilder::GetInstance()->GetMesh("humanmed")->textureID = LoadTGA("Image//LOD//humanmed.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("humanhigh", "OBJ//LOD//humanhigh.obj");
-	MeshBuilder::GetInstance()->GetMesh("humanhigh")->textureID = LoadTGA("Image//LOD//humanhigh.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("humanlow", lua->getStringValue(lua->theObjectState, "humanlow"));
+	MeshBuilder::GetInstance()->GetMesh("humanlow")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "humanmed"));
+	MeshBuilder::GetInstance()->GenerateOBJ("humanmed", lua->getStringValue(lua->theObjectState, "humanmed"));
+	MeshBuilder::GetInstance()->GetMesh("humanmed")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "humanmed"));
+	MeshBuilder::GetInstance()->GenerateOBJ("humanhigh", lua->getStringValue(lua->theObjectState, "humanhigh"));
+	MeshBuilder::GetInstance()->GetMesh("humanhigh")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "humanhigh"));
 
 	// Lamp post
-	MeshBuilder::GetInstance()->GenerateOBJ("lamppostlow", "OBJ//LOD//lamppostlow.obj");
-	MeshBuilder::GetInstance()->GetMesh("lamppostlow")->textureID = LoadTGA("Image//LOD//lampposthigh.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("lamppostmed", "OBJ//LOD//lamppostmed.obj");
-	MeshBuilder::GetInstance()->GetMesh("lamppostmed")->textureID = LoadTGA("Image//LOD//lampposthigh.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("lampposthigh", "OBJ//LOD//lampposthigh.obj");
-	MeshBuilder::GetInstance()->GetMesh("lampposthigh")->textureID = LoadTGA("Image//LOD//lampposthigh.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("lamppostlow", lua->getStringValue(lua->theObjectState, "lamppostlow"));
+	MeshBuilder::GetInstance()->GetMesh("lamppostlow")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "lamppost"));
+	MeshBuilder::GetInstance()->GenerateOBJ("lamppostmed", lua->getStringValue(lua->theObjectState, "lamppostmed"));
+	MeshBuilder::GetInstance()->GetMesh("lamppostmed")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "lamppost"));
+	MeshBuilder::GetInstance()->GenerateOBJ("lampposthigh", lua->getStringValue(lua->theObjectState, "lampposthigh"));
+	MeshBuilder::GetInstance()->GetMesh("lampposthigh")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "lamppost"));
 
 	// Tree
-	MeshBuilder::GetInstance()->GenerateOBJ("treelow", "OBJ//LOD//treelow.obj");
-	MeshBuilder::GetInstance()->GetMesh("treelow")->textureID = LoadTGA("Image//LOD//treehigh.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("treemed", "OBJ//LOD//treehigh.obj");
-	MeshBuilder::GetInstance()->GetMesh("treemed")->textureID = LoadTGA("Image//LOD//treehigh.tga");
-	MeshBuilder::GetInstance()->GenerateOBJ("treehigh", "OBJ//LOD//treehigh.obj");
-	MeshBuilder::GetInstance()->GetMesh("treehigh")->textureID = LoadTGA("Image//LOD//treemed.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("treelow", lua->getStringValue(lua->theObjectState, "treelow"));
+	MeshBuilder::GetInstance()->GetMesh("treelow")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "treehigh"));
+	MeshBuilder::GetInstance()->GenerateOBJ("treemed", lua->getStringValue(lua->theObjectState, "treehigh"));
+	MeshBuilder::GetInstance()->GetMesh("treemed")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "treehigh"));
+	MeshBuilder::GetInstance()->GenerateOBJ("treehigh", lua->getStringValue(lua->theObjectState, "treehigh"));
+	MeshBuilder::GetInstance()->GetMesh("treehigh")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "treemed"));
 
 	// Win / Lose Screen
-	MeshBuilder::GetInstance()->GenerateQuad("win", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("win")->textureID = LoadTGA("Image//win.tga");
-	MeshBuilder::GetInstance()->GenerateQuad("lose", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("lose")->textureID = LoadTGA("Image//lose.tga");
 
 	// Set up the Spatial Partition and pass it to the EntityManager to manage
 	CSpatialPartition::GetInstance()->Init(100, 100, 10, 10);

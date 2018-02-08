@@ -47,6 +47,7 @@ private:
 	Zombie* theZombie;
 	House* theHouse;
 
+	CLuaInterface *lua;
 	float timerToSpawnZombie;
 	//static SceneText* sInstance; // The pointer to the object that gets registered
 

@@ -30,7 +30,7 @@ void CTutorialState::Init()
 
 	// Load all the meshes
 	MeshBuilder::GetInstance()->GenerateQuad("TUTORIALSTATE_BKGROUND", Color(1, 1, 1), 1.f);
-	MeshBuilder::GetInstance()->GetMesh("TUTORIALSTATE_BKGROUND")->textureID = LoadTGA("Image//TutorialState.tga");
+	MeshBuilder::GetInstance()->GetMesh("TUTORIALSTATE_BKGROUND")->textureID = LoadTGA(CLuaInterface::GetInstance()->getStringValue(CLuaInterface::GetInstance()->theImageState, "tutorial"));
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
 	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
 	TutorialStateBackGround = Create::Sprite2DObject("TUTORIALSTATE_BKGROUND", Vector3(halfWindowWidth, halfWindowHeight, 0.0f), Vector3(800.0f, 600.0f, 0.0f));

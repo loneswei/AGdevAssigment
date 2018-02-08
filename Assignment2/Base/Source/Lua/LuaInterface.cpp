@@ -32,6 +32,10 @@ bool CLuaInterface::Init()
 	LuaSetUp(theControlState, "Image//controls.lua");
 	theSettingState = lua_open();
 	LuaSetUp(theSettingState, "Image//settings.lua");
+	theImageState = lua_open();
+	LuaSetUp(theImageState, "Image//imagefilepath.lua");
+	theObjectState = lua_open();
+	LuaSetUp(theObjectState, "Image//objfilepath.lua");
 	result = true;
 
 
@@ -89,6 +93,15 @@ char CLuaInterface::getCharValue(lua_State* luaState, const char* varName)
 	// else return a default value of <SPACE>
 	else
 		return ' ';
+}
+
+const char* CLuaInterface::getStringValue(lua_State * luaState, const char * varName)
+{
+	size_t len;
+	lua_getglobal(luaState, varName);
+	const char* str = lua_tolstring(luaState, -1, &len);
+
+	return str;
 }
 
 // Get Vector3 values through the Lua Interface Class
