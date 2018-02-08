@@ -20,7 +20,7 @@ public:
 	bool IsKeyUp(unsigned char _slot);
 	bool IsKeyPressed(unsigned char _slot);
 	bool IsKeyReleased(unsigned char _slot);
-
+	bool AnyKeyPressed();
 private:
 	KeyboardController();
 	~KeyboardController();

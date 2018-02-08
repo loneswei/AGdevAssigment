@@ -37,3 +37,8 @@ bool KeyboardController::IsKeyReleased(unsigned char _slot)
 {
 	return IsKeyUp(_slot) && prevStatus.test(_slot);
 }
+
+bool KeyboardController::AnyKeyPressed()
+{
+	return currStatus.any();
+}
