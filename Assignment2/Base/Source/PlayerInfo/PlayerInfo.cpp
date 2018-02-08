@@ -71,12 +71,12 @@ CPlayerInfo::~CPlayerInfo(void)
 void CPlayerInfo::Init(void)
 {
 	// Set the default values
-	defaultPosition = CLuaInterface::GetInstance()->getVector3Values("CPlayerInfoStartPos");
+	defaultPosition = CLuaInterface::GetInstance()->getVector3Values(CLuaInterface::GetInstance()->theLuaState, "CPlayerInfoStartPos");
 	defaultTarget.Set(0,0,0);
 	defaultUp.Set(0,1,0);
 
 	// Set the current values
-	position = CLuaInterface::GetInstance()->getVector3Values("CPlayerInfoStartPos");
+	position = CLuaInterface::GetInstance()->getVector3Values(CLuaInterface::GetInstance()->theLuaState, "CPlayerInfoStartPos");
 	target.Set(0, 0, 0);
 	up.Set(0, 1, 0);
 
@@ -93,15 +93,15 @@ void CPlayerInfo::Init(void)
 	secondaryWeapon = new RocketLauncher();
 	secondaryWeapon->Init();
 
-	keyMoveForward = CLuaInterface::GetInstance()->getCharValue("moveForward");
-	keyMoveBackward = CLuaInterface::GetInstance()->getCharValue("moveBackward");
-	keyMoveLeft = CLuaInterface::GetInstance()->getCharValue("moveLeft");
-	keyMoveRight = CLuaInterface::GetInstance()->getCharValue("moveRight");
+	keyMoveForward = CLuaInterface::GetInstance()->getCharValue(CLuaInterface::GetInstance()->theControlState, "moveForward");
+	keyMoveBackward = CLuaInterface::GetInstance()->getCharValue(CLuaInterface::GetInstance()->theControlState,"moveBackward");
+	keyMoveLeft = CLuaInterface::GetInstance()->getCharValue(CLuaInterface::GetInstance()->theControlState,"moveLeft");
+	keyMoveRight = CLuaInterface::GetInstance()->getCharValue(CLuaInterface::GetInstance()->theControlState, "moveRight");
 
 	float distanceSquare = CLuaInterface::GetInstance()->getDistanceSquareValue("CalculateDistanceSquare", Vector3(0, 0, 0), Vector3(10, 10, 10));
 
 	int a = 1000, b = 2000, c = 3000, d = 4000;
-	CLuaInterface::GetInstance()->getVariableValues("GetMinMax", a, b, c, d);
+	CLuaInterface::GetInstance()->getVariableValues(CLuaInterface::GetInstance()->theLuaState, "GetMinMax", a, b, c, d);
 }
 
 // Returns true if the player is on ground

@@ -318,16 +318,12 @@ void SceneText::Init()
 	textObj[0]->SetText("HELLO WORLD");
 
 	//gameplay
-	timerToSpawnZombie = 0.0f;
 	gameEnd = false;
-	timerToWinGame = 0.0f;
-	createScreen = false;
 }
 
 void SceneText::Update(double dt)
 {
-	if (!gameEnd)
-	{
+	
 		// Update our entities
 		EntityManager::GetInstance()->Update(dt);
 
@@ -387,40 +383,26 @@ void SceneText::Update(double dt)
 		playerInfo->Update(dt);
 
 		// spawn zombie every 5 seconds
-		timerToSpawnZombie += (float)dt;
-		if (timerToSpawnZombie > 5.0f)
-		{
-			theZombie = new Zombie();
-			theZombie->Init();	// zombie will be added into entitylist in Init(), so dunneed call update
-			theZombie->SetTerrain(groundEntity); 
-			timerToSpawnZombie -= 5.0f;
-		}
+		//timerToSpawnZombie += (float)dt;
+		//if (timerToSpawnZombie > 5.0f)
+		//{
+		//	theZombie = new Zombie();
+		//	theZombie->Init();	// zombie will be added into entitylist in Init(), so dunneed call update
+		//	theZombie->SetTerrain(groundEntity); 
+		//	timerToSpawnZombie -= 5.0f;
+		//}
 
 		GraphicsManager::GetInstance()->UpdateLights(dt);
-
-		// Game ends when player survived for 30s or player collides with zombie
-		timerToWinGame += (float)dt;
-		if (timerToWinGame > 30.0f || playerInfo->GetPlayerLose())
-			gameEnd = true;
-	}
 
 	// show postgame screen based on outcome
 	if (gameEnd)
 	{
-		if (!createScreen)
-		{
-			//if (playerInfo->GetPlayerLose())
-			//	Create::Sprite2DObject("lose", Vector3(0.0f, 0.0f, 0.0f), Vector3(400.0f, 400.0f, 400.0f));
-			//else
-			//	Create::Sprite2DObject("win", Vector3(0.0f, 0.0f, 0.0f), Vector3(400.0f, 400.0f, 400.0f));
-			if (playerInfo->GetPlayerLose())
-				SceneManager::GetInstance()->SetActiveScene("DefeatState");
-			else
-				SceneManager::GetInstance()->SetActiveScene("VictoryState");
-
-			createScreen = true;
-		}
+		if (playerInfo->GetPlayerLose())
+			SceneManager::GetInstance()->SetActiveScene("DefeatState");
+		else
+			SceneManager::GetInstance()->SetActiveScene("VictoryState");
 	}
+
 	// Update the 2 text object values.
 	std::ostringstream ss;
 	ss.precision(5);

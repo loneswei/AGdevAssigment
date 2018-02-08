@@ -25,28 +25,15 @@ bool CLuaInterface::Init()
 
 	// 1. Create lua state
 	theLuaState = lua_open();
-
-	if (theLuaState)
-	{
-		// 2. Load lua auxiliary libraries
-		luaL_openlibs(theLuaState);
-
-		// 3. Load lua script
-		luaL_dofile(theLuaState, "Image//DM2240.lua");
-
-		result = true;
-	}
-
+	LuaSetUp(theLuaState, "Image//DM2240.lua");
 	theErrorState = lua_open();
+	LuaSetUp(theErrorState, "Image//errorLookup.lua");
+	theControlState = lua_open();
+	LuaSetUp(theControlState, "Image//controls.lua");
+	theSettingState = lua_open();
+	LuaSetUp(theSettingState, "Image//settings.lua");
+	result = true;
 
-	if ((theLuaState) && (theErrorState))
-	{
-		// 2. Load lua auxiliary libraries
-		luaL_openlibs(theLuaState);
-
-		// Load the error lua script
-		luaL_dofile(theErrorState, "Image//errorLookup.lua");
-	}
 
 	return result;
 }
@@ -77,25 +64,25 @@ void CLuaInterface::Run()
 }
 
 // Get an integer value through the Lua Interface Class
-int CLuaInterface::getIntValue(const char* varName)
+int CLuaInterface::getIntValue(lua_State* luaState, const char* varName)
 {
-	lua_getglobal(theLuaState, varName);
-	return lua_tointeger(theLuaState, -1);
+	lua_getglobal(luaState, varName);
+	return lua_tointeger(luaState, -1);
 }
 // Get a float value through the Lua Interface Class
-float CLuaInterface::getFloatValue(const char* varName)
+float CLuaInterface::getFloatValue(lua_State* luaState, const char* varName)
 {
-	lua_getglobal(theLuaState, varName);
-	return (float)lua_tonumber(theLuaState, -1);
+	lua_getglobal(luaState, varName);
+	return (float)lua_tonumber(luaState, -1);
 }
 
 // Get a char value through the Lua Interface Class
-char CLuaInterface::getCharValue(const char* varName)
+char CLuaInterface::getCharValue(lua_State* luaState, const char* varName)
 {
-	lua_getglobal(theLuaState, varName);
+	lua_getglobal(luaState, varName);
 
 	size_t len;
-	const char* cstr = lua_tolstring(theLuaState, -1, &len);
+	const char* cstr = lua_tolstring(luaState, -1, &len);
 	// if the string is not empty, then return the first char
 	if (len > 0)
 		return cstr[0];
@@ -105,18 +92,18 @@ char CLuaInterface::getCharValue(const char* varName)
 }
 
 // Get Vector3 values through the Lua Interface Class
-Vector3 CLuaInterface::getVector3Values(const char* varName)
+Vector3 CLuaInterface::getVector3Values(lua_State* luaState, const char* varName)
 {
-	lua_getglobal(theLuaState, varName);
-	lua_rawgeti(theLuaState, -1, 1);
-	int x = lua_tonumber(theLuaState, -1);
-	lua_pop(theLuaState, 1);
-	lua_rawgeti(theLuaState, -1, 2);
-	int y = lua_tonumber(theLuaState, -1);
-	lua_pop(theLuaState, 1);
-	lua_rawgeti(theLuaState, -1, 3);
-	int z = lua_tonumber(theLuaState, -1);
-	lua_pop(theLuaState, 1);
+	lua_getglobal(luaState, varName);
+	lua_rawgeti(luaState, -1, 1);
+	int x = lua_tonumber(luaState, -1);
+	lua_pop(luaState, 1);
+	lua_rawgeti(luaState, -1, 2);
+	int y = lua_tonumber(luaState, -1);
+	lua_pop(luaState, 1);
+	lua_rawgeti(luaState, -1, 3);
+	int z = lua_tonumber(luaState, -1);
+	lua_pop(luaState, 1);
 
 	return Vector3(x, y, z);
 }
@@ -140,22 +127,22 @@ float CLuaInterface::getDistanceSquareValue(const char* varName,
 }
 
 // Get variable number of values through the Lua Interface Class
-int CLuaInterface::getVariableValues(const char* varName, int &a, int &b, int &c, int &d)
+int CLuaInterface::getVariableValues(lua_State* luaState, const char* varName, int &a, int &b, int &c, int &d)
 {
-	lua_getglobal(theLuaState, varName);
-	lua_pushnumber(theLuaState, a);
-	lua_pushnumber(theLuaState, b);
-	lua_pushnumber(theLuaState, c);
-	lua_pushnumber(theLuaState, d);
-	lua_call(theLuaState, 4, 4);
-	a = lua_tonumber(theLuaState, -1);
-	lua_pop(theLuaState, 1);
-	b = lua_tonumber(theLuaState, -1);
-	lua_pop(theLuaState, 1);
-	c = lua_tonumber(theLuaState, -1);
-	lua_pop(theLuaState, 1);
-	d = lua_tonumber(theLuaState, -1);
-	lua_pop(theLuaState, 1);
+	lua_getglobal(luaState, varName);
+	lua_pushnumber(luaState, a);
+	lua_pushnumber(luaState, b);
+	lua_pushnumber(luaState, c);
+	lua_pushnumber(luaState, d);
+	lua_call(luaState, 4, 4);
+	a = lua_tonumber(luaState, -1);
+	lua_pop(luaState, 1);
+	b = lua_tonumber(luaState, -1);
+	lua_pop(luaState, 1);
+	c = lua_tonumber(luaState, -1);
+	lua_pop(luaState, 1);
+	d = lua_tonumber(luaState, -1);
+	lua_pop(luaState, 1);
 
 	return true;
 }
@@ -223,4 +210,16 @@ void CLuaInterface::error(const char *errorCode)
 		cout << errorMsg << endl;
 	else
 		cout << errorCode << " is not valid.\n*** Please contact the developer ***" << endl;
+}
+
+void CLuaInterface::LuaSetUp(lua_State * luaState, const char* luafile)
+{
+	if (luaState)
+	{
+		// 2. Load lua auxiliary libraries
+		luaL_openlibs(luaState);
+
+		// 3. Load lua script
+		luaL_dofile(luaState, luafile);
+	}
 }
