@@ -5,9 +5,14 @@
 #include "MeshBuilder.h"
 #include "GraphicsManager.h"
 #include"RenderHelper.h"
+#include "StatesZombie.h"
 
 void Zombie::Init()
 {
+	sm = new StateMachine();
+	sm->AddState(new StateMove("Move", this));
+	sm->AddState(new StateChase("Chase", this));
+
 	previousIndex = -1;
 	currentIndex = -1;
 	dead = false;
@@ -102,6 +107,21 @@ void Zombie::Init()
 	}
 
 	position = pos;
+
+	if (!listOfWaypoints.empty())
+		listOfWaypoints.clear();
+	// Set up the waypoints
+	listOfWaypoints.push_back(0);
+	listOfWaypoints.push_back(1);
+	listOfWaypoints.push_back(2);
+
+	CWaypoint* nextWaypoint = GetNextWaypoint();
+	if (nextWaypoint)
+		target = nextWaypoint->GetPosition();
+	else
+		target.SetZero();
+	cout << "Next target: " << target << endl;
+
 	EntityManager::GetInstance()->AddEntity(this, true);
 
 
@@ -117,52 +137,47 @@ void Zombie::Update(double dt)
 		return;
 	}
 
-	// movement
+	sm->Update(dt);
 
-	// constantly update the target since player position will change as well
-	target = CPlayerInfo::GetInstance()->GetPos();
+	// movement
 	bool canMove = false;
 	bool hasCollider = false;
 	Vector3 tempPos = position;
 	Vector3 moveDir = target - position;
 
-	// gameplay : when zombie 'collides' with player
-	if (DistanceSquaredBetween(CPlayerInfo::GetInstance()->GetPos(), position) < 25)
-	{
-		CPlayerInfo::GetInstance()->SetPlayerLose(true);
-		return;
-	}
-
 	// simulate zombie movement
 	tempPos += moveDir.Normalized() * (float)m_dSpeed * (float)dt;
 
 	//checks with every entity in entitylist
-	for (auto go : EntityManager::GetInstance()->GetEntityList())
+	if (sm->GetCurrentState() == "Chase")
 	{
-		//prevents unnecessary checks
-		if (go == this->zRArm || go == this->zHead || go == this->zBody || go == this->zLArm)
-			continue;
-		if (go == this || !go || go->IsDone())
-			continue;
-
-		if (jockey)
-			if (go == this->zHorse)
+		for (auto go : EntityManager::GetInstance()->GetEntityList())
+		{
+			//prevents unnecessary checks
+			if (go == this->zRArm || go == this->zHead || go == this->zBody || go == this->zLArm)
+				continue;
+			if (go == this || !go || go->IsDone())
 				continue;
 
-		if (go->HasCollider())
-		{
-			hasCollider = true;
-			// zombie is not an obj but an invisible pt that is based off the parent node position
-			if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, go))
+			if (jockey)
+				if (go == this->zHorse)
+					continue;
+
+			if (go->HasCollider())
 			{
-				canMove = false;
-				break;
+				hasCollider = true;
+				// zombie is not an obj but an invisible pt that is based off the parent node position
+				if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, go))
+				{
+					canMove = false;
+					break;
+				}
+				else
+					canMove = true;
 			}
 			else
-				canMove = true;
+				hasCollider = false;
 		}
-		else
-			hasCollider = false;
 	}
 	// conditions satisfied
 	if ((hasCollider && canMove) || !hasCollider)

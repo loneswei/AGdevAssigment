@@ -3,6 +3,7 @@
 #include "../GenericEntity.h"
 #include "../EntityManager.h"
 #include "Vector3.h"
+#include "../../Common/Source/StateMachine.h"
 
 class Zombie : public CEnemy
 {
@@ -19,6 +20,8 @@ public:
 
 	void SetJockey(bool j) { jockey = j; }
 	bool GetJockey() { return jockey; }
+
+	StateMachine *sm;
 
 private:
 	GenericEntity *zBody, *zHead, *zLArm, *zRArm, *zHorse;
