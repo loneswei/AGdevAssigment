@@ -172,26 +172,19 @@ void SceneText::Init()
 	//Create::Entity("lightball", Vector3(lights[0]->position.x, lights[0]->position.y, lights[0]->position.z)); // Lightball
 
 	{
-		Vector3 housePos = Vector3(Math::RandIntMinMax(-400, 400), 5, Math::RandIntMinMax(-400, 400));
+		Vector3 housePos = lua->getVector3Values(lua->theEnvironmentInfoState, "housePos");
 		theHouse = new House();
 		theHouse->Init(housePos);
 	}
 
-	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_1");
-	int aWayPoint = CWaypointManager::GetInstance()->AddWaypoint(Vector3(CLuaInterface::GetInstance()->GetField("x"),
-		CLuaInterface::GetInstance()->GetField("y"),
-		CLuaInterface::GetInstance()->GetField("z")));
+	lua_getglobal(lua->theLuaState, "Waypoint_A_1");
+	int aWayPoint = CWaypointManager::GetInstance()->AddWaypoint(Vector3(lua->GetField("x"), lua->GetField("y"), lua->GetField("z")));
 
-	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_2");
-	int anotherWaypoint = CWaypointManager::GetInstance()->AddWaypoint(aWayPoint, Vector3(CLuaInterface::GetInstance()->GetField("x"),
-		CLuaInterface::GetInstance()->GetField("y"),
-		CLuaInterface::GetInstance()->GetField("z")));
+	lua_getglobal(lua->theLuaState, "Waypoint_A_2");
+	int anotherWaypoint = CWaypointManager::GetInstance()->AddWaypoint(aWayPoint, Vector3(lua->GetField("x"), lua->GetField("y"), lua->GetField("z")));
 
-
-	lua_getglobal(CLuaInterface::GetInstance()->theLuaState, "Waypoint_A_3");
-	CWaypointManager::GetInstance()->AddWaypoint(anotherWaypoint, Vector3(CLuaInterface::GetInstance()->GetField("x"),
-		CLuaInterface::GetInstance()->GetField("y"),
-		CLuaInterface::GetInstance()->GetField("z")));
+	lua_getglobal(lua->theLuaState, "Waypoint_A_3");
+	CWaypointManager::GetInstance()->AddWaypoint(anotherWaypoint, Vector3(lua->GetField("x"), lua->GetField("y"), lua->GetField("z")));
 
 	CWaypointManager::GetInstance()->PrintSelf();
 
@@ -199,19 +192,19 @@ void SceneText::Init()
 	human->Init();
 	CSceneGraph::GetInstance()->AddNode(human);
 
-	GenericEntity* lampPost = Create::Entity("lamppostmed", Vector3(Math::RandIntMinMax(-400, 400), 5, Math::RandIntMinMax(-400, 400)), Vector3(5, 5, 5));
+	GenericEntity* lampPost = Create::Entity("lamppostmed", lua->getVector3Values(lua->theEnvironmentInfoState, "lampPos"), Vector3(5, 5, 5));
 	lampPost->InitLOD("lampposthigh", "lamppostmed", "lamppostlow");
 	lampPost->SetCollider(true);
 	lampPost->SetAABB(Vector3(2, 15, 2), Vector3(-2, -15, -2));
 	CSceneGraph::GetInstance()->AddNode(lampPost);
 
-	GenericEntity* tree = Create::Entity("treemed", Vector3(Math::RandIntMinMax(-400, 400), 13.5f, Math::RandIntMinMax(-400, 400)), Vector3(5, 5, 5));
+	GenericEntity* tree = Create::Entity("treemed", lua->getVector3Values(lua->theEnvironmentInfoState, "treePos"), Vector3(5, 5, 5));
 	tree->InitLOD("treehigh", "treemed", "treelow");
 	tree->SetCollider(true);
 	tree->SetAABB(Vector3(3, 21.5f, 3), Vector3(-3, -21.5f, -3));
 	CSceneGraph::GetInstance()->AddNode(tree);
 
-	GenericEntity* car = Create::Entity("carmed", Vector3(Math::RandIntMinMax(-400, 400), -4, Math::RandIntMinMax(-400, 400)), Vector3(5, 5, 5));
+	GenericEntity* car = Create::Entity("carmed", lua->getVector3Values(lua->theEnvironmentInfoState, "carPos"), Vector3(5, 5, 5));
 	car->InitLOD("carhigh", "carmed", "carlow");
 	car->SetCollider(true);
 	car->SetAABB(Vector3(12, 5.5f, 25), Vector3(-12, -5.5f, -25));

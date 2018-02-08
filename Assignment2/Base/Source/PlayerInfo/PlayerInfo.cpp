@@ -73,12 +73,12 @@ void CPlayerInfo::Init(void)
 {
 	lua = CLuaInterface::GetInstance();
 	// Set the default values
-	defaultPosition = CLuaInterface::GetInstance()->getVector3Values(CLuaInterface::GetInstance()->theLuaState, "CPlayerInfoStartPos");
+	defaultPosition = lua->getVector3Values(lua->theLuaState, "CPlayerInfoStartPos");
 	defaultTarget.Set(0,0,0);
 	defaultUp.Set(0,1,0);
 
 	// Set the current values
-	position = CLuaInterface::GetInstance()->getVector3Values(CLuaInterface::GetInstance()->theLuaState, "CPlayerInfoStartPos");
+	position = lua->getVector3Values(lua->theLuaState, "CPlayerInfoStartPos");
 	target.Set(0, 0, 0);
 	up.Set(0, 1, 0);
 
@@ -107,10 +107,10 @@ void CPlayerInfo::Init(void)
 	keyShootPri = CheckSpecialKey(lua->getStringValue(lua->theControlState, "shootprimary"));
 	keyShootSec = CheckSpecialKey(lua->getStringValue(lua->theControlState, "shootsecondary"));
 
-	float distanceSquare = CLuaInterface::GetInstance()->getDistanceSquareValue("CalculateDistanceSquare", Vector3(0, 0, 0), Vector3(10, 10, 10));
+	float distanceSquare = lua->getDistanceSquareValue("CalculateDistanceSquare", Vector3(0, 0, 0), Vector3(10, 10, 10));
 
 	int a = 1000, b = 2000, c = 3000, d = 4000;
-	CLuaInterface::GetInstance()->getVariableValues(CLuaInterface::GetInstance()->theLuaState, "GetMinMax", a, b, c, d);
+	lua->getVariableValues(lua->theLuaState, "GetMinMax", a, b, c, d);
 }
 
 // Returns true if the player is on ground

@@ -33,6 +33,8 @@ bool CLuaInterface::Init()
 	theSettingState = lua_open();
 	LuaSetUp(theSettingState, "Image//settings.lua");
 
+	theEnvironmentInfoState = lua_open();
+	LuaSetUp(theEnvironmentInfoState, "Image//environmentInfo.lua");
 	theWeaponInfoState = lua_open();
 	LuaSetUp(theWeaponInfoState, "Image//weaponInfo.lua");
 

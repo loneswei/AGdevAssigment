@@ -1,9 +1,10 @@
 #include "Human.h"
+#include "../Lua/LuaInterface.h"
 
 void Human::Init()
 {
 	//creation of human
-	position = Vector3(Math::RandIntMinMax(-400, 400), 0, Math::RandIntMinMax(-400, 400));
+	position = CLuaInterface::GetInstance()->getVector3Values(CLuaInterface::GetInstance()->theEnvironmentInfoState, "humanPos");
 	scale = Vector3(5, 5, 5);
 	InitLOD("humanhigh", "humanmed", "humanlow");
 	SetCollider(true);

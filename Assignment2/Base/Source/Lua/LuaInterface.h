@@ -77,6 +77,7 @@ public:
 	lua_State *theControlState;
 	lua_State *theSettingState;
 	lua_State *thePlayerInfoState;
+	lua_State *theEnvironmentInfoState;
 	lua_State *theWeaponInfoState;
 	lua_State *theEnemyInfoState;
 	lua_State *theImageState;
