@@ -169,8 +169,7 @@ int CLuaInterface::getVariableValues(lua_State* luaState, const char* varName, i
 }
 
 // Save an integer value through the Lua Interface Class
-void CLuaInterface::saveIntValue(const char* varName, 
-								const int value, const bool bOverwrite)
+void CLuaInterface::saveIntValue(lua_State* luaState, const char* varName, const int value, const bool bOverwrite)
 {
 	lua_getglobal(theLuaState, "SaveToLuaFile");
 	char outputString[80];

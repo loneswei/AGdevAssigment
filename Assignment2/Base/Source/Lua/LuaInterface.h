@@ -58,7 +58,7 @@ public:
 	int getVariableValues(lua_State* luaState, const char* varName, int &a, int &b, int &c, int &d);
 
 	// Save an integer value through the Lua Interface Class
-	void saveIntValue(const char* varName, const int value, const bool bOverwrite = NULL);
+	void saveIntValue(lua_State* luaState, const char* varName, const int value, const bool bOverwrite = NULL);
 	// Save a float value through the Lua Interface Class
 	void saveFloatValue(const char* varName, const float value, const bool bOverwrite = NULL);
 

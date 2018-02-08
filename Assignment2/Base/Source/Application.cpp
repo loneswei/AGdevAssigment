@@ -121,6 +121,7 @@ void Application::InitDisplay(void)
 Application::Application()
 	: m_window_width(640)
 	, m_window_height(480)
+	, ResizeWindow(false)
 {
 }
 
@@ -138,8 +139,6 @@ void Application::Init()
 	m_window_height = CLuaInterface::GetInstance()->getIntValue(CLuaInterface::GetInstance()->theSettingState, "height");
 
 	CLuaInterface::GetInstance()->Run();
-	CLuaInterface::GetInstance()->saveFloatValue("Player1", 200.10, true);
-	CLuaInterface::GetInstance()->saveIntValue("Player2", 100);
 
 	//Set the error callback
 	glfwSetErrorCallback(error_callback);
@@ -219,6 +218,13 @@ void Application::Run()
 		glfwPollEvents();
 		UpdateInput();
 		
+		if (ResizeWindow)
+		{
+			glfwSetWindowSize(m_window, m_window_width, m_window_height);
+			glfwSetWindowSizeCallback(m_window, resize_callback);
+			ResizeWindow = false;
+		}
+
 		SceneManager::GetInstance()->Update(m_timer.getElapsedTime());
 		SceneManager::GetInstance()->Render();
 

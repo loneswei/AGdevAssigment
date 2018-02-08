@@ -34,7 +34,8 @@ public:
 
 	int GetWindowHeight();
 	int GetWindowWidth();
-	
+	void SetWindow(int width, int height) { this->m_window_width = width; this->m_window_height = height; }
+	bool ResizeWindow;
 private:
 	Application();
 	~Application();

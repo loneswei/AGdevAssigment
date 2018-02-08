@@ -46,6 +46,38 @@ void CSettingsState::Update(double dt)
 		cout << "Loading MenuState" << endl;
 		SceneManager::GetInstance()->SetActiveScene("MenuState");
 	}
+
+	if (KeyboardController::GetInstance()->IsKeyReleased('1'))
+	{
+		Application::GetInstance().SetWindow(800, 600);
+		Application::GetInstance().ResizeWindow = true;
+		CLuaInterface::GetInstance()->saveIntValue(CLuaInterface::GetInstance()->theSettingState, "width", Application::GetInstance().GetWindowWidth(),true);
+		CLuaInterface::GetInstance()->saveIntValue(CLuaInterface::GetInstance()->theSettingState, "height", Application::GetInstance().GetWindowHeight());
+
+	}
+
+	if (KeyboardController::GetInstance()->IsKeyReleased('2'))
+	{
+		Application::GetInstance().SetWindow(1200, 900);
+		Application::GetInstance().ResizeWindow = true;
+		CLuaInterface::GetInstance()->saveIntValue(CLuaInterface::GetInstance()->theSettingState, "width", Application::GetInstance().GetWindowWidth(), true);
+		CLuaInterface::GetInstance()->saveIntValue(CLuaInterface::GetInstance()->theSettingState, "height", Application::GetInstance().GetWindowHeight());
+
+	}
+
+	if (KeyboardController::GetInstance()->IsKeyReleased('3'))
+	{
+		Application::GetInstance().SetWindow(1600, 1200);
+		Application::GetInstance().ResizeWindow = true;
+		CLuaInterface::GetInstance()->saveIntValue(CLuaInterface::GetInstance()->theSettingState, "width", Application::GetInstance().GetWindowWidth(), true);
+		CLuaInterface::GetInstance()->saveIntValue(CLuaInterface::GetInstance()->theSettingState, "height", Application::GetInstance().GetWindowHeight());
+
+	}
+
+	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
+	float halfWindowHeight = Application::GetInstance().GetWindowHeight() / 2.0f;
+	SettingsStateBackGround->SetPosition(Vector3(halfWindowWidth, halfWindowHeight, 0.0f));
+	SettingsStateBackGround->SetScale(Vector3(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight(), 0.0f));
 }
 
 void CSettingsState::Render()
