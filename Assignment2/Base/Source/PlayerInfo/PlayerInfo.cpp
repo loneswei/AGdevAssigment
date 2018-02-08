@@ -776,26 +776,28 @@ unsigned char CPlayerInfo::CheckSpecialKey(const char* control)
 	if (control == nullptr)
 		return '_';
 
-	if (control == "space")
+	std::string control_str(control);
+
+	if (control_str == "space")
 		return VK_SPACE;
-	else if (control == "LMB")
+	else if (control_str == "LMB")
 		return MouseController::LMB;
-	else if (control == "RMB")
+	else if (control_str == "RMB")
 		return MouseController::RMB;
-	else if (control == "LSHIFT")
+	else if (control_str == "LSHIFT")
 		return VK_LSHIFT;
-	else if (control == "RSHIFT")
+	else if (control_str == "RSHIFT")
 		return VK_RSHIFT;
-	else if (control == "tab")
+	else if (control_str == "tab")
 		return VK_TAB;
-	else if (control == "enter")
+	else if (control_str == "enter")
 		return VK_RETURN;
-	else if (control == "backspace")
+	else if (control_str == "backspace")
 		return VK_BACK;
-	else if (control == "lcontrol")
+	else if (control_str == "lcontrol")
 		return VK_LCONTROL;
-	else if (control == "rcontrol")
+	else if (control_str == "rcontrol")
 		return VK_RCONTROL;
 	else
-		return control[0];
+		return control_str[0];
 }
