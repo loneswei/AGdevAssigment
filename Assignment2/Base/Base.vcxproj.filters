@@ -181,7 +181,7 @@
       <Filter>Waypoint</Filter>
     </ClCompile>
     <ClCompile Include="Source\Enemy\StatesZombie.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

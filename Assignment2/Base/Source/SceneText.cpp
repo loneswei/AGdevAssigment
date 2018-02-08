@@ -249,6 +249,8 @@ void SceneText::Update(double dt)
 	timerToWinGame += dt;
 	if (timerToWinGame > 30.f)
 		gameEnd = true;
+	if (playerInfo->GetPlayerLose())
+		gameEnd = true;
 	
 		// Update our entities
 		EntityManager::GetInstance()->Update(dt);
