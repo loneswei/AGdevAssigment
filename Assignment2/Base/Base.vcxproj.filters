@@ -180,6 +180,9 @@
     <ClCompile Include="Source\Waypoint\WaypointManager.cpp">
       <Filter>Waypoint</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy\StatesZombie.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -322,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="Source\Waypoint\WaypointManager.h">
       <Filter>Waypoint</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\StatesZombie.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -28,6 +28,8 @@
     <ClCompile Include="Source\RenderHelper.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
+    <ClCompile Include="Source\State.cpp" />
+    <ClCompile Include="Source\StateMachine.cpp" />
     <ClCompile Include="Source\timer.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
     <ClCompile Include="Source\Vector2.cpp" />
@@ -56,6 +58,8 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\SingletonTemplate.h" />
+    <ClInclude Include="Source\State.h" />
+    <ClInclude Include="Source\StateMachine.h" />
     <ClInclude Include="Source\timer.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vector2.h" />
