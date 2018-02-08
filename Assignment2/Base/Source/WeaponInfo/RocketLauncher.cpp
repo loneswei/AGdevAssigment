@@ -1,6 +1,7 @@
 #include "RocketLauncher.h"
 #include "../Projectile/Rocket.h"
 #include "../SceneGraph/SceneGraph.h"
+#include "../Lua/LuaInterface.h"
 
 RocketLauncher::RocketLauncher()
 {
@@ -14,12 +15,12 @@ void RocketLauncher::Init(void)
 {
 	CWeaponInfo::Init();
 
-	magRounds = 2;
-	maxMagRounds = 2;
-	totalRounds = 10;
-	maxTotalRounds = 10;
+	magRounds = CLuaInterface::GetInstance()->getIntValue(CLuaInterface::GetInstance()->theWeaponInfoState, "rocketMag");
+	maxMagRounds = CLuaInterface::GetInstance()->getIntValue(CLuaInterface::GetInstance()->theWeaponInfoState, "rocketMaxMag");
+	totalRounds = CLuaInterface::GetInstance()->getIntValue(CLuaInterface::GetInstance()->theWeaponInfoState, "rocketTotal");
+	maxTotalRounds = CLuaInterface::GetInstance()->getIntValue(CLuaInterface::GetInstance()->theWeaponInfoState, "rocketMaxTotal");
 
-	timeBetweenShots = 3;
+	timeBetweenShots = (double)CLuaInterface::GetInstance()->getIntValue(CLuaInterface::GetInstance()->theWeaponInfoState, "rocketTime");
 	elapsedTime = 0.0;
 	bFire = true;
 }

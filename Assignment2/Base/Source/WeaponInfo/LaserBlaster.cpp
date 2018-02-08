@@ -2,6 +2,7 @@
 #include "../Projectile/Laser.h"
 #include "MeshBuilder.h"
 #include "../EntityManager.h"
+#include "../Lua/LuaInterface.h"
 
 CLaserBlaster::CLaserBlaster()
 {
@@ -19,16 +20,16 @@ void CLaserBlaster::Init(void)
 	CWeaponInfo::Init();
 
 	// The number of ammunition in a magazine for this weapon
-	magRounds = 25;
+	magRounds = CLuaInterface::GetInstance()->getIntValue(CLuaInterface::GetInstance()->theWeaponInfoState, "laserMag");
 	// The maximum number of ammunition for this magazine for this weapon
-	maxMagRounds = 25;
+	maxMagRounds = CLuaInterface::GetInstance()->getIntValue(CLuaInterface::GetInstance()->theWeaponInfoState, "laserMaxMag");
 	// The current total number of rounds currently carried by this player
-	totalRounds = 100;
+	totalRounds = CLuaInterface::GetInstance()->getIntValue(CLuaInterface::GetInstance()->theWeaponInfoState, "laserTotal");
 	// The max total number of rounds currently carried by this player
-	maxTotalRounds = 100;
+	maxTotalRounds = CLuaInterface::GetInstance()->getIntValue(CLuaInterface::GetInstance()->theWeaponInfoState, "laserMaxTotal");
 
 	// The time between shots
-	timeBetweenShots = 0.1667;
+	timeBetweenShots = (double)CLuaInterface::GetInstance()->getFloatValue(CLuaInterface::GetInstance()->theWeaponInfoState, "laserTime");
 	// The elapsed time (between shots)
 	elapsedTime = 0.0;
 	// Boolean flag to indicate if weapon can fire now

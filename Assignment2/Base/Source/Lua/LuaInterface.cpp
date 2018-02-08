@@ -32,6 +32,10 @@ bool CLuaInterface::Init()
 	LuaSetUp(theControlState, "Image//controls.lua");
 	theSettingState = lua_open();
 	LuaSetUp(theSettingState, "Image//settings.lua");
+
+	theWeaponInfoState = lua_open();
+	LuaSetUp(theWeaponInfoState, "Image//weaponInfo.lua");
+
 	theImageState = lua_open();
 	LuaSetUp(theImageState, "Image//imagefilepath.lua");
 	theObjectState = lua_open();
