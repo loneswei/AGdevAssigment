@@ -124,8 +124,8 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GetMesh("housebackwall")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "houselow"));
 	MeshBuilder::GetInstance()->GenerateOBJ("houserightwall", lua->getStringValue(lua->theObjectState, "houserightwall"));
 	MeshBuilder::GetInstance()->GetMesh("houserightwall")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "houselow"));
-	//MeshBuilder::GetInstance()->GenerateOBJ("housefrontwall", "OBJ//LOD//housefrontwall.obj");
-	//MeshBuilder::GetInstance()->GetMesh("housefrontwall")->textureID = LoadTGA("Image//LOD//househigh.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("housefrontwall", "OBJ//LOD//housefrontwall.obj");
+	MeshBuilder::GetInstance()->GetMesh("housefrontwall")->textureID = LoadTGA("Image//LOD//househigh.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("houselowdoor", lua->getStringValue(lua->theObjectState, "housedoor"));
 	MeshBuilder::GetInstance()->GetMesh("houselowdoor")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "houselow"));
 	MeshBuilder::GetInstance()->GenerateOBJ("housemeddoor", lua->getStringValue(lua->theObjectState, "housedoor"));
