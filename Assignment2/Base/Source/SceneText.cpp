@@ -160,10 +160,11 @@ void SceneText::Init()
 	// Win / Lose Screen
 
 	// Set up the Spatial Partition and pass it to the EntityManager to manage
-	CSpatialPartition::GetInstance()->Init(100, 100, 10, 10);
+	CSpatialPartition::GetInstance()->Init(lua->getIntValue(lua->theSpatialState, "xgridsize"), lua->getIntValue(lua->theSpatialState, "zgridsize"),
+		lua->getIntValue(lua->theSpatialState, "xnumgrid"), lua->getIntValue(lua->theSpatialState, "zgridsize"));
 	CSpatialPartition::GetInstance()->SetMesh("GRIDMESH");
 	CSpatialPartition::GetInstance()->SetCamera(&camera);
-	CSpatialPartition::GetInstance()->SetLevelOfDetails(40000.0f, 160000.0f);
+	CSpatialPartition::GetInstance()->SetLevelOfDetails(lua->getIntValue(lua->theSpatialState, "highmiddist"), lua->getIntValue(lua->theSpatialState, "midlowdist"));
 	EntityManager::GetInstance()->SetSpatialPartition(CSpatialPartition::GetInstance());
 
 	// Create entities into the scene

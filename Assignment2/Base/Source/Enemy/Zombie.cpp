@@ -136,29 +136,6 @@ void Zombie::Update(double dt)
 	// simulate zombie movement
 	tempPos += moveDir.Normalized() * (float)m_dSpeed * (float)dt;
 
-	// cannot use because the size of the vector will change will projectile kill of the zombie, causing crash
-	//zombieGridObj = CSpatialPartition::GetInstance()->GetObjects(this->zBody->GetPosition(), 1);
-	//for (int i = 0; i < zombieGridObj.size(); ++i)
-	//{
-	//	if (zombieGridObj[i] == this->zRArm || zombieGridObj[i] == this->zHead || zombieGridObj[i] == this->zBody || zombieGridObj[i] == this->zLArm)
-	//		continue;
-	//	if (zombieGridObj[i] == this || !zombieGridObj[i] || zombieGridObj[i]->IsDone())
-	//		continue;
-	//	if (zombieGridObj[i]->HasCollider())
-	//	{
-	//		hasCollider = true;
-	//		if (EntityManager::GetInstance()->PointToAABBCollision(tempPos, zombieGridObj[i]))
-	//		{
-	//			canMove = false;
-	//			break;
-	//		}
-	//		else
-	//			canMove = true;
-	//	}
-	//	else
-	//		hasCollider = false;
-	//}
-
 	//checks with every entity in entitylist
 	for (auto go : EntityManager::GetInstance()->GetEntityList())
 	{

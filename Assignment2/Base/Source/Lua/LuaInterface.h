@@ -81,5 +81,6 @@ public:
 	lua_State *theEnemyInfoState;
 	lua_State *theImageState;
 	lua_State *theObjectState;
+	lua_State *theSpatialState;
 };
 

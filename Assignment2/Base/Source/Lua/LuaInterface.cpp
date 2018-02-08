@@ -40,6 +40,8 @@ bool CLuaInterface::Init()
 	LuaSetUp(theImageState, "Image//imagefilepath.lua");
 	theObjectState = lua_open();
 	LuaSetUp(theObjectState, "Image//objfilepath.lua");
+	theSpatialState = lua_open();
+	LuaSetUp(theSpatialState, "Image//spatial.lua");
 	result = true;
 
 
