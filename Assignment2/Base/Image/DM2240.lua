@@ -46,14 +46,6 @@ function GetMinMax(...)
 end
 
 title = "DM2240 - Week 14 Scripting"
-width = 800
-height = 600
-
--- Keyboard Inputs
-moveForward  = "W"
-moveBackward = "S"
-moveLeft     = "A"
-moveRight    = "D"
 
 -- CPlayerInfo start position
 CPlayerInfoStartPos = {0,0,10}
