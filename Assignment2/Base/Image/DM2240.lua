@@ -51,6 +51,11 @@ title = "DM2240 - Week 14 Scripting"
 CPlayerInfoStartPos = {0,0,10}
 
 -- Way points
-Waypoint_A_1 = {x=10.0, y=0.0, z=50.0}
-Waypoint_A_2 = {x=10.0, y=0.0, z=-50.0}
-Waypoint_A_3 = {x=-10.0, y=0.0, z=0.0}
+Waypoint_A_1 = {x=50.0, y=0.0, z=50.0}
+Waypoint_A_2 = {x=50.0, y=0.0, z=-50.0}
+Waypoint_A_3 = {x=-50.0, y=0.0, z=0.0}
+
+Waypoint_B_1 = {x=200.0, y=0.0, z=0.0}
+Waypoint_B_2 = {x=200.0, y=0.0, z=-50.0}
+Waypoint_B_3 = {x=150.0, y=0.0, z=-50.0}
+Waypoint_B_4 = {x=150.0, y=0.0, z=0.0}

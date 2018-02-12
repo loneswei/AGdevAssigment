@@ -45,6 +45,7 @@ private:
 	CEnemy* theEnemy;
 	Human* human;
 	Zombie* theZombie;
+	Zombie* zombie;
 	House* theHouse;
 
 	CLuaInterface *lua;

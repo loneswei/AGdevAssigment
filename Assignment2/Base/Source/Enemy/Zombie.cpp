@@ -17,12 +17,23 @@ void Zombie::Init()
 	currentIndex = -1;
 	dead = false;
 	Vector3 pos;
-	pos.Set(Math::RandFloatMinMax(-400, 400), -2, Math::RandFloatMinMax(-400, 400));
+	//pos.Set(Math::RandFloatMinMax(-200, 200), -2, Math::RandFloatMinMax(-200, 200));
 
 	//prevent it from spawning it too near to the player starting game position
-	while ((pos.x > -200 && pos.x < 200) || (pos.z > -200 && pos.z < 200))
-		pos.Set(Math::RandFloatMinMax(-400, 400), -2, Math::RandFloatMinMax(-400, 400));
+	//while ((pos.x > -100 && pos.x < 100) || (pos.z > -100 && pos.z < 100))
+		//pos.Set(Math::RandFloatMinMax(-400, 400), -2, Math::RandFloatMinMax(-400, 400));
+	
+	CWaypoint* nextWaypoint = GetNextWaypoint();
+	if (nextWaypoint)
+	{
+		pos = position = nextWaypoint->GetPosition();
+		target = pos;
+	}
+	else
+		target.SetZero();
 
+	cout << "Next target: " << target << endl;
+	
 	// randomly spawns a zombie or zombiejockey
 	int decideJockey = Math::RandIntMinMax(0, 1);
 	switch (decideJockey)
@@ -106,21 +117,7 @@ void Zombie::Init()
 		CSceneNode *zHeadNode = bodyNode->AddChild(zHead);
 	}
 
-	position = pos;
-
-	if (!listOfWaypoints.empty())
-		listOfWaypoints.clear();
-	// Set up the waypoints
-	listOfWaypoints.push_back(0);
-	listOfWaypoints.push_back(1);
-	listOfWaypoints.push_back(2);
-
-	CWaypoint* nextWaypoint = GetNextWaypoint();
-	if (nextWaypoint)
-		target = nextWaypoint->GetPosition();
-	else
-		target.SetZero();
-	cout << "Next target: " << target << endl;
+	//position = pos;
 
 	EntityManager::GetInstance()->AddEntity(this, true);
 

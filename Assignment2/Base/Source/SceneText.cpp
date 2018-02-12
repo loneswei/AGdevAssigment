@@ -124,8 +124,8 @@ void SceneText::Init()
 	MeshBuilder::GetInstance()->GetMesh("housebackwall")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "houselow"));
 	MeshBuilder::GetInstance()->GenerateOBJ("houserightwall", lua->getStringValue(lua->theObjectState, "houserightwall"));
 	MeshBuilder::GetInstance()->GetMesh("houserightwall")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "houselow"));
-	//MeshBuilder::GetInstance()->GenerateOBJ("housefrontwall", "OBJ//LOD//housefrontwall.obj");
-	//MeshBuilder::GetInstance()->GetMesh("housefrontwall")->textureID = LoadTGA("Image//LOD//househigh.tga");
+	MeshBuilder::GetInstance()->GenerateOBJ("housefrontwall", "OBJ//LOD//housefrontwall.obj");
+	MeshBuilder::GetInstance()->GetMesh("housefrontwall")->textureID = LoadTGA("Image//LOD//househigh.tga");
 	MeshBuilder::GetInstance()->GenerateOBJ("houselowdoor", lua->getStringValue(lua->theObjectState, "housedoor"));
 	MeshBuilder::GetInstance()->GetMesh("houselowdoor")->textureID = LoadTGA(lua->getStringValue(lua->theImageState, "houselow"));
 	MeshBuilder::GetInstance()->GenerateOBJ("housemeddoor", lua->getStringValue(lua->theObjectState, "housedoor"));
@@ -186,6 +186,18 @@ void SceneText::Init()
 	lua_getglobal(lua->theLuaState, "Waypoint_A_3");
 	CWaypointManager::GetInstance()->AddWaypoint(anotherWaypoint, Vector3(lua->GetField("x"), lua->GetField("y"), lua->GetField("z")));
 
+	lua_getglobal(lua->theLuaState, "Waypoint_B_1");
+	int bWayPoint = CWaypointManager::GetInstance()->AddWaypoint(Vector3(lua->GetField("x"), lua->GetField("y"), lua->GetField("z")));
+
+	lua_getglobal(lua->theLuaState, "Waypoint_B_2");
+	int bbWaypoint = CWaypointManager::GetInstance()->AddWaypoint(bWayPoint, Vector3(lua->GetField("x"), lua->GetField("y"), lua->GetField("z")));
+
+	lua_getglobal(lua->theLuaState, "Waypoint_B_3");
+	int bbbWaypoint = CWaypointManager::GetInstance()->AddWaypoint(bbWaypoint, Vector3(lua->GetField("x"), lua->GetField("y"), lua->GetField("z")));
+
+	lua_getglobal(lua->theLuaState, "Waypoint_B_4");
+	CWaypointManager::GetInstance()->AddWaypoint(bbbWaypoint, Vector3(lua->GetField("x"), lua->GetField("y"), lua->GetField("z")));
+
 	CWaypointManager::GetInstance()->PrintSelf();
 
 	human = new Human();
@@ -225,8 +237,25 @@ void SceneText::Init()
 	playerInfo->SetTerrain(groundEntity);
 
 	theZombie = new Zombie();
+	if (!theZombie->listOfWaypoints.empty())
+		theZombie->listOfWaypoints.clear();
+	// Set up the waypoints
+	theZombie->listOfWaypoints.push_back(0);
+	theZombie->listOfWaypoints.push_back(1);
+	theZombie->listOfWaypoints.push_back(2);
 	theZombie->Init();
 	theZombie->SetTerrain(groundEntity);
+
+	zombie = new Zombie();
+	if (!zombie->listOfWaypoints.empty())
+		zombie->listOfWaypoints.clear();
+	// Set up the waypoints
+	zombie->listOfWaypoints.push_back(3);
+	zombie->listOfWaypoints.push_back(4);
+	zombie->listOfWaypoints.push_back(5);
+	zombie->listOfWaypoints.push_back(6);
+	zombie->Init();
+	zombie->SetTerrain(groundEntity);
 
 	// Setup the 2D entities
 	float halfWindowWidth = Application::GetInstance().GetWindowWidth() / 2.0f;
@@ -242,6 +271,7 @@ void SceneText::Init()
 	//gameplay
 	gameEnd = false;
 	timerToWinGame = 0;
+	//timerToSpawnZombie = 0;
 }
 
 void SceneText::Update(double dt)

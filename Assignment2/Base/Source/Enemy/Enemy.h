@@ -17,8 +17,7 @@ protected:
 	Vector3 maxBoundary, minBoundary;
 	GroundEntity* m_pTerrain;
 
-	// Vector containing IDs of Waypoints
-	vector<int> listOfWaypoints;
+	
 	// Current ID of Waypoint
 	int m_iWayPointIndex;
 
@@ -66,6 +65,8 @@ public:
 	// Constrain the position within the borders
 	void Constrain(void);
 
+	// Vector containing IDs of Waypoints
+	vector<int> listOfWaypoints;
 	// Render
 	//void Render(void);
 };
